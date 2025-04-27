@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,6 +27,6 @@ public class LineUp {
     @JoinTable(name = "LineUp_drivers",
             joinColumns = @JoinColumn(name = "lineUp_id"),
             inverseJoinColumns = @JoinColumn(name = "drivers_id"))
-    private List<Drivers> drivers;
+    private List<Driver> drivers;
 
 }

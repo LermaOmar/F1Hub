@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Drivers {
+public class Driver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

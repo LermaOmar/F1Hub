@@ -15,13 +15,9 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String password;
-
-    @Column(unique = true)
-    private String email;
-
-    @Column(unique = true)
-    private String username;
+    @OneToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     @OneToMany(mappedBy = "appUser")
     private List<LineUp> lineUps;

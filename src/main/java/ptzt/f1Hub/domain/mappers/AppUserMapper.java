@@ -1,0 +1,17 @@
+package ptzt.f1Hub.domain.mappers;
+
+import org.mapstruct.Mapper;
+import ptzt.f1Hub.application.services.account.AccountService;
+import ptzt.f1Hub.domain.models.AppUser;
+import ptzt.f1Hub.instraestructure.dto.out.appUser.AppUserOutDto;
+import ptzt.f1Hub.instraestructure.dto.out.appUser.AppUserOutLimitedDto;
+
+@Mapper(componentModel = "spring", uses = AccountService.class)
+public interface AppUserMapper {
+
+
+    AppUserOutDto toDto(AppUser appUser);
+
+    AppUserOutLimitedDto toLimitedDto(AppUser appUser);
+
+}
