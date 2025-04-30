@@ -16,11 +16,11 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy = "appUser")
+    @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY)
     private List<LineUp> lineUps = new ArrayList<>();
 
     private Long budget = 100_000_000L;

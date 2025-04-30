@@ -15,7 +15,7 @@ public class League {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "league")
+    @OneToMany(mappedBy = "league", fetch = FetchType.LAZY)
     private List<LineUp> lineUps;
 
     @Column(unique = true)

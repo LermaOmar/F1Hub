@@ -26,7 +26,7 @@ public class Driver {
 
     private Boolean active = true;
 
-    @ManyToMany(mappedBy = "drivers")
+    @ManyToMany(mappedBy = "drivers", fetch = FetchType.LAZY)
     private List<LineUp> lineUps;
 
     private String nationality;

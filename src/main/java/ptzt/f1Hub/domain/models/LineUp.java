@@ -23,13 +23,13 @@ public class LineUp {
     @JoinColumn(name = "league_id")
     private League league;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "LineUp_drivers",
             joinColumns = @JoinColumn(name = "lineUp_id"),
             inverseJoinColumns = @JoinColumn(name = "drivers_id"))
     private List<Driver> drivers;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
 
