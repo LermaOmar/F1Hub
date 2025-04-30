@@ -1,0 +1,101 @@
+package ptzt.f1Hub.application.services.team;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ptzt.f1Hub.application.services.lineUp.LineUpService;
+import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
+import ptzt.f1Hub.domain.exceptions.UnproccesableEntityException;
+import ptzt.f1Hub.domain.models.Driver;
+import ptzt.f1Hub.domain.models.Team;
+import ptzt.f1Hub.instraestructure.repository.TeamRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class TeamServiceImpl implements TeamService{
+
+    private final TeamRepository teamRepository;
+    private final LineUpService lineUpService;
+
+    @Transactional
+    @Override
+    public Team create(Team team) {
+
+        if (teamRepository.findByName(team.getName()).isPresent())
+            throw new UnproccesableEntityException("Ya existe un equipo con ese nombre");
+
+        return teamRepository.save(team);
+
+    }
+
+    @Override
+    public Team update(Team team) {
+
+        Optional<Team> opTeam = teamRepository.findByName(team.getName());
+
+        if (opTeam.isPresent() && !opTeam.get().getId().equals(team.getId()))
+            throw new UnproccesableEntityException("Ya existe un equipo con ese nombre");
+
+        return teamRepository.save(team);
+
+    }
+
+    @Override
+    public Team getById(Long id) {
+
+        return teamRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No existe un equipo con ese ID"));
+
+    }
+
+    @Override
+    public Page<Team> getAll(Pageable pageable) {
+
+        return teamRepository.findAll(pageable);
+
+    }
+
+    @Override
+    public List<Team> getAll() {
+
+        return teamRepository.findAll();
+
+    }
+
+    @Transactional
+    @Override
+    public void deactivate(Long id) {
+
+        Team team = getById(id);
+
+        team.setActive(false);
+
+        lineUpService.getAllByTeam(team).forEach(lineUp -> {
+
+            lineUp.setTeam(null);
+        });
+
+        teamRepository.save(team);
+
+    }
+
+    @Transactional
+    @Override
+    public void updateValue(Team team) {
+
+        if (team.getPreviousPoints() == 0)
+            return;
+
+        long pointsDifference = team.getPoints() - team.getPreviousPoints();
+
+        double priceChangeFactor =  pointsDifference * 1.0 / team.getPreviousPoints();
+
+        team.setPrice(Math.round(team.getPrice() + (team.getPrice() * priceChangeFactor)));
+
+    }
+}
