@@ -20,7 +20,7 @@ public interface LineUpService {
 
     Page<LineUp> getAll(Pageable pageable);
 
-    List<LineUp> getAllByDriver(Driver driver);
+    List<LineUp> getAllByDriver(List<Driver> drivers);
 
     List<LineUp> getAllByTeam(Team team);
 

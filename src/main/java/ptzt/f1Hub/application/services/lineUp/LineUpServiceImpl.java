@@ -7,9 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.application.services.driver.DriverService;
+import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.team.TeamService;
 import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.models.Driver;
+import ptzt.f1Hub.domain.models.League;
 import ptzt.f1Hub.domain.models.LineUp;
 import ptzt.f1Hub.domain.models.Team;
 import ptzt.f1Hub.instraestructure.repository.LineUpRepository;
@@ -23,6 +25,7 @@ public class LineUpServiceImpl implements LineUpService {
     private final LineUpRepository lineUpRepository;
     private final TeamService teamService;
     private final DriverService driverService;
+    private final LeagueService leagueService;
 
     @Transactional
     @Override
@@ -44,19 +47,26 @@ public class LineUpServiceImpl implements LineUpService {
     public void delete(LineUp lineUp) {
 
         Team team = lineUp.getTeam();
-        List<Driver> drivers = lineUp.getDrivers();
-
         team.setLineUp(null);
         teamService.update(team);
 
+        List<Driver> drivers = lineUp.getDrivers();
         drivers.forEach(driver -> {
             List<LineUp> lineUps = driver.getLineUps().stream()
-                    .filter(lineUp1 -> !lineUp1.getId().equals(lineUp1.getId()))
+                    .filter(lineUp1 -> !lineUp1.getId().equals(lineUp.getId()))
                     .toList();
 
             driver.setLineUps(lineUps);
             driverService.update(driver);
         });
+
+        League league = lineUp.getLeague();
+        league.setLineUps(
+            league.getLineUps().stream()
+                    .filter(lineUp1 -> !lineUp1.getId().equals(lineUp.getId()))
+                    .toList()
+        );
+        leagueService.update(league);
 
         lineUpRepository.delete(lineUp);
 
@@ -78,9 +88,9 @@ public class LineUpServiceImpl implements LineUpService {
     }
 
     @Override
-    public List<LineUp> getAllByDriver(Driver driver) {
+    public List<LineUp> getAllByDriver(List<Driver> drivers) {
 
-        return lineUpRepository.findAllByDriver(driver);
+        return lineUpRepository.findAllByDrivers(drivers);
 
     }
 

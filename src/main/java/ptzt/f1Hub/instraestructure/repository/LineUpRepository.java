@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface LineUpRepository extends JpaRepository<LineUp, Long> {
 
-    List<LineUp> findAllByDriver(Driver driver);
+    List<LineUp> findAllByDrivers(List<Driver> drivers);
 
     List<LineUp> findAllByTeam(Team team);
 
