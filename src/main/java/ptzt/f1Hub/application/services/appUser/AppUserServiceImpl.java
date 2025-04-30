@@ -41,7 +41,7 @@ public class AppUserServiceImpl implements AppUserService{
     public AppUser getById(Long id) {
 
         return appUserRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No existe una entidad con ese id"));
+                .orElseThrow(() -> new EntityNotFoundException("There is no user with that id"));
 
     }
 

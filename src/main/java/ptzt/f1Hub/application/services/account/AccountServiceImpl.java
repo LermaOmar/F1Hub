@@ -17,13 +17,12 @@ import java.util.Optional;
 public class AccountServiceImpl implements AccountService{
 
     private final AccountRepository accountRepository;
-    private final AppUserService appUserService;
 
     @Override
     public Account create(Account account) {
 
         if (accountRepository.findByUsernameOrEmail(account.getUsername(),account.getEmail()).isPresent())
-            throw new UnproccesableEntityException("Las cuentas deben tener email y username únicos");
+            throw new UnproccesableEntityException("Email or Username already assigned to other account");;
 
         return accountRepository.save(account);
 
@@ -34,7 +33,7 @@ public class AccountServiceImpl implements AccountService{
 
         Optional<Account> opAccount = accountRepository.findByUsernameOrEmail(account.getUsername(),account.getEmail());
         if (opAccount.isPresent() && !opAccount.get().getId().equals(account.getId()))
-            throw new UnproccesableEntityException("Las cuentas deben tener email y username únicos");
+            throw new UnproccesableEntityException("Email or Username already assigned to other account");
 
         return accountRepository.save(account);
 
@@ -51,7 +50,7 @@ public class AccountServiceImpl implements AccountService{
     public Account getById(Long id) {
 
         return accountRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No existe una cuenta con ese ID"));
+                .orElseThrow(() -> new EntityNotFoundException("There is no account with that ID"));
     }
 
     @Override

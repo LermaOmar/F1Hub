@@ -9,6 +9,7 @@ import ptzt.f1Hub.application.services.lineUp.LineUpService;
 import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.exceptions.UnproccesableEntityException;
 import ptzt.f1Hub.domain.models.Driver;
+import ptzt.f1Hub.domain.models.LineUp;
 import ptzt.f1Hub.domain.models.Team;
 import ptzt.f1Hub.instraestructure.repository.TeamRepository;
 
@@ -27,7 +28,7 @@ public class TeamServiceImpl implements TeamService{
     public Team create(Team team) {
 
         if (teamRepository.findByName(team.getName()).isPresent())
-            throw new UnproccesableEntityException("Ya existe un equipo con ese nombre");
+            throw new UnproccesableEntityException("Name is already assigned to other team");
 
         return teamRepository.save(team);
 
@@ -39,7 +40,12 @@ public class TeamServiceImpl implements TeamService{
         Optional<Team> opTeam = teamRepository.findByName(team.getName());
 
         if (opTeam.isPresent() && !opTeam.get().getId().equals(team.getId()))
-            throw new UnproccesableEntityException("Ya existe un equipo con ese nombre");
+            throw new UnproccesableEntityException("Name is already assigned to other team");
+
+        LineUp lineUp = team.getLineUp();
+
+        if (lineUp != null && lineUp.getId() != null)
+            lineUpService.update(lineUp);
 
         return teamRepository.save(team);
 
@@ -49,7 +55,7 @@ public class TeamServiceImpl implements TeamService{
     public Team getById(Long id) {
 
         return teamRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No existe un equipo con ese ID"));
+                .orElseThrow(() -> new EntityNotFoundException("There is no team with that ID"));
 
     }
 

@@ -38,7 +38,7 @@ public class DriverServiceImpl implements DriverService{
     public Driver getById(Long id) {
 
         return driverRepository.findById(id).
-                orElseThrow(() -> new EntityNotFoundException("No se ha encontrado un piloto con ese ID"));
+                orElseThrow(() -> new EntityNotFoundException("There is no driver with that ID"));
 
     }
 
@@ -64,7 +64,7 @@ public class DriverServiceImpl implements DriverService{
 
         driver.setActive(false);
 
-        lineUpService.getAllByDriver(driver).forEach(lineUp -> {
+        lineUpService.getAllByDriver(List.of(driver)).forEach(lineUp -> {
 
             List<Driver> drivers = lineUp.getDrivers();
 
