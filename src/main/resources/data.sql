@@ -19,6 +19,7 @@ INSERT INTO driver (name, points, previous_points, price, active, nationality) V
 ('Yuki Tsunoda', 0, 0, 10000000, TRUE, 'Japan'),
 ('Isack Hadjar', 0, 0, 750000, TRUE, 'France'),
 ('Nico Hülkenberg', 0, 0, 1500000, TRUE, 'Germany');
+
 INSERT INTO team (name, nationality, price, points, previous_points, active) VALUES
 ('Red Bull Racing', 'Austria', 50000000, 0, 0, true),
 ('Mercedes-AMG Petronas', 'Germany', 35000000, 0, 0, true),
