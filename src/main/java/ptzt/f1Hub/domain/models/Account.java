@@ -13,7 +13,7 @@ import ptzt.f1Hub.domain.enums.Roles;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String password;

@@ -12,7 +12,7 @@ import java.util.List;
 public class LineUp {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -28,5 +28,9 @@ public class LineUp {
             joinColumns = @JoinColumn(name = "lineUp_id"),
             inverseJoinColumns = @JoinColumn(name = "drivers_id"))
     private List<Driver> drivers;
+
+    @OneToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
 }

@@ -13,19 +13,29 @@ import java.util.List;
 public class Team {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private boolean competing;
+    private Boolean active = true;
 
     @Column(unique = true)
     private String name;
 
-    private long points;
+    private Long points = 0L;
+
+    private Long previousPoints = 0L;
+
+    private Long price;
 
     private String nationality;
 
-    @OneToMany(mappedBy = "team", orphanRemoval = true)
-    private List<League> leagues;
+    @OneToOne(mappedBy = "team")
+    private LineUp lineUp;
 
+    @PreUpdate
+    public void preUpdate(){
+
+        this.previousPoints = this.points;
+
+    }
 }

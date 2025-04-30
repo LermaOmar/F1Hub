@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,7 +13,7 @@ import java.util.List;
 public class AppUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
@@ -20,6 +21,8 @@ public class AppUser {
     private Account account;
 
     @OneToMany(mappedBy = "appUser")
-    private List<LineUp> lineUps;
+    private List<LineUp> lineUps = new ArrayList<>();
+
+    private Long budget = 100_000_000L;
 
 }

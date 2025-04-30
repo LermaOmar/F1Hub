@@ -13,20 +13,31 @@ import java.util.List;
 public class Driver {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    private int driverNumber;
+    private Long points = 0L;
 
-    private long points;
+    private Long previousPoints = 0L;
 
-    private boolean competing;
+    private Long price;
+
+    private Boolean active = true;
 
     @ManyToMany(mappedBy = "drivers")
     private List<LineUp> lineUps;
 
     private String nationality;
+
+    @PreUpdate
+    public void preUpdate(){
+
+        this.previousPoints = this.points;
+
+    }
+
+
 
 }

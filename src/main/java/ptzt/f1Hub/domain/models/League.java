@@ -12,7 +12,7 @@ import java.util.List;
 public class League {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(mappedBy = "league")
@@ -20,9 +20,5 @@ public class League {
 
     @Column(unique = true)
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private Team team;
 
 }
