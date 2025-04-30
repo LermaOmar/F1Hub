@@ -40,7 +40,6 @@ public class AuthController {
         AppUser registeredUser = new AppUser();
 
         registeredUser.setAccount(registeredAccount);
-        registeredUser.setLineUps(new ArrayList<>());
 
         return ResponseEntity.ok(
                 appUserMapper.toDto(appUserService.create(registeredUser))
