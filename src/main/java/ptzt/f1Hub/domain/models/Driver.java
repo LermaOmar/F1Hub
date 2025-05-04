@@ -6,39 +6,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Driver {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Driver extends AuctionableEntity{
 
     private String name;
-
-    private Long points = 0L;
-
-    private Long previousPoints = 0L;
-
-    private Long price;
-
-    private Boolean active = true;
 
     @ManyToMany(mappedBy = "drivers", fetch = FetchType.LAZY)
     private Set<LineUp> lineUps = new HashSet<>();
 
-    private String nationality;
 
-    @PreUpdate
-    public void preUpdate(){
-
-        this.previousPoints = this.points;
-
-    }
 
 
 

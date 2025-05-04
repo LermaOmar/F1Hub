@@ -1,0 +1,35 @@
+package ptzt.f1Hub.domain.models;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "type")
+@Getter
+@Setter
+public abstract class AuctionableEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nationality;
+
+    private Long points = 0L;
+
+    private Long previousPoints = 0L;
+
+    private Long price;
+
+    private Boolean active = true;
+
+    @PreUpdate
+    public void preUpdate(){
+
+        this.previousPoints = this.points;
+
+    }
+
+}
