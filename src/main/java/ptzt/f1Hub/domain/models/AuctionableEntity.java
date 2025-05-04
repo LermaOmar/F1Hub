@@ -3,6 +3,11 @@ package ptzt.f1Hub.domain.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ptzt.f1Hub.domain.models.market.MarketItem;
+import ptzt.f1Hub.domain.models.market.Offer;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -24,6 +29,12 @@ public abstract class AuctionableEntity {
     private Long price;
 
     private Boolean active = true;
+
+    @OneToMany(mappedBy = "auctionableEntity")
+    private Set<Offer> offers = new HashSet<>();
+
+    @OneToMany(mappedBy = "auctionableEntity")
+    private Set<MarketItem> marketItems = new HashSet<>();
 
     @PreUpdate
     public void preUpdate(){

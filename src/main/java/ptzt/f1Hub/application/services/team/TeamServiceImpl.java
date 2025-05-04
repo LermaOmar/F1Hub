@@ -6,11 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.application.services.lineUp.LineUpService;
+import ptzt.f1Hub.application.services.market.MarketItemService;
 import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.exceptions.UnproccesableEntityException;
 import ptzt.f1Hub.domain.models.Driver;
 import ptzt.f1Hub.domain.models.LineUp;
 import ptzt.f1Hub.domain.models.Team;
+import ptzt.f1Hub.domain.models.market.MarketItem;
 import ptzt.f1Hub.instraestructure.repository.TeamRepository;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class TeamServiceImpl implements TeamService{
 
     private final TeamRepository teamRepository;
     private final LineUpService lineUpService;
+    private final MarketItemService marketItemService;
 
     @Transactional
     @Override
@@ -30,7 +33,14 @@ public class TeamServiceImpl implements TeamService{
         if (teamRepository.findByName(team.getName()).isPresent())
             throw new UnproccesableEntityException("Name is already assigned to other team");
 
-        return teamRepository.save(team);
+        Team createdTeam = teamRepository.save(team);
+
+        MarketItem marketItem = new MarketItem();
+        marketItem.setAuctionableEntity(createdTeam);
+
+        marketItemService.create(marketItem);
+
+        return createdTeam;
 
     }
 

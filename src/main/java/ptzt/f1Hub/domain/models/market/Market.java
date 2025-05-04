@@ -1,4 +1,4 @@
-package ptzt.f1Hub.domain.models;
+package ptzt.f1Hub.domain.models.market;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,16 +10,13 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class League {
+public class Market {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "league", fetch = FetchType.LAZY)
-    private Set<LineUp> lineUps = new HashSet<>();
-
-    @Column(unique = true)
-    private String name;
+    @OneToMany(mappedBy = "market", fetch = FetchType.EAGER)
+    private Set<MarketItem> marketItems = new HashSet<>();
 
 }

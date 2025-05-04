@@ -3,11 +3,9 @@ package ptzt.f1Hub.domain.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ptzt.f1Hub.domain.models.market.Offer;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -26,5 +24,8 @@ public class AppUser {
     private Set<LineUp> lineUps = new HashSet<>();
 
     private Long budget = 100_000_000L;
+
+    @OneToMany(mappedBy = "appUser", orphanRemoval = true)
+    private Set<Offer> offers = new HashSet<>();
 
 }

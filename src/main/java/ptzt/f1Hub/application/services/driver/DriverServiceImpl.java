@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.application.services.lineUp.LineUpService;
+import ptzt.f1Hub.application.services.market.MarketItemService;
 import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.models.Driver;
+import ptzt.f1Hub.domain.models.market.MarketItem;
 import ptzt.f1Hub.instraestructure.repository.DriverRepository;
 
 import java.util.List;
@@ -20,12 +22,20 @@ public class DriverServiceImpl implements DriverService{
 
     private final DriverRepository driverRepository;
     private final LineUpService lineUpService;
+    private final MarketItemService marketItemService;
 
     @Transactional
     @Override
     public Driver create(Driver driver) {
 
-        return driverRepository.save(driver);
+        Driver createdDriver = driverRepository.save(driver);
+
+        MarketItem marketItem = new MarketItem();
+        marketItem.setAuctionableEntity(driver);
+
+        marketItemService.create(marketItem);
+
+        return createdDriver;
 
     }
 

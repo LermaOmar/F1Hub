@@ -67,3 +67,39 @@ INSERT INTO team (id, name) VALUES
 (28, 'Visa Cash App RB F1 Team'),
 (29, 'Stake F1 Team Kick Sauber'),
 (30, 'Haas F1 Team');
+
+-- Market
+INSERT INTO market (id) VALUES (1);
+
+-- MarketItems
+INSERT INTO market_item (auctionable_entity_id, available, market_id) VALUES
+(1, FALSE, null),
+(2, FALSE, null),
+(3, FALSE, null),
+(4, FALSE, null),
+(5, FALSE, null),
+(6, FALSE, null),
+(7, FALSE, null),
+(8, FALSE, null),
+(9, FALSE, null),
+(10, FALSE, null),
+(11, FALSE, null),
+(12, FALSE, null),
+(13, FALSE, null),
+(14, FALSE, null),
+(15, FALSE, null),
+(16, FALSE, null),
+(17, FALSE, null),
+(18, FALSE, null),
+(19, FALSE, null),
+(20, FALSE, null),
+(21, FALSE, null),
+(22, FALSE, null),
+(23, FALSE, null),
+(24, FALSE, null),
+(25, FALSE, null),
+(26, FALSE, null),
+(27, FALSE, null),
+(28, FALSE, null),
+(29, FALSE, null),
+(30, FALSE, null);
