@@ -1,4 +1,4 @@
-package ptzt.f1Hub.application.services.market;
+package ptzt.f1Hub.application.services.market.item;
 
 import ptzt.f1Hub.domain.models.market.MarketItem;
 

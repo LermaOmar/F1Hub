@@ -1,4 +1,4 @@
-package ptzt.f1Hub.application.services.market;
+package ptzt.f1Hub.application.services.market.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
