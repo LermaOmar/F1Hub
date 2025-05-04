@@ -1,6 +1,7 @@
 package ptzt.f1Hub.application.services.market;
 
 import ptzt.f1Hub.domain.models.market.Market;
+import ptzt.f1Hub.domain.models.market.MarketItem;
 
 import java.util.Optional;
 
@@ -11,5 +12,7 @@ public interface MarketService {
     Market update(Market market);
 
     Optional<Market> getById(Long id);
+
+    void finalizeAuction(Long id);
 
 }

@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@DiscriminatorValue("Driver")
 @Getter
 @Setter
 public class Driver extends AuctionableEntity{

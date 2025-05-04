@@ -31,9 +31,6 @@ public abstract class AuctionableEntity {
     private Boolean active = true;
 
     @OneToMany(mappedBy = "auctionableEntity")
-    private Set<Offer> offers = new HashSet<>();
-
-    @OneToMany(mappedBy = "auctionableEntity")
     private Set<MarketItem> marketItems = new HashSet<>();
 
     @PreUpdate

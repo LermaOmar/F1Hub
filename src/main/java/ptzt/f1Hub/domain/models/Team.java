@@ -6,6 +6,7 @@ import lombok.Setter;
 
 
 @Entity
+@DiscriminatorValue("Team")
 @Getter
 @Setter
 public class Team extends AuctionableEntity {

@@ -6,6 +6,8 @@ import lombok.Setter;
 import ptzt.f1Hub.domain.models.AppUser;
 import ptzt.f1Hub.domain.models.AuctionableEntity;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -19,14 +21,12 @@ public class Offer {
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
-    @ManyToOne
-    @JoinColumn(name = "auctionable_entity_id")
-    private AuctionableEntity auctionableEntity;
-
     private Long amount;
 
     @ManyToOne
     @JoinColumn(name = "market_item_id")
     private MarketItem marketItem;
+
+    private LocalDateTime createdAt;
 
 }
