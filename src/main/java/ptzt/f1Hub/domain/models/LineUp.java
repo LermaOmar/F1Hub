@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,7 +29,7 @@ public class LineUp {
     @JoinTable(name = "LineUp_drivers",
             joinColumns = @JoinColumn(name = "lineUp_id"),
             inverseJoinColumns = @JoinColumn(name = "drivers_id"))
-    private List<Driver> drivers;
+    private Set<Driver> drivers = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")

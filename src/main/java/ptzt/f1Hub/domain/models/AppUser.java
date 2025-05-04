@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -21,7 +23,7 @@ public class AppUser {
     private Account account;
 
     @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY)
-    private List<LineUp> lineUps = new ArrayList<>();
+    private Set<LineUp> lineUps = new HashSet<>();
 
     private Long budget = 100_000_000L;
 

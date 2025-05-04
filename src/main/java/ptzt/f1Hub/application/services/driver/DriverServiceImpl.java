@@ -11,6 +11,8 @@ import ptzt.f1Hub.domain.models.Driver;
 import ptzt.f1Hub.instraestructure.repository.DriverRepository;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -66,16 +68,28 @@ public class DriverServiceImpl implements DriverService{
 
         lineUpService.getAllByDriver(List.of(driver)).forEach(lineUp -> {
 
-            List<Driver> drivers = lineUp.getDrivers();
+            Set<Driver> drivers = lineUp.getDrivers();
 
             lineUp.setDrivers(drivers.stream()
                     .filter(driv -> !driv.getId().equals(driver.getId()))
-                    .toList()
+                    .collect(Collectors.toSet())
             );
 
             lineUpService.update(lineUp);
 
         });
+
+        driverRepository.save(driver);
+    }
+
+
+    @Transactional
+    @Override
+    public void activate(Long id) {
+
+        Driver driver = getById(id);
+
+        driver.setActive(true);
 
         driverRepository.save(driver);
     }

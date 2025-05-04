@@ -20,6 +20,8 @@ public interface DriverService {
 
     void deactivate(Long id);
 
+    void activate(Long id);
+
     void updateValue(Driver driver);
 
 }

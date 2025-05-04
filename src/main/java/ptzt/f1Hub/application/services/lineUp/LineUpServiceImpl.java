@@ -17,6 +17,8 @@ import ptzt.f1Hub.domain.models.Team;
 import ptzt.f1Hub.instraestructure.repository.LineUpRepository;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Lazy)
@@ -50,11 +52,11 @@ public class LineUpServiceImpl implements LineUpService {
         team.setLineUp(null);
         teamService.update(team);
 
-        List<Driver> drivers = lineUp.getDrivers();
+        Set<Driver> drivers = lineUp.getDrivers();
         drivers.forEach(driver -> {
-            List<LineUp> lineUps = driver.getLineUps().stream()
+            Set<LineUp> lineUps = driver.getLineUps().stream()
                     .filter(lineUp1 -> !lineUp1.getId().equals(lineUp.getId()))
-                    .toList();
+                    .collect(Collectors.toSet());
 
             driver.setLineUps(lineUps);
             driverService.update(driver);
@@ -64,7 +66,7 @@ public class LineUpServiceImpl implements LineUpService {
         league.setLineUps(
             league.getLineUps().stream()
                     .filter(lineUp1 -> !lineUp1.getId().equals(lineUp.getId()))
-                    .toList()
+                    .collect(Collectors.toSet())
         );
         leagueService.update(league);
 
