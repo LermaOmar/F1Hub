@@ -20,6 +20,8 @@ public interface TeamService {
 
     void deactivate(Long id);
 
+    void activate(Long id);
+
     void updateValue(Team team);
 
 }

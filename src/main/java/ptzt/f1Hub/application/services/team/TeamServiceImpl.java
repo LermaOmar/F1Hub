@@ -101,6 +101,17 @@ public class TeamServiceImpl implements TeamService{
 
     @Transactional
     @Override
+    public void activate(Long id) {
+
+        Team team = getById(id);
+        team.setActive(true);
+
+        teamRepository.save(team);
+
+    }
+
+    @Transactional
+    @Override
     public void updateValue(Team team) {
 
         if (team.getPreviousPoints() == 0)

@@ -83,7 +83,7 @@ public class DriverController {
     @PutMapping("/activate/{id}")
     public ResponseEntity<DefaultResponseDto> activate(@PathVariable Long id){
 
-        driverService.deactivate(id);
+        driverService.activate(id);
 
         return ResponseEntity.ok(
                 new DefaultResponseDto(200, "Driver has been activated")
