@@ -16,7 +16,7 @@ import ptzt.f1Hub.instraestructure.dto.out.team.TeamOutDto;
 import ptzt.f1Hub.instraestructure.dto.out.team.TeamOutLimitedDto;
 
 @RestController
-@RequestMapping("/drivers")
+@RequestMapping("/teams")
 @RequiredArgsConstructor
 public class TeamController {
 
