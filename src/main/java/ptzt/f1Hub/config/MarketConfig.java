@@ -27,7 +27,7 @@ public class MarketConfig {
 
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "*/10 * * * * *")
     public void setUpMarketDaily() {
 
         updateMarketItems();

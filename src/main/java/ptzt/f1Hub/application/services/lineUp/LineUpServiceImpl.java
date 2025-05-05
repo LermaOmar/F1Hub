@@ -10,10 +10,7 @@ import ptzt.f1Hub.application.services.driver.DriverService;
 import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.team.TeamService;
 import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
-import ptzt.f1Hub.domain.models.Driver;
-import ptzt.f1Hub.domain.models.League;
-import ptzt.f1Hub.domain.models.LineUp;
-import ptzt.f1Hub.domain.models.Team;
+import ptzt.f1Hub.domain.models.*;
 import ptzt.f1Hub.instraestructure.repository.LineUpRepository;
 
 import java.util.List;
@@ -100,6 +97,14 @@ public class LineUpServiceImpl implements LineUpService {
     public List<LineUp> getAllByTeam(Team team) {
 
         return lineUpRepository.findAllByTeam(team);
+
+    }
+
+    @Override
+    public LineUp getByAppUserAndLeague(AppUser appUser, League league) {
+
+        return lineUpRepository.findByAppUserAndLeague(appUser, league)
+                .orElseThrow(() -> new EntityNotFoundException("There is no Line up with that user and league"));
 
     }
 }

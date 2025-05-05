@@ -11,6 +11,8 @@ import ptzt.f1Hub.domain.models.League;
 import ptzt.f1Hub.domain.models.LineUp;
 import ptzt.f1Hub.instraestructure.repository.LeagueRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class LeagueServiceImpl implements LeagueService{
@@ -54,6 +56,13 @@ public class LeagueServiceImpl implements LeagueService{
     public Page<League> getAll(Pageable pageable) {
 
         return leagueRepository.findAll(pageable);
+
+    }
+
+    @Override
+    public List<League> getAll() {
+
+        return leagueRepository.findAll();
 
     }
 

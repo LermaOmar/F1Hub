@@ -4,6 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ptzt.f1Hub.domain.models.League;
 
+import java.util.List;
+
 public interface LeagueService {
 
     League  create(League league);
@@ -15,5 +17,7 @@ public interface LeagueService {
     League getById(Long id);
 
     Page<League> getAll(Pageable pageable);
+
+    List<League> getAll();
 
 }

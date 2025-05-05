@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.application.services.lineUp.LineUpService;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
+import ptzt.f1Hub.application.services.offer.OfferService;
 import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.exceptions.UnproccesableEntityException;
 import ptzt.f1Hub.domain.models.LineUp;
