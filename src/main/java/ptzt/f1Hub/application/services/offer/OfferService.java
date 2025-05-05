@@ -8,6 +8,8 @@ public interface OfferService {
 
     List<Offer> getAll();
 
+    Offer getById(Long id);
+
     Offer create(Offer offer);
 
     Offer update(Offer offer);

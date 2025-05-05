@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.application.services.appUser.AppUserService;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
+import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.exceptions.UnproccesableEntityException;
 import ptzt.f1Hub.domain.models.AppUser;
 import ptzt.f1Hub.domain.models.Budget;
@@ -14,6 +15,7 @@ import ptzt.f1Hub.domain.models.market.Offer;
 import ptzt.f1Hub.instraestructure.repository.OfferRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,9 +33,26 @@ public class OfferServiceImpl implements OfferService{
 
     }
 
+    @Override
+    public Offer getById(Long id) {
+
+        return offerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("There is no Offer with that ID"));
+
+    }
+
     @Transactional
     @Override
     public Offer create(Offer offer) {
+
+        Optional<Offer> opOffer = offerRepository
+                .findByAppUserAndLeagueAndMarketItem(offer.getAppUser(),offer.getLeague(),offer.getMarketItem());
+
+        if (opOffer.isPresent() && opOffer.get().getAppUser().getId().equals(offer.getAppUser().getId()))
+            throw new UnproccesableEntityException("This user already post a offer for this item");
+
+        else if (!offer.getMarketItem().getAvailable())
+            throw new UnproccesableEntityException("Item is not available");
 
         validateOffer(offer);
         return offerRepository.save(offer);
