@@ -7,4 +7,12 @@ import java.util.List;
 public interface OfferService {
 
     List<Offer> getAll();
+
+    Offer create(Offer offer);
+
+    Offer update(Offer offer);
+
+    void delete(Offer offer);
+
+
 }

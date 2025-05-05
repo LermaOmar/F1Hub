@@ -52,38 +52,37 @@ public class MarketServiceImpl implements MarketService{
     @Override
     public Map<League, Map<MarketItem, Offer>> finalizeAuction() {
 
+        // Retrieve all offers and all leagues
         List<Offer> allOffers = offerService.getAll();
         List<League> allLeagues = leagueService.getAll();
 
+        // This map will hold the winning offers per league and per market item
         Map<League, Map<MarketItem, Offer>> winningOffersByLeague = new HashMap<>();
 
-        // Process each league independently
+        // Iterate over all leagues
         allLeagues.forEach(league -> {
+            // Create a map to hold the highest offer for each market item within this league
             Map<MarketItem, Offer> highestOffersForLeague = new HashMap<>();
 
             // Filter and process offers for the current league
             allOffers.stream()
-                    .filter(offer ->
-                            isUserInLeague(offer.getAppUser(), league))  // Only consider offers from users in the current league
+                    .filter(offer -> offer.getLeague().equals(league)) // Filter offers by league
                     .forEach(offer -> {
                         MarketItem marketItem = offer.getMarketItem();
 
-                        // Compare offers for the same MarketItem within this league and keep the highest offer
+                        // Update the highest offer for each market item, comparing by the offer amount
                         highestOffersForLeague.merge(marketItem, offer,
                                 (existingOffer, newOffer) -> newOffer.getAmount() > existingOffer.getAmount() ? newOffer : existingOffer);
                     });
 
-            // Add the highest offers for the league to the final result
+            // Add the highest offers for the current league to the final result
             winningOffersByLeague.put(league, highestOffersForLeague);
         });
 
+        // Return the map with winning offers by league and market item
         return winningOffersByLeague;
     }
 
 
-    private boolean isUserInLeague(AppUser appUser, League league) {
-        return appUser.getLineUps().stream()
-                .anyMatch(lineUp -> lineUp.getLeague().equals(league));  // Verify if user is part of the league
-    }
 
 }

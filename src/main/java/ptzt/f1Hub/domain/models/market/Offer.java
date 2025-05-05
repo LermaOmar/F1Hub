@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ptzt.f1Hub.domain.models.AppUser;
 import ptzt.f1Hub.domain.models.AuctionableEntity;
+import ptzt.f1Hub.domain.models.League;
 
 import java.time.LocalDateTime;
 
@@ -28,5 +29,23 @@ public class Offer {
     private MarketItem marketItem;
 
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "league_id")
+    private League league;
+
+    @PrePersist
+    public void prePersist(){
+
+        this.createdAt  = LocalDateTime.now();
+
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+
+        this.createdAt  = LocalDateTime.now();
+
+    }
 
 }

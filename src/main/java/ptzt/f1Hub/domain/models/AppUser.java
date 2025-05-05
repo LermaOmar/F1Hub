@@ -23,9 +23,10 @@ public class AppUser {
     @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY)
     private Set<LineUp> lineUps = new HashSet<>();
 
-    private Long budget = 100_000_000L;
-
-    @OneToMany(mappedBy = "appUser", orphanRemoval = true)
+    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private Set<Offer> offers = new HashSet<>();
+
+    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    private Set<Budget> budgets = new HashSet<>();
 
 }

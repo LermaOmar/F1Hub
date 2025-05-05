@@ -21,7 +21,12 @@ public class MarketItemServiceImpl implements MarketItemService{
 
     }
 
+    @Override
+    public void update(MarketItem marketItem) {
 
+        marketItemRepository.save(marketItem);
+
+    }
 
     @Override
     public void displayInMarket(MarketItem marketItem) {

@@ -8,6 +8,8 @@ public interface MarketItemService {
 
     void create(MarketItem marketItem);
 
+    void update(MarketItem marketItem);
+
     void displayInMarket(MarketItem marketItem);
 
     void hideInMarket(MarketItem marketItem);
