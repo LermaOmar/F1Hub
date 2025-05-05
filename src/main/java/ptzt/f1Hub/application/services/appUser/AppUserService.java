@@ -20,4 +20,6 @@ public interface AppUserService {
     Page<AppUser> getAll(Pageable pageable);
 
     void joinLeague(AppUser appUser, Long league);
+
+    void leaveLeague(AppUser appUser, Long league);
 }

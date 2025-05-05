@@ -95,4 +95,29 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
 
+    @Override
+    public void leaveLeague(AppUser appUser, Long leagueId) {
+
+        League foundLeague = leagueService.getById(leagueId);
+
+        //Verify user not in league
+        if (appUser.getLineUps().stream().anyMatch(lineUp -> lineUp.getLeague().getId().equals(leagueId))) {
+            throw new UnproccesableEntityException("User is not in this league");
+        }
+
+
+        LineUp lineUp = lineUpService.getByAppUserAndLeague(appUser,foundLeague);
+
+
+        Budget budget = budgetService.getByUserAndLeague(appUser,foundLeague);
+
+
+        lineUpService.delete(lineUp);
+        budgetService.delete(budget);
+
+        appUser.getBudgets().removeIf(budget1 -> budget1.getId().equals(budget.getId()));
+        appUser.getLineUps().removeIf(lineUp1 -> lineUp1.getId().equals(lineUp.getId()));
+        update(appUser);
+    }
+
 }
