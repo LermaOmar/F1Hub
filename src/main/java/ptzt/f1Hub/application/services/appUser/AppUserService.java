@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ptzt.f1Hub.domain.models.AppUser;
+import ptzt.f1Hub.domain.models.League;
 
 
 public interface AppUserService {
@@ -18,4 +19,5 @@ public interface AppUserService {
 
     Page<AppUser> getAll(Pageable pageable);
 
+    void joinLeague(AppUser appUser, Long league);
 }

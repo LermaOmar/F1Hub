@@ -4,17 +4,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ptzt.f1Hub.application.services.budget.BudgetService;
+import ptzt.f1Hub.application.services.league.LeagueService;
+import ptzt.f1Hub.application.services.lineUp.LineUpService;
 import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
+import ptzt.f1Hub.domain.exceptions.UnproccesableEntityException;
 import ptzt.f1Hub.domain.models.AppUser;
+import ptzt.f1Hub.domain.models.Budget;
+import ptzt.f1Hub.domain.models.League;
+import ptzt.f1Hub.domain.models.LineUp;
 import ptzt.f1Hub.instraestructure.repository.AppUserRepository;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AppUserServiceImpl implements AppUserService{
+public class AppUserServiceImpl implements AppUserService {
 
     private final AppUserRepository appUserRepository;
+    private final LeagueService leagueService;
+    private final LineUpService lineUpService;
+    private final BudgetService budgetService;
 
     @Override
     public AppUser create(AppUser appUser) {
@@ -51,5 +61,38 @@ public class AppUserServiceImpl implements AppUserService{
         return appUserRepository.findAll(pageable);
 
     }
+
+    @Override
+    public void joinLeague(AppUser appUser, Long leagueId) {
+
+        League foundLeague = leagueService.getById(leagueId);
+
+        //Verify user already in league
+        if (appUser.getLineUps().stream().anyMatch(lineUp -> lineUp.getLeague().getId().equals(leagueId))) {
+            throw new UnproccesableEntityException("User is already in this league");
+        }
+
+
+        LineUp lineUp = new LineUp();
+        lineUp.setAppUser(appUser);
+        lineUp.setLeague(foundLeague);
+        LineUp createdLineUp = lineUpService.create(lineUp);
+
+        Budget budget = new Budget();
+        budget.setLeague(foundLeague);
+        budget.setAppUser(appUser);
+        Budget createdBudget = budgetService.create(budget);
+
+
+        foundLeague.getBudgets().add(createdBudget);
+        foundLeague.getLineUps().add(createdLineUp);
+
+        leagueService.update(foundLeague);
+
+        appUser.getBudgets().add(createdBudget);
+        appUser.getLineUps().add(createdLineUp);
+        update(appUser);
+    }
+
 
 }
