@@ -51,8 +51,6 @@ public class OfferServiceImpl implements OfferService{
         if (opOffer.isPresent() && opOffer.get().getAppUser().getId().equals(offer.getAppUser().getId()))
             throw new UnproccesableEntityException("This user already post a offer for this item");
 
-        else if (!offer.getMarketItem().getAvailable())
-            throw new UnproccesableEntityException("Item is not available");
 
         validateOffer(offer);
         return offerRepository.save(offer);
@@ -84,6 +82,9 @@ public class OfferServiceImpl implements OfferService{
     }
 
     private void validateOffer(Offer offer) {
+
+        if (!offer.getMarketItem().getAvailable())
+            throw new UnproccesableEntityException("Item is not available");
 
         Budget budget = offer.getAppUser().getBudgets().stream()
                 .filter(budget1 -> budget1.getAppUser().getId().equals(offer.getAppUser().getId())
