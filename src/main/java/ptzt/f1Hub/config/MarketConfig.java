@@ -36,34 +36,29 @@ public class MarketConfig {
 
     private void updateMarketItems() {
 
-        Optional<Market> opMarket = marketService.getById(1L);
-
-        Market market = opMarket.orElseGet(() -> marketService.create(new Market()));
+        List<Market> markets = marketService.getAll();
+        if (markets.isEmpty())
+            return;
 
         List<MarketItem> availableItems = marketItemService.getAll().stream()
-                .filter(item -> !market.getMarketItems().contains(item))
-                .collect(Collectors.toList());
-
-        List<MarketItem> unavailableItems = marketItemService.getAll().stream()
-                .filter(item -> item.getMarket() != null)
+                .filter(marketItem -> marketItem.getAvailable() && marketItem.getMarkets().size() == markets.size())
                 .toList();
 
+        List<MarketItem> unavailableItems = marketItemService.getAll().stream()
+                .filter(item -> !item.getAvailable())
+                .collect(Collectors.toList());
 
-        unavailableItems.forEach(marketItemService::hideInMarket);
 
-        Collections.shuffle(availableItems);
+        availableItems.forEach(marketItem -> marketItemService.hideInMarket(marketItem,markets));
 
-        Set<MarketItem> selectedItems = new HashSet<>(availableItems.subList(0, Math.min(7, availableItems.size())));
+        Collections.shuffle(unavailableItems);
+
+        Set<MarketItem> selectedItems = new HashSet<>(unavailableItems.subList(0, Math.min(7, unavailableItems.size())));
 
         selectedItems.forEach(item -> {
-            item.setMarket(market);
-            marketItemService.displayInMarket(item);
+            marketItemService.displayInMarket(item,markets);
         });
 
-        market.getMarketItems().clear();
-        market.setMarketItems(selectedItems);
-
-        marketService.update(market);
 
     }
 }
