@@ -14,11 +14,10 @@ import ptzt.f1Hub.instraestructure.dto.out.offer.OfferOutDto;
 import ptzt.f1Hub.instraestructure.dto.out.shared.DefaultResponseDto;
 
 @RestController
-@RequestMapping("/offer")
+@RequestMapping("/offers")
 @RequiredArgsConstructor
 public class OfferController {
 
-    private final MarketService marketService;
     private final OfferService offerService;
     private final OfferMapper offerMapper;
 
