@@ -5,8 +5,8 @@ import ptzt.f1Hub.domain.models.market.Market;
 import ptzt.f1Hub.domain.models.market.MarketItem;
 import ptzt.f1Hub.domain.models.market.Offer;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface MarketService {
 
@@ -14,7 +14,11 @@ public interface MarketService {
 
     Market update(Market market);
 
-    Optional<Market> getById(Long id);
+    Market getById(Long id);
+
+    Market getByLeague(League league);
+
+    List<Market> getAll();
 
     Map<League, Map<MarketItem, Offer>>  finalizeAuction();
 

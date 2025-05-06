@@ -26,8 +26,10 @@ public class MarketItem {
 
     private Boolean available = false;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "market_id")
-    private Market market;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "MarketItem_markets",
+            joinColumns = @JoinColumn(name = "marketItem_id"),
+            inverseJoinColumns = @JoinColumn(name = "markets_id"))
+    private Set<Market> markets = new HashSet<>();
 
 }

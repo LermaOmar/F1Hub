@@ -4,9 +4,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ptzt.f1Hub.application.services.league.LeagueService;
-import ptzt.f1Hub.application.services.market.item.MarketItemService;
 import ptzt.f1Hub.application.services.offer.OfferService;
-import ptzt.f1Hub.domain.exceptions.OffersNotAvailableException;
+import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.models.*;
 import ptzt.f1Hub.domain.models.market.Market;
 import ptzt.f1Hub.domain.models.market.MarketItem;
@@ -14,7 +13,6 @@ import ptzt.f1Hub.domain.models.market.Offer;
 import ptzt.f1Hub.instraestructure.repository.MarketRepository;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,9 +40,25 @@ public class MarketServiceImpl implements MarketService{
     }
 
     @Override
-    public Optional<Market> getById(Long id) {
+    public Market getById(Long id) {
 
-        return marketRepository.findById(id);
+        return marketRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("There is no market with that ID"));
+
+    }
+
+    @Override
+    public Market getByLeague(League league) {
+
+        return marketRepository.findByLeague(league)
+                .orElseThrow(() -> new EntityNotFoundException("There is no market with that ID"));
+
+    }
+
+    @Override
+    public List<Market> getAll() {
+
+        return marketRepository.findAll();
 
     }
 

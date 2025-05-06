@@ -3,6 +3,7 @@ package ptzt.f1Hub.domain.models.market;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ptzt.f1Hub.domain.models.League;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,8 @@ public class Market {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "market", fetch = FetchType.EAGER)
-    private Set<MarketItem> marketItems = new HashSet<>();
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "league_id", unique = true)
+    private League league;
 
 }

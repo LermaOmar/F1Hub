@@ -1,4 +1,4 @@
--- Drivers
+-- ========== Auctionable Entities: Drivers ==========
 INSERT INTO auctionable_entity (price, points, previous_points, active, nationality, type) VALUES
 (50000000, 0, 0, TRUE, 'Netherlands', 'Driver'),
 (8000000, 0, 0, TRUE, 'New Zealand', 'Driver'),
@@ -43,7 +43,7 @@ INSERT INTO driver (id, name) VALUES
 (19, 'Isack Hadjar'),
 (20, 'Nico Hülkenberg');
 
--- Teams
+-- ========== Auctionable Entities: Teams ==========
 INSERT INTO auctionable_entity (price, points, previous_points, active, nationality, type) VALUES
 (50000000, 0, 0, TRUE, 'Austria', 'Team'),
 (35000000, 0, 0, TRUE, 'Germany', 'Team'),
@@ -68,38 +68,76 @@ INSERT INTO team (id, name) VALUES
 (29, 'Stake F1 Team Kick Sauber'),
 (30, 'Haas F1 Team');
 
--- Market
-INSERT INTO market (id) VALUES (1);
+-- ========== League ==========
+INSERT INTO league (name) VALUES
+('F1 League');
 
--- MarketItems
-INSERT INTO market_item (auctionable_entity_id, available, market_id) VALUES
-(1, FALSE, null),
-(2, FALSE, null),
-(3, FALSE, null),
-(4, FALSE, null),
-(5, FALSE, null),
-(6, FALSE, null),
-(7, FALSE, null),
-(8, FALSE, null),
-(9, FALSE, null),
-(10, FALSE, null),
-(11, FALSE, null),
-(12, FALSE, null),
-(13, FALSE, null),
-(14, FALSE, null),
-(15, FALSE, null),
-(16, FALSE, null),
-(17, FALSE, null),
-(18, FALSE, null),
-(19, FALSE, null),
-(20, FALSE, null),
-(21, FALSE, null),
-(22, FALSE, null),
-(23, FALSE, null),
-(24, FALSE, null),
-(25, FALSE, null),
-(26, FALSE, null),
-(27, FALSE, null),
-(28, FALSE, null),
-(29, FALSE, null),
-(30, FALSE, null);
+-- ========== Market ==========
+INSERT INTO market (league_id) VALUES
+(1);
+
+-- ========== Market Items ==========
+INSERT INTO market_item (auctionable_entity_id, available) VALUES
+(1, FALSE),
+(2, FALSE),
+(3, FALSE),
+(4, FALSE),
+(5, FALSE),
+(6, FALSE),
+(7, FALSE),
+(8, FALSE),
+(9, FALSE),
+(10, FALSE),
+(11, FALSE),
+(12, FALSE),
+(13, FALSE),
+(14, FALSE),
+(15, FALSE),
+(16, FALSE),
+(17, FALSE),
+(18, FALSE),
+(19, FALSE),
+(20, FALSE),
+(21, FALSE),
+(22, FALSE),
+(23, FALSE),
+(24, FALSE),
+(25, FALSE),
+(26, FALSE),
+(27, FALSE),
+(28, FALSE),
+(29, FALSE),
+(30, FALSE);
+
+-- ========== MarketItem-Markets (Many-to-Many Relation) ==========
+INSERT INTO market_item_markets (market_item_id, markets_id) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1),
+(10, 1),
+(11, 1),
+(12, 1),
+(13, 1),
+(14, 1),
+(15, 1),
+(16, 1),
+(17, 1),
+(18, 1),
+(19, 1),
+(20, 1),
+(21, 1),
+(22, 1),
+(23, 1),
+(24, 1),
+(25, 1),
+(26, 1),
+(27, 1),
+(28, 1),
+(29, 1),
+(30, 1);

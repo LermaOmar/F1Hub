@@ -3,10 +3,10 @@ package ptzt.f1Hub.domain.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ptzt.f1Hub.domain.models.market.Market;
 import ptzt.f1Hub.domain.models.market.Offer;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -29,5 +29,8 @@ public class League {
 
     @OneToMany(mappedBy = "league", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Budget> budgets = new HashSet<>();
+
+    @OneToOne(mappedBy = "league", cascade = CascadeType.REMOVE)
+    private Market market;
 
 }
