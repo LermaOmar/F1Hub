@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ptzt.f1Hub.application.services.auctionableEntity.AuctionableEntityService;
 import ptzt.f1Hub.application.services.team.TeamService;
 import ptzt.f1Hub.domain.mappers.TeamMapper;
 import ptzt.f1Hub.domain.models.Team;
@@ -22,6 +23,7 @@ public class TeamController {
 
     private final TeamService teamService;
     private final TeamMapper teamMapper;
+    private final AuctionableEntityService auctionableEntityService;
 
     @GetMapping
     public ResponseEntity<PageOutDto<TeamOutLimitedDto>> getAll(@PageableDefault Pageable pageable){
@@ -65,6 +67,17 @@ public class TeamController {
                 teamMapper.toOutDto(
                         teamService.update(team)
                 )
+        );
+
+    }
+
+    @PutMapping("/points/{id}")
+    public ResponseEntity<DefaultResponseDto> setPoints(@PathVariable Long id, @RequestParam(name = "points") Long points){
+
+        auctionableEntityService.updatePoints(id,points);
+
+        return ResponseEntity.ok(
+                new DefaultResponseDto(200, "Teams's points have been updated")
         );
 
     }

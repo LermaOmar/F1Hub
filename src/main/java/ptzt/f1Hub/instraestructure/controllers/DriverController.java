@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ptzt.f1Hub.application.services.auctionableEntity.AuctionableEntityService;
 import ptzt.f1Hub.application.services.driver.DriverService;
 import ptzt.f1Hub.domain.mappers.DriverMapper;
 import ptzt.f1Hub.domain.models.Driver;
@@ -22,6 +23,7 @@ public class DriverController {
 
     private final DriverService driverService;
     private final DriverMapper driverMapper;
+    private final AuctionableEntityService auctionableEntityService;
 
     @GetMapping
     public ResponseEntity<PageOutDto<DriverOutLimitedDto>> getAll(@PageableDefault Pageable pageable){
@@ -80,6 +82,17 @@ public class DriverController {
 
     }
 
+    @PutMapping("/points/{id}")
+    public ResponseEntity<DefaultResponseDto> setPoints(@PathVariable Long id, @RequestParam(name = "points") Long points){
+
+        auctionableEntityService.updatePoints(id,points);
+
+        return ResponseEntity.ok(
+                new DefaultResponseDto(200, "Driver's points have been updated")
+        );
+
+    }
+
     @PutMapping("/activate/{id}")
     public ResponseEntity<DefaultResponseDto> activate(@PathVariable Long id){
 
@@ -90,4 +103,5 @@ public class DriverController {
         );
 
     }
+
 }
