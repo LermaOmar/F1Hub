@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.Setter;
 import ptzt.f1Hub.domain.enums.Roles;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -27,7 +31,7 @@ public class Account {
     boolean active;
 
     @Enumerated
-    Roles rol;
+    Set<Roles> roles = new HashSet<>(List.of(Roles.PLAYER));
 
     @OneToOne(mappedBy = "account")
     private AppUser appUser;

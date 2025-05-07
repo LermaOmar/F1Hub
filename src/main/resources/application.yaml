@@ -15,3 +15,8 @@ spring:
 
   application:
     name: F1Hub
+    
+security:
+  jwt:
+    key: ${KEY}
+    expiration-time: ${EXPIRATION_TIME}

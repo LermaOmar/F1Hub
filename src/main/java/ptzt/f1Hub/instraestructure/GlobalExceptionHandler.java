@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
-import ptzt.f1Hub.domain.exceptions.UnproccesableEntityException;
+import ptzt.f1Hub.domain.exceptions.*;
 import ptzt.f1Hub.instraestructure.dto.out.shared.ErrorResponseDto;
 
 import java.time.LocalDateTime;
@@ -39,6 +38,27 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                         new ErrorResponseDto(422, LocalDateTime.now(), e.getMessage())
                 );
 
+    }
+
+    @ExceptionHandler({InvalidTokenException.class, AuthenticationException.class, AccountNotActiveException.class})
+    public ResponseEntity<ErrorResponseDto> handleUnauthorizedErrors (Exception ex){
+        return ResponseEntity.
+                status(HttpStatusCode.
+                        valueOf(401)).
+                body((new ErrorResponseDto(401, LocalDateTime.now(), ex.getMessage())));
+    }
+
+    @ExceptionHandler(UserUnauthorizedException.class)
+    public ResponseEntity<ErrorResponseDto> handleUserUnauthorizedException (UserUnauthorizedException ex){
+
+        //Se controla que se lance la excepción por falta de permisos, en caso positivo se asigna como codigo de status
+        //de la respuesta 403 - Forbidden, en caso contrario 401 - Unauthorized
+        int status = ex.getMessage().toLowerCase().contains("authority") ? 403 : 401;
+
+        return ResponseEntity.
+                status(HttpStatusCode.
+                        valueOf(status)).
+                body((new ErrorResponseDto(status, LocalDateTime.now(), ex.getMessage())));
     }
 
     @Override
