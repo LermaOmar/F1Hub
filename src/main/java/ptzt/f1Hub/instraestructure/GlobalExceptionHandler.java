@@ -15,6 +15,9 @@ import ptzt.f1Hub.instraestructure.dto.out.shared.ErrorResponseDto;
 
 import java.time.LocalDateTime;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+
+
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -40,10 +43,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-
-        return ResponseEntity.status(400).body(
-                new ErrorResponseDto(400, LocalDateTime.now(),ex.getMessage())
-        );
-
+        return ResponseEntity.
+                status(HttpStatusCode.
+                        valueOf(400)).
+                body((new ErrorResponseDto(400, LocalDateTime.now(),String.format("Formato de la petición no valida: %s",
+                        ex.getAllErrors()
+                                .stream()
+                                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                                .toList()))));
     }
 }
