@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.offer.OfferService;
-import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
+import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.models.*;
 import ptzt.f1Hub.domain.models.market.Market;
 import ptzt.f1Hub.domain.models.market.MarketItem;

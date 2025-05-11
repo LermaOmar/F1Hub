@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ptzt.f1Hub.application.services.market.MarketService;
-import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
+import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.models.market.Market;
 import ptzt.f1Hub.domain.models.market.MarketItem;
 import ptzt.f1Hub.instraestructure.repository.MarketItemRepository;

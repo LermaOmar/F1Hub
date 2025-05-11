@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 import ptzt.f1Hub.config.security.AppUserDetailService;
 import ptzt.f1Hub.config.security.JwtService;
-import ptzt.f1Hub.domain.exceptions.AccountNotActiveException;
-import ptzt.f1Hub.domain.exceptions.AuthenticationException;
-import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
-import ptzt.f1Hub.domain.exceptions.UnproccesableEntityException;
+import ptzt.f1Hub.exceptions.AccountNotActiveException;
+import ptzt.f1Hub.exceptions.AuthenticationException;
+import ptzt.f1Hub.exceptions.EntityNotFoundException;
+import ptzt.f1Hub.exceptions.UnproccesableEntityException;
 import ptzt.f1Hub.domain.models.Account;
 import ptzt.f1Hub.instraestructure.dto.in.account.AccountLoginDto;
 import ptzt.f1Hub.instraestructure.repository.AccountRepository;

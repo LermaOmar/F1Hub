@@ -1,4 +1,4 @@
-package ptzt.f1Hub.domain.exceptions;
+package ptzt.f1Hub.exceptions;
 
 public class AccountNotActiveException extends RuntimeException {
     public AccountNotActiveException(String message) {

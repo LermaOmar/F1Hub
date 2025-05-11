@@ -24,7 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import ptzt.f1Hub.config.security.JwtAuthFilter;
-import ptzt.f1Hub.domain.exceptions.UserUnauthorizedException;
+import ptzt.f1Hub.exceptions.UserUnauthorizedException;
 
 
 @Configuration

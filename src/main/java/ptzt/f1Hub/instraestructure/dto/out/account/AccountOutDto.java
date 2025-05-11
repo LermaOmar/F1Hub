@@ -2,6 +2,8 @@ package ptzt.f1Hub.instraestructure.dto.out.account;
 
 import ptzt.f1Hub.domain.enums.Roles;
 
+import java.util.List;
+
 public record AccountOutDto(
 
         Long id,
@@ -14,5 +16,5 @@ public record AccountOutDto(
 
         boolean active,
 
-        Roles rol) {
+        List<Roles> roles) {
 }

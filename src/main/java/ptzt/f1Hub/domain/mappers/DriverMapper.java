@@ -11,6 +11,8 @@ import ptzt.f1Hub.instraestructure.dto.out.driver.DriverOutLimitedDto;
 @Mapper(componentModel = "spring")
 public interface DriverMapper {
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "marketItems", ignore = true)
     @Mapping(target = "points", ignore = true)
     @Mapping(target = "previousPoints", ignore = true)
     @Mapping(target = "active", ignore = true)
@@ -18,6 +20,7 @@ public interface DriverMapper {
     Driver toEntity(DriverInDto driverInDto);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "marketItems", ignore = true)
     @Mapping(target = "points", ignore = true)
     @Mapping(target = "previousPoints", ignore = true)
     @Mapping(target = "active", ignore = true)

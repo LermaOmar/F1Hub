@@ -7,15 +7,13 @@ import org.springframework.stereotype.Service;
 import ptzt.f1Hub.application.services.budget.BudgetService;
 import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.lineUp.LineUpService;
-import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
-import ptzt.f1Hub.domain.exceptions.UnproccesableEntityException;
+import ptzt.f1Hub.exceptions.EntityNotFoundException;
+import ptzt.f1Hub.exceptions.UnproccesableEntityException;
 import ptzt.f1Hub.domain.models.AppUser;
 import ptzt.f1Hub.domain.models.Budget;
 import ptzt.f1Hub.domain.models.League;
 import ptzt.f1Hub.domain.models.LineUp;
 import ptzt.f1Hub.instraestructure.repository.AppUserRepository;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

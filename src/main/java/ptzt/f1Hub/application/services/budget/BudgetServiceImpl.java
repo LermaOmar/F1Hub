@@ -3,7 +3,7 @@ package ptzt.f1Hub.application.services.budget;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ptzt.f1Hub.domain.exceptions.EntityNotFoundException;
+import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.models.AppUser;
 import ptzt.f1Hub.domain.models.Budget;
 import ptzt.f1Hub.domain.models.League;

@@ -18,6 +18,10 @@ public interface AccountMapper {
     @Mapping(target = "appUser", ignore = true)
     Account toEntity(AccountInDto accountInDto);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "active", ignore = true)
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "appUser", ignore = true)
     void toUpdate(AccountInDto accountInDto, @MappingTarget Account account);
 
     AccountOutDto toDto(Account account);

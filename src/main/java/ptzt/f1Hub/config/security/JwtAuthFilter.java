@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import ptzt.f1Hub.domain.exceptions.InvalidTokenException;
+import ptzt.f1Hub.exceptions.InvalidTokenException;
 
 import java.io.IOException;
 import java.util.Collections;

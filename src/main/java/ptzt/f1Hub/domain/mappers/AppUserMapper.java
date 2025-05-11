@@ -12,8 +12,6 @@ import ptzt.f1Hub.instraestructure.dto.out.appUser.AppUserOutLimitedDto;
 public interface AppUserMapper {
 
 
-    AppUser toEntity(AppUserIdInDto appUserIdInDto);
-
     AppUserOutDto toDto(AppUser appUser);
 
     AppUserOutLimitedDto toLimitedDto(AppUser appUser);

@@ -16,13 +16,13 @@ public interface LeagueMapper {
     @Mapping(target = "lineUps", ignore = true)
     @Mapping(target = "offers", ignore = true)
     @Mapping(target = "budgets", ignore = true)
+    @Mapping(target = "market", ignore = true)
     League toEntity(LeagueInDto leagueInDto);
-
-    League toEntity(LeagueInIdDto leagueInIdDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "lineUps", ignore = true)
     @Mapping(target = "offers", ignore = true)
+    @Mapping(target = "market", ignore = true)
     @Mapping(target = "budgets", ignore = true)
     League toUpdate(LeagueInDto leagueInDto, @MappingTarget League league);
 
