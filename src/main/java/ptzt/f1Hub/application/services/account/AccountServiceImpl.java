@@ -93,6 +93,13 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
+    public Account getByEmail(String email) {
+
+        return accountRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("There is no account with that email"));
+    }
+
+    @Override
     public Page<Account> getAll(Pageable pageable) {
 
         return accountRepository.findAll(pageable);

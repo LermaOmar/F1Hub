@@ -7,12 +7,9 @@ import org.springframework.stereotype.Service;
 import ptzt.f1Hub.application.services.budget.BudgetService;
 import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.lineUp.LineUpService;
+import ptzt.f1Hub.domain.models.*;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.exceptions.UnproccesableEntityException;
-import ptzt.f1Hub.domain.models.AppUser;
-import ptzt.f1Hub.domain.models.Budget;
-import ptzt.f1Hub.domain.models.League;
-import ptzt.f1Hub.domain.models.LineUp;
 import ptzt.f1Hub.instraestructure.repository.AppUserRepository;
 
 @Service
@@ -50,6 +47,14 @@ public class AppUserServiceImpl implements AppUserService {
 
         return appUserRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("There is no user with that id"));
+
+    }
+
+    @Override
+    public AppUser getByAccount(Account account) {
+
+        return appUserRepository.findByAccount(account)
+                .orElseThrow(() -> new EntityNotFoundException("There is no user with that account"));
 
     }
 

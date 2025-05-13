@@ -3,6 +3,7 @@ package ptzt.f1Hub.application.services.appUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import ptzt.f1Hub.domain.models.Account;
 import ptzt.f1Hub.domain.models.AppUser;
 import ptzt.f1Hub.domain.models.League;
 
@@ -16,6 +17,8 @@ public interface AppUserService {
     void delete(AppUser appUser);
 
     AppUser getById(Long id);
+
+    AppUser getByAccount(Account account);
 
     Page<AppUser> getAll(Pageable pageable);
 

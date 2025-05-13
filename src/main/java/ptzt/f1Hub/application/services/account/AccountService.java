@@ -18,5 +18,7 @@ public interface AccountService {
 
     Account getById(Long id);
 
+    Account getByEmail(String email);
+
     Page<Account> getAll(Pageable pageable);
 }
