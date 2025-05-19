@@ -28,10 +28,12 @@ public class Account {
     @Column(unique = true)
     private String username;
 
-    boolean active;
+    boolean active = true;
 
-    @Enumerated
-    Set<Roles> roles = new HashSet<>(List.of(Roles.PLAYER));
+    @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "account_roles", joinColumns = @JoinColumn(name = "account_id"))
+    @Enumerated(EnumType.STRING)
+    Set<Roles> roles = Set.of(Roles.PLAYER);
 
     @OneToOne(mappedBy = "account")
     private AppUser appUser;
