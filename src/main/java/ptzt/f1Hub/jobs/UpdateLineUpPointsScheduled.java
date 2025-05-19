@@ -3,9 +3,7 @@ package ptzt.f1Hub.jobs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ptzt.f1Hub.application.services.driver.DriverService;
 import ptzt.f1Hub.application.services.lineUp.LineUpService;
-import ptzt.f1Hub.application.services.team.TeamService;
 
 
 @Component
@@ -24,9 +22,9 @@ public class UpdateLineUpPointsScheduled {
 
             if (lineUp.getTeam() != null || lineUp.getDrivers().size() == 2){
 
-                lineUp.setTotalPoints(lineUp.getTotalPoints() + lineUp.getTeam().getPoints());
+                lineUp.setTotalPoints(lineUp.getTotalPoints() + (lineUp.getTeam().getPoints() - lineUp.getTeam().getPreviousPoints()));
 
-                lineUp.getDrivers().forEach(driver -> lineUp.setTotalPoints(lineUp.getTotalPoints() + driver.getPoints()));
+                lineUp.getDrivers().forEach(driver -> lineUp.setTotalPoints(lineUp.getTotalPoints() + (driver.getPoints() - driver.getPreviousPoints())));
             }
 
         });
