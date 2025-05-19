@@ -18,4 +18,7 @@ public class TeamInDto {
     @NotBlank(message = "Specify the nationality of the team")
     private String nationality;
 
+    @NotNull(message = "Specify if the team is active")
+    private Boolean active;
+
 }

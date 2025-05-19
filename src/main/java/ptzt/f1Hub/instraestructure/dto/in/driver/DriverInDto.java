@@ -18,4 +18,6 @@ public class DriverInDto {
     @NotBlank(message = "Specify the nationality of the driver")
     private String nationality;
 
+    @NotNull(message = "Specify if the team is active")
+    private Boolean active;
 }

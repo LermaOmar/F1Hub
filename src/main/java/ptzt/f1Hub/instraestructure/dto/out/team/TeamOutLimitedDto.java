@@ -6,9 +6,13 @@ public record TeamOutLimitedDto(
 
         String name,
 
+        String nationality,
+
         Long price,
 
-        Boolean active
+        Boolean active,
+
+        String type
 
 ) {
 }
