@@ -15,7 +15,6 @@ public interface DriverMapper {
     @Mapping(target = "marketItems", ignore = true)
     @Mapping(target = "points", ignore = true)
     @Mapping(target = "previousPoints", ignore = true)
-    @Mapping(target = "active", ignore = true)
     @Mapping(target = "lineUps", ignore = true)
     Driver toEntity(DriverInDto driverInDto);
 
@@ -23,11 +22,11 @@ public interface DriverMapper {
     @Mapping(target = "marketItems", ignore = true)
     @Mapping(target = "points", ignore = true)
     @Mapping(target = "previousPoints", ignore = true)
-    @Mapping(target = "active", ignore = true)
     @Mapping(target = "lineUps", ignore = true)
     void toUpdate(DriverInDto driverInDto, @MappingTarget Driver driver);
 
     DriverOutDto toOutDto(Driver driver);
 
+    @Mapping(target = "type", expression = "java(\"Driver\")")
     DriverOutLimitedDto toOutLimitedDto(Driver driver);
 }

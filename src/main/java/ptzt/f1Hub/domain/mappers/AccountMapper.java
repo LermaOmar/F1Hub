@@ -6,6 +6,7 @@ import org.mapstruct.MappingTarget;
 import ptzt.f1Hub.domain.enums.Roles;
 import ptzt.f1Hub.domain.models.Account;
 import ptzt.f1Hub.instraestructure.dto.in.account.AccountInDto;
+import ptzt.f1Hub.instraestructure.dto.in.account.AccountInFullDto;
 import ptzt.f1Hub.instraestructure.dto.out.account.AccountLimitedOutDto;
 import ptzt.f1Hub.instraestructure.dto.out.account.AccountOutDto;
 
@@ -13,16 +14,19 @@ import ptzt.f1Hub.instraestructure.dto.out.account.AccountOutDto;
 public interface AccountMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "active", ignore = true)
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "appUser", ignore = true)
     Account toEntity(AccountInDto accountInDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "active", ignore = true)
-    @Mapping(target = "roles", ignore = true)
     @Mapping(target = "appUser", ignore = true)
-    void toUpdate(AccountInDto accountInDto, @MappingTarget Account account);
+    Account toEntity(AccountInFullDto accountInDto);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "appUser", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    void toUpdate(AccountInFullDto accountInDto, @MappingTarget Account account);
 
     AccountOutDto toDto(Account account);
 

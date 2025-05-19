@@ -14,7 +14,6 @@ public interface TeamMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "points", ignore = true)
     @Mapping(target = "previousPoints", ignore = true)
-    @Mapping(target = "active", ignore = true)
     @Mapping(target = "lineUp", ignore = true)
     @Mapping(target = "marketItems", ignore = true)
     Team toEntity(TeamInDto teamInDto);
@@ -22,12 +21,12 @@ public interface TeamMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "points", ignore = true)
     @Mapping(target = "previousPoints", ignore = true)
-    @Mapping(target = "active", ignore = true)
     @Mapping(target = "lineUp", ignore = true)
     @Mapping(target = "marketItems", ignore = true)
     void toUpdate(TeamInDto teamInDto, @MappingTarget Team team);
 
     TeamOutDto toOutDto(Team team);
 
+    @Mapping(target = "type", expression = "java(\"Team\")")
     TeamOutLimitedDto toOutLimitedDto(Team team);
 }
