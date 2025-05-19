@@ -2,6 +2,8 @@ package ptzt.f1Hub.application.services.market.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ptzt.f1Hub.application.services.market.MarketService;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
@@ -75,6 +77,13 @@ public class MarketItemServiceImpl implements MarketItemService{
     public List<MarketItem> getAll() {
 
         return marketItemRepository.findAll();
+
+    }
+
+    @Override
+    public Page<MarketItem> getAll(Pageable pageable) {
+
+        return marketItemRepository.findAll(pageable);
 
     }
 }

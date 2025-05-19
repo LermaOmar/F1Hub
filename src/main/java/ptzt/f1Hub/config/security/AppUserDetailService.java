@@ -26,28 +26,10 @@ public class AppUserDetailService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(email));
 
         return User.builder()
-                .username(person.getUsername())
+                .username(person.getEmail())
                 .password(person.getPassword())
                 .roles(getRoles(person.getRoles()))
                 .build();
-    }
-
-    public UserDetails loadUserByJwtUsername(String username) throws UsernameNotFoundException {
-        try{
-
-            Account person = accountRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException(username));
-
-            return User.builder()
-                    .username(person.getUsername())
-                    .password(person.getPassword())
-                    .roles(getRoles(person.getRoles()))
-                    .build();
-
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private String[] getRoles(Set<Roles> roles) {

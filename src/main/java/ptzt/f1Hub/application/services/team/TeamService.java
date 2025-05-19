@@ -16,7 +16,11 @@ public interface TeamService {
 
     Page<Team> getAll(Pageable pageable);
 
+    Page<Team> getAllActive(Pageable pageable);
+
     List<Team> getAll();
+
+    List<Team> getAllNotAssigned(Long league);
 
     void deactivate(Long id);
 

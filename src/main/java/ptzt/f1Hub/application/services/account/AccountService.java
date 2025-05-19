@@ -21,4 +21,6 @@ public interface AccountService {
     Account getByEmail(String email);
 
     Page<Account> getAll(Pageable pageable);
+
+    Page<Account> getAllActive(Pageable pageable);
 }

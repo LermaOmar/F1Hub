@@ -76,9 +76,23 @@ public class TeamServiceImpl implements TeamService{
     }
 
     @Override
+    public Page<Team> getAllActive(Pageable pageable) {
+
+        return teamRepository.findAllByActiveTrue(pageable);
+
+    }
+
+    @Override
     public List<Team> getAll() {
 
         return teamRepository.findAll();
+
+    }
+
+    @Override
+    public List<Team> getAllNotAssigned(Long league) {
+
+        return teamRepository.findAllByNotAssignedToLineUpInLeague(league);
 
     }
 

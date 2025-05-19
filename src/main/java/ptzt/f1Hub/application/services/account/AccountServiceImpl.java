@@ -1,6 +1,7 @@
 package ptzt.f1Hub.application.services.account;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.NonUniqueResultException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,11 +37,16 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public Account create(Account account) {
 
-        if (accountRepository.findByUsernameOrEmail(account.getUsername(),account.getEmail()).isPresent())
-            throw new UnproccesableEntityException("Email or Username already assigned to other account");;
+        try {
+            if (accountRepository.findByUsernameOrEmail(account.getUsername(),account.getEmail()).isPresent())
+                throw new UnproccesableEntityException("Email or Username already assigned to other account");;
 
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
-        return accountRepository.save(account);
+            account.setPassword(passwordEncoder.encode(account.getPassword()));
+            return accountRepository.save(account);
+
+        } catch (NonUniqueResultException e) {
+            throw new UnproccesableEntityException("Email or Username already assigned to other account");
+        }
 
     }
 
@@ -70,11 +76,18 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public Account update(Account account) {
 
-        Optional<Account> opAccount = accountRepository.findByUsernameOrEmail(account.getUsername(),account.getEmail());
-        if (opAccount.isPresent() && !opAccount.get().getId().equals(account.getId()))
-            throw new UnproccesableEntityException("Email or Username already assigned to other account");
+        try{
 
-        return accountRepository.save(account);
+            Optional<Account> opAccount = accountRepository.findByUsernameOrEmail(account.getUsername(),account.getEmail());
+
+            if (opAccount.isPresent() && !opAccount.get().getId().equals(account.getId()))
+                throw new UnproccesableEntityException("Email or Username already assigned to other account");
+
+            return accountRepository.save(account);
+
+        } catch (NonUniqueResultException e) {
+            throw new UnproccesableEntityException("Email or Username already assigned to other account");
+        }
 
     }
 
@@ -103,6 +116,13 @@ public class AccountServiceImpl implements AccountService{
     public Page<Account> getAll(Pageable pageable) {
 
         return accountRepository.findAll(pageable);
+
+    }
+
+    @Override
+    public Page<Account> getAllActive(Pageable pageable) {
+
+        return accountRepository.findAllByActiveTrue(pageable);
 
     }
 }

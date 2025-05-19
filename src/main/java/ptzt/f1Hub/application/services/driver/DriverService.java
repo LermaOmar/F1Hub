@@ -16,7 +16,11 @@ public interface DriverService {
 
     Page<Driver> getAll(Pageable pageable);
 
+    Page<Driver> getAllActive(Pageable pageable);
+
     List<Driver> getAll();
+
+    List<Driver> getAllNotAssigned(Long league);
 
     void deactivate(Long id);
 

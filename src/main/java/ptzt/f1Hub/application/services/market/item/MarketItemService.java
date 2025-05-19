@@ -1,5 +1,7 @@
 package ptzt.f1Hub.application.services.market.item;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import ptzt.f1Hub.domain.models.market.Market;
 import ptzt.f1Hub.domain.models.market.MarketItem;
 
@@ -20,5 +22,8 @@ public interface MarketItemService {
     List<MarketItem> getAllByMarkets(List<Market> markets);
 
     List<MarketItem> getAll();
+
+    Page<MarketItem> getAll(Pageable pageable);
+
 
 }

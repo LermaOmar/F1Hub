@@ -1,6 +1,8 @@
 package ptzt.f1Hub.application.services.offer;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.application.services.appUser.AppUserService;
@@ -30,6 +32,13 @@ public class OfferServiceImpl implements OfferService{
     public List<Offer> getAll() {
 
         return offerRepository.findAll();
+
+    }
+
+    @Override
+    public Page<Offer> getAllByUser(Pageable pageable, AppUser appUser) {
+
+        return offerRepository.findAllByAppUser(pageable, appUser);
 
     }
 

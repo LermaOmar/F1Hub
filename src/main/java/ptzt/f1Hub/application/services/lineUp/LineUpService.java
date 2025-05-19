@@ -16,11 +16,15 @@ public interface LineUpService {
 
     LineUp getById(Long id);
 
-    Page<LineUp> getAll(Pageable pageable);
+    Page<LineUp> getAllByUser(Pageable pageable, AppUser appUser);
+
+    Page<LineUp> getAllByLeague(Pageable pageable, League league);
 
     List<LineUp> getAllByDriver(List<Driver> drivers);
 
     List<LineUp> getAllByTeam(Team team);
+
+    List<LineUp> getAll();
 
     LineUp getByAppUserAndLeague(AppUser appUser, League league);
 

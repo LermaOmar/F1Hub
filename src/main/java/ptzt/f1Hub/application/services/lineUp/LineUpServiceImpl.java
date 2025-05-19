@@ -80,9 +80,16 @@ public class LineUpServiceImpl implements LineUpService {
     }
 
     @Override
-    public Page<LineUp> getAll(Pageable pageable) {
+    public Page<LineUp> getAllByUser(Pageable pageable, AppUser appUser) {
 
-        return lineUpRepository.findAll(pageable);
+        return lineUpRepository.findAllByAppUser(appUser, pageable);
+
+    }
+
+    @Override
+    public Page<LineUp> getAllByLeague(Pageable pageable, League league) {
+
+        return lineUpRepository.findAllByLeague(league, pageable);
 
     }
 
@@ -97,6 +104,13 @@ public class LineUpServiceImpl implements LineUpService {
     public List<LineUp> getAllByTeam(Team team) {
 
         return lineUpRepository.findAllByTeam(team);
+
+    }
+
+    @Override
+    public List<LineUp> getAll() {
+
+        return lineUpRepository.findAll();
 
     }
 

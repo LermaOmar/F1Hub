@@ -14,7 +14,7 @@ public interface AppUserService {
 
     AppUser update(AppUser appUser);
 
-    void delete(AppUser appUser);
+    void delete(Long id);
 
     AppUser getById(Long id);
 

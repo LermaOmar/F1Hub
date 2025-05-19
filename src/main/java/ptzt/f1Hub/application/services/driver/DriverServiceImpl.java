@@ -62,9 +62,23 @@ public class DriverServiceImpl implements DriverService{
     }
 
     @Override
+    public Page<Driver> getAllActive(Pageable pageable) {
+
+        return driverRepository.findAllByActiveTrue(pageable);
+
+    }
+
+    @Override
     public List<Driver> getAll() {
 
         return driverRepository.findAll();
+
+    }
+
+    @Override
+    public List<Driver> getAllNotAssigned(Long league) {
+
+        return driverRepository.findAllByNotAssignedToLeague(league);
 
     }
 
