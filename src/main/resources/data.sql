@@ -141,3 +141,22 @@ INSERT INTO market_item_markets (market_item_id, markets_id) VALUES
 (28, 1),
 (29, 1),
 (30, 1);
+
+
+-- Insertar cuenta de administrador
+INSERT INTO ACCOUNT (USERNAME, EMAIL, PASSWORD, ACTIVE)
+VALUES (
+    'admin',
+    'admin@gmail.com',
+    '$2a$10$1dff.3.2WuMaPuvDI0LQMe.huZHOdPPYqTveTLLu1Jh7Rz80iELDC',
+    TRUE
+);
+
+-- Insertar roles en la tabla intermedia
+INSERT INTO ACCOUNT_ROLES (ACCOUNT_ID, ROLES) VALUES (1, 'ADMIN');
+INSERT INTO ACCOUNT_ROLES (ACCOUNT_ID, ROLES) VALUES (1, 'PLAYER');
+INSERT INTO ACCOUNT_ROLES (ACCOUNT_ID, ROLES) VALUES (1, 'REVIEWER');
+
+INSERT INTO APP_USER (ACCOUNT_ID)
+VALUES (1);
+
