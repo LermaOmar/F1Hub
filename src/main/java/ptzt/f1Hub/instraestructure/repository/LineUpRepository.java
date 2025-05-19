@@ -1,5 +1,7 @@
 package ptzt.f1Hub.instraestructure.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ptzt.f1Hub.domain.models.*;
 
@@ -14,5 +16,8 @@ public interface LineUpRepository extends JpaRepository<LineUp, Long> {
 
     Optional<LineUp> findByAppUserAndLeague(AppUser appUser, League league);
 
+    Page<LineUp> findAllByLeague(League league, Pageable pageable);
+
+    Page<LineUp> findAllByAppUser(AppUser appUser, Pageable pageable);
 
 }

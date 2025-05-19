@@ -1,5 +1,7 @@
 package ptzt.f1Hub.instraestructure.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ptzt.f1Hub.domain.models.AppUser;
@@ -13,4 +15,6 @@ import java.util.Optional;
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     Optional<Offer> findByAppUserAndLeagueAndMarketItem(AppUser appUser, League league, MarketItem marketItem);
+
+    Page<Offer> findAllByAppUser(Pageable pageable, AppUser appUser);
 }
