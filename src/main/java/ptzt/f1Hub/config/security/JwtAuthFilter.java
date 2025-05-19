@@ -50,7 +50,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (request.getRequestURI().contains("/auth") || request.getRequestURI().contains("/swagger") || request.getRequestURI().contains("/h2-console")) {
+        if ((request.getRequestURI().contains("/auth") && !(request.getRequestURI().contains("/auth/check")))|| request.getRequestURI().contains("/swagger") || request.getRequestURI().contains("/h2-console")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -67,7 +67,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String username = jwtService.extractUsername(token);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = appUserDetailService.loadUserByJwtUsername(username);
+                UserDetails userDetails = appUserDetailService.loadUserByUsername(username);
 
                 if (userDetails != null && jwtService.isValidToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

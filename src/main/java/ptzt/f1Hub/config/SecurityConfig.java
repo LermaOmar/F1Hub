@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -23,6 +24,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ptzt.f1Hub.config.security.JwtAuthFilter;
 import ptzt.f1Hub.exceptions.UserUnauthorizedException;
 
@@ -40,24 +43,34 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry ->
                         registry.requestMatchers("/h2-console/**").permitAll()
                                 .requestMatchers("/swagger/**").permitAll()
+                                .requestMatchers(HttpMethod.OPTIONS).permitAll()
 
                                 //AUTH
+                                .requestMatchers("/auth/check").hasAnyRole("ADMIN","REVIEWER","PLAYER")
                                 .requestMatchers("/auth/**").permitAll()
+
+                                //ACCOUNTS
+                                .requestMatchers(HttpMethod.PUT, "/accounts/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/accounts/**").hasRole("ADMIN")
 
                                 //APPUSERS
                                 .requestMatchers(HttpMethod.PUT, "/appUsers/**").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/appUsers/**").hasAnyRole("ADMIN","REVIEWER","PLAYER")
+                                .requestMatchers(HttpMethod.POST, "/appUsers/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/appUsers/**").hasRole("ADMIN")
 
                                 //DRIVERS
+                                .requestMatchers(HttpMethod.PUT, "/drivers/points/*").hasRole("REVIEWER")
                                 .requestMatchers("/drivers/**").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.PUT, "/drivers/points/*").hasRole("MANTAINER")
 
                                 //TEAMS
+                                .requestMatchers(HttpMethod.PUT, "/teams/points/*").hasRole("REVIEWER")
                                 .requestMatchers("/teams/**").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.PUT, "/teams/points/*").hasRole("MANTAINER")
 
                                 //OFFERS
                                 .requestMatchers("/offers/**").authenticated()
@@ -90,6 +103,8 @@ public class SecurityConfig {
                     handlerExceptionResolver.resolveException(request, response, null, invalidTokenException);
                 });
     }
+
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
