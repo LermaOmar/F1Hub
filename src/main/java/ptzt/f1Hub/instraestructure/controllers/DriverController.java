@@ -2,6 +2,7 @@ package ptzt.f1Hub.instraestructure.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +27,13 @@ public class DriverController {
     private final AuctionableEntityService auctionableEntityService;
 
     @GetMapping
-    public ResponseEntity<PageOutDto<DriverOutLimitedDto>> getAll(@PageableDefault Pageable pageable){
+    public ResponseEntity<PageOutDto<DriverOutLimitedDto>> getAll(@PageableDefault Pageable pageable,
+                                                                @RequestParam(required = false) boolean skipNotActive){
+
+        Page<Driver> page = skipNotActive ? driverService.getAllActive(pageable) : driverService.getAll(pageable);
 
         return ResponseEntity.ok(
-                new PageOutDto<>(driverService.getAll(pageable).map(driverMapper::toOutLimitedDto))
+                new PageOutDto<>(page.map(driverMapper::toOutLimitedDto))
         ) ;
 
     }

@@ -2,6 +2,7 @@ package ptzt.f1Hub.instraestructure.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +27,13 @@ public class TeamController {
     private final AuctionableEntityService auctionableEntityService;
 
     @GetMapping
-    public ResponseEntity<PageOutDto<TeamOutLimitedDto>> getAll(@PageableDefault Pageable pageable){
+    public ResponseEntity<PageOutDto<TeamOutLimitedDto>> getAll(@PageableDefault Pageable pageable,
+                                                                @RequestParam(required = false) boolean skipNotActive){
+
+        Page<Team> page = skipNotActive ? teamService.getAllActive(pageable) : teamService.getAll(pageable);
 
         return ResponseEntity.ok(
-                new PageOutDto<>(teamService.getAll(pageable).map(teamMapper::toOutLimitedDto))
+                new PageOutDto<>(page.map(teamMapper::toOutLimitedDto))
         ) ;
 
     }
@@ -57,7 +61,8 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TeamOutDto> update(@Valid @RequestBody TeamInDto teamInDto, @PathVariable Long id){
+    public ResponseEntity<TeamOutDto> update(@Valid @RequestBody TeamInDto teamInDto,
+                                             @PathVariable Long id){
 
         Team team = teamService.getById(id);
 

@@ -3,6 +3,7 @@ package ptzt.f1Hub.instraestructure.controllers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ptzt.f1Hub.application.services.account.AccountService;
@@ -33,7 +34,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<AppUserOutDto> login(@Valid @RequestBody AccountInDto accountInDto){
+    public ResponseEntity<AppUserOutDto> register(@Valid @RequestBody AccountInDto accountInDto){
 
         Account entity = accountMapper.toEntity(accountInDto);
 
@@ -55,6 +56,15 @@ public class AuthController {
         return ResponseEntity.ok(
                 new DefaultResponseDto(200, accountService.login(accountLoginDto ))
         );
+    }
+
+    @PostMapping("/check")
+    public ResponseEntity<DefaultResponseDto> checkToken(){
+
+        return ResponseEntity.ok(
+                new DefaultResponseDto(200,"Valid token")
+        );
+
     }
 
 }
