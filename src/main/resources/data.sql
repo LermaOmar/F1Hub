@@ -1,25 +1,26 @@
 -- ========== Auctionable Entities: Drivers ==========
-INSERT INTO auctionable_entity (price, points, previous_points, active, nationality, type) VALUES
-(50000000, 0, 0, TRUE, 'Netherlands', 'Driver'),
-(8000000, 0, 0, TRUE, 'New Zealand', 'Driver'),
-(30000000, 0, 0, TRUE, 'Monaco', 'Driver'),
-(20000000, 0, 0, TRUE, 'United Kingdom', 'Driver'),
-(40000000, 0, 0, TRUE, 'United Kingdom', 'Driver'),
-(30000000, 0, 0, TRUE, 'Australia', 'Driver'),
-(30000000, 0, 0, TRUE, 'United Kingdom', 'Driver'),
-(12000000, 0, 0, TRUE, 'Italy', 'Driver'),
-(11000000, 0, 0, TRUE, 'Spain', 'Driver'),
-(7000000, 0, 0, TRUE, 'Canada', 'Driver'),
-(9000000, 0, 0, TRUE, 'France', 'Driver'),
-(800000, 0, 0, TRUE, 'Australia', 'Driver'),
-(1500000, 0, 0, TRUE, 'France', 'Driver'),
-(1200000, 0, 0, TRUE, 'United Kingdom', 'Driver'),
-(3500000, 0, 0, TRUE, 'Brazil', 'Driver'),
-(10000000, 0, 0, TRUE, 'Thailand', 'Driver'),
-(15000000, 0, 0, TRUE, 'Spain', 'Driver'),
-(10000000, 0, 0, TRUE, 'Japan', 'Driver'),
-(750000, 0, 0, TRUE, 'France', 'Driver'),
-(1500000, 0, 0, TRUE, 'Germany', 'Driver');
+INSERT INTO auctionable_entity (price, points, previous_points, active, nationality, type, image_url) VALUES
+(50000000, 0, 0, TRUE, 'Netherlands', 'Driver', 'http://172.25.36.12:8080/images/verstappen.avif'),
+(8000000, 0, 0, TRUE, 'New Zealand', 'Driver', 'http://172.25.36.12:8080/images/lawson.avif'),
+(30000000, 0, 0, TRUE, 'Monaco', 'Driver', 'http://172.25.36.12:8080/images/leclerc.avif'),
+(20000000, 0, 0, TRUE, 'United Kingdom', 'Driver', 'http://172.25.36.12:8080/images/hamilton.avif'),
+(40000000, 0, 0, TRUE, 'United Kingdom', 'Driver', 'http://172.25.36.12:8080/images/norris.avif'),
+(30000000, 0, 0, TRUE, 'Australia', 'Driver', 'http://172.25.36.12:8080/images/piastri.avif'),
+(30000000, 0, 0, TRUE, 'United Kingdom', 'Driver', 'http://172.25.36.12:8080/images/russell.avif'),
+(12000000, 0, 0, TRUE, 'Italy', 'Driver', 'http://172.25.36.12:8080/images/antonelli.avif'),
+(11000000, 0, 0, TRUE, 'Spain', 'Driver', 'http://172.25.36.12:8080/images/alonso.avif'),
+(7000000, 0, 0, TRUE, 'Canada', 'Driver', 'http://172.25.36.12:8080/images/stroll.avif'),
+(9000000, 0, 0, TRUE, 'France', 'Driver', 'http://172.25.36.12:8080/images/gasly.avif'),
+(800000, 0, 0, TRUE, 'Australia', 'Driver', 'http://172.25.36.12:8080/images/doohan.avif'),
+(1500000, 0, 0, TRUE, 'France', 'Driver', 'http://172.25.36.12:8080/images/ocon.avif'),
+(1200000, 0, 0, TRUE, 'United Kingdom', 'Driver', 'http://172.25.36.12:8080/images/bearman.avif'),
+(3500000, 0, 0, TRUE, 'Brazil', 'Driver', 'http://172.25.36.12:8080/images/bortoleto.avif'),
+(10000000, 0, 0, TRUE, 'Thailand', 'Driver', 'http://172.25.36.12:8080/images/albon.avif'),
+(15000000, 0, 0, TRUE, 'Spain', 'Driver', 'http://172.25.36.12:8080/images/sainz.avif'),
+(10000000, 0, 0, TRUE, 'Japan', 'Driver', 'http://172.25.36.12:8080/images/tsunoda.avif'),
+(750000, 0, 0, TRUE, 'France', 'Driver', 'http://172.25.36.12:8080/images/hadjar.avif'),
+(1500000, 0, 0, TRUE, 'Germany', 'Driver', 'http://172.25.36.12:8080/images/hulkenberg.avif');
+
 
 INSERT INTO driver (id, name) VALUES
 (1, 'Max Verstappen'),
@@ -44,17 +45,17 @@ INSERT INTO driver (id, name) VALUES
 (20, 'Nico Hülkenberg');
 
 -- ========== Auctionable Entities: Teams ==========
-INSERT INTO auctionable_entity (price, points, previous_points, active, nationality, type) VALUES
-(50000000, 0, 0, TRUE, 'Austria', 'Team'),
-(35000000, 0, 0, TRUE, 'Germany', 'Team'),
-(35000000, 0, 0, TRUE, 'Italy', 'Team'),
-(60000000, 0, 0, TRUE, 'United Kingdom', 'Team'),
-(10000000, 0, 0, TRUE, 'United Kingdom', 'Team'),
-(8000000, 0, 0, TRUE, 'France', 'Team'),
-(10000000, 0, 0, TRUE, 'United Kingdom', 'Team'),
-(8500000, 0, 0, TRUE, 'Italy', 'Team'),
-(5000000, 0, 0, TRUE, 'Switzerland', 'Team'),
-(7500000, 0, 0, TRUE, 'United States', 'Team');
+INSERT INTO auctionable_entity (price, points, previous_points, active, nationality, type, image_url) VALUES
+(50000000, 0, 0, TRUE, 'Austria', 'Team', 'http://172.25.36.12:8080/images/redbull.avif'),
+(35000000, 0, 0, TRUE, 'Germany', 'Team', 'http://172.25.36.12:8080/images/mercedes.png'),
+(35000000, 0, 0, TRUE, 'Italy', 'Team', 'http://172.25.36.12:8080/images/ferrari.png'),
+(60000000, 0, 0, TRUE, 'United Kingdom', 'Team', 'http://172.25.36.12:8080/images/mclaren.png'),
+(10000000, 0, 0, TRUE, 'United Kingdom', 'Team', 'http://172.25.36.12:8080/images/aston.jpg'),
+(8000000, 0, 0, TRUE, 'France', 'Team', 'http://172.25.36.12:8080/images/alpine.png'),
+(10000000, 0, 0, TRUE, 'United Kingdom', 'Team', 'http://172.25.36.12:8080/images/williams.jpg'),
+(8500000, 0, 0, TRUE, 'Italy', 'Team', 'http://172.25.36.12:8080/images/visa.png'),
+(5000000, 0, 0, TRUE, 'Switzerland', 'Team', 'http://172.25.36.12:8080/images/kick.png'),
+(7500000, 0, 0, TRUE, 'United States', 'Team', 'http://172.25.36.12:8080/images/haas.png');
 
 INSERT INTO team (id, name) VALUES
 (21, 'Red Bull Racing'),

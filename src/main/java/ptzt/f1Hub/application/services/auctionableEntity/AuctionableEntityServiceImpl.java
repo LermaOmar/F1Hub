@@ -18,6 +18,7 @@ public class AuctionableEntityServiceImpl implements AuctionableEntityService{
 
         AuctionableEntity auctionableEntity = getById(id);
 
+        auctionableEntity.setPreviousPoints(auctionableEntity.getPoints());
         auctionableEntity.setPoints(auctionableEntity.getPoints() + points);
         auctionableEntityRepository.save(auctionableEntity);
 

@@ -30,6 +30,8 @@ public abstract class AuctionableEntity {
 
     private Boolean active = true;
 
+    private String imageUrl = "";
+
     @OneToMany(mappedBy = "auctionableEntity")
     private Set<MarketItem> marketItems = new HashSet<>();
 
