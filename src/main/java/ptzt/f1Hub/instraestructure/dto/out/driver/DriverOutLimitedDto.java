@@ -12,7 +12,9 @@ public record DriverOutLimitedDto(
 
         Boolean active,
 
-        String type
+        String type,
+
+        String imageUrl
 
 
 ) {

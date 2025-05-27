@@ -12,7 +12,11 @@ public record DriverOutDto(
 
         Long points,
 
-        Boolean active
+        Long previousPoints,
+
+        Boolean active,
+
+        String imageUrl
 
 ) {
 }

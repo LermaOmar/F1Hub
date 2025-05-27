@@ -12,7 +12,9 @@ public record TeamOutLimitedDto(
 
         Boolean active,
 
-        String type
+        String type,
+
+        String imageUrl
 
 ) {
 }

@@ -12,7 +12,11 @@ public record TeamOutDto(
 
         Long points,
 
-        Boolean active
+        Long previousPoints,
+
+        Boolean active,
+
+        String imageUrl
 
 ) {
 }
