@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import ptzt.f1Hub.domain.models.market.MarketItem;
-import ptzt.f1Hub.domain.models.market.Offer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,11 +34,5 @@ public abstract class AuctionableEntity {
     @OneToMany(mappedBy = "auctionableEntity")
     private Set<MarketItem> marketItems = new HashSet<>();
 
-    @PreUpdate
-    public void preUpdate(){
-
-        this.previousPoints = this.points;
-
-    }
 
 }
