@@ -24,8 +24,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ptzt.f1Hub.config.security.JwtAuthFilter;
 import ptzt.f1Hub.exceptions.UserUnauthorizedException;
 
@@ -49,6 +47,7 @@ public class SecurityConfig {
                         registry.requestMatchers("/h2-console/**").permitAll()
                                 .requestMatchers("/swagger/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                                .requestMatchers("/images/**", "/css/**", "/js/**").permitAll()
 
                                 //AUTH
                                 .requestMatchers("/auth/check").hasAnyRole("ADMIN","REVIEWER","PLAYER")
