@@ -14,6 +14,8 @@ public interface TeamService {
 
     Team getById(Long id);
 
+    Team getMvp();
+
     Page<Team> getAll(Pageable pageable);
 
     Page<Team> getAllActive(Pageable pageable);

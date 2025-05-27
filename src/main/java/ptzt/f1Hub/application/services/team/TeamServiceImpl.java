@@ -69,6 +69,13 @@ public class TeamServiceImpl implements TeamService{
     }
 
     @Override
+    public Team getMvp() {
+
+        return teamRepository.findFirstByOrderByPreviousPointsDesc();
+
+    }
+
+    @Override
     public Page<Team> getAll(Pageable pageable) {
 
         return teamRepository.findAll(pageable);
@@ -104,10 +111,7 @@ public class TeamServiceImpl implements TeamService{
 
         team.setActive(false);
 
-        lineUpService.getAllByTeam(team).forEach(lineUp -> {
-
-            lineUp.setTeam(null);
-        });
+        lineUpService.getAllByTeam(team).forEach(lineUp -> lineUp.setTeam(null));
 
         teamRepository.save(team);
 

@@ -23,5 +23,8 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
 
     Page<Team> findAllByActiveTrue(Pageable pageable);
 
+    Team findFirstByOrderByPreviousPointsDesc();
+
+
 
 }

@@ -49,6 +49,17 @@ public class TeamController {
 
     }
 
+    @GetMapping("/mvp")
+    public ResponseEntity<TeamOutDto> getById(@PageableDefault Pageable pageable){
+
+        return ResponseEntity.ok(
+                teamMapper.toOutDto(
+                        teamService.getMvp()
+                )
+        ) ;
+
+    }
+
     @PostMapping
     public ResponseEntity<TeamOutDto> create(@Valid @RequestBody TeamInDto teamInDto){
 
