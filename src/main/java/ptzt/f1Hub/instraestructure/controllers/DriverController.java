@@ -49,6 +49,18 @@ public class DriverController {
 
     }
 
+    @GetMapping("/mvps")
+    public ResponseEntity<PageOutDto<DriverOutLimitedDto>> getMvps(@PageableDefault Pageable pageable){
+
+        return ResponseEntity.ok(
+                new PageOutDto<>(
+                        driverService.getMvps(pageable)
+                                .map(driverMapper::toOutLimitedDto)
+                )
+        ) ;
+
+    }
+
     @PostMapping
     public ResponseEntity<DriverOutDto> create(@Valid @RequestBody DriverInDto driverInDto){
 
@@ -88,6 +100,8 @@ public class DriverController {
 
     @PutMapping("/points/{id}")
     public ResponseEntity<DefaultResponseDto> setPoints(@PathVariable Long id, @RequestParam(name = "points") Long points){
+
+
 
         auctionableEntityService.updatePoints(id,points);
 

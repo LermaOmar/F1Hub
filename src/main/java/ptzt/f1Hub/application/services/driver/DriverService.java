@@ -16,6 +16,8 @@ public interface DriverService {
 
     Page<Driver> getAll(Pageable pageable);
 
+    Page<Driver> getMvps(Pageable pageable);
+
     Page<Driver> getAllActive(Pageable pageable);
 
     List<Driver> getAll();

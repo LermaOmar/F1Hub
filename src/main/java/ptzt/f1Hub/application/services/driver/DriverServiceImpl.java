@@ -2,16 +2,19 @@ package ptzt.f1Hub.application.services.driver;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.application.services.lineUp.LineUpService;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
+import ptzt.f1Hub.domain.models.AuctionableEntity;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.models.Driver;
 import ptzt.f1Hub.domain.models.market.MarketItem;
 import ptzt.f1Hub.instraestructure.repository.DriverRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,6 +61,16 @@ public class DriverServiceImpl implements DriverService{
     public Page<Driver> getAll(Pageable pageable) {
 
         return driverRepository.findAll(pageable);
+
+    }
+
+    @Override
+    public Page<Driver> getMvps(Pageable pageable) {
+
+        return new PageImpl<>(driverRepository.findAll().stream()
+                .sorted(Comparator.comparing(AuctionableEntity::getPreviousPoints))
+                .limit(2)
+                .toList(), pageable, 2);
 
     }
 
