@@ -8,7 +8,6 @@ import lombok.Setter;
 import ptzt.f1Hub.domain.enums.Roles;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,7 +27,7 @@ public class Account {
     @Column(unique = true)
     private String username;
 
-    boolean active = true;
+    boolean active = false;
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "account_roles", joinColumns = @JoinColumn(name = "account_id"))
@@ -37,5 +36,8 @@ public class Account {
 
     @OneToOne(mappedBy = "account")
     private AppUser appUser;
+
+    @OneToMany(mappedBy = "account", orphanRemoval = true)
+    private Set<VerificationToken> verificationTokens = new HashSet<>();
 
 }

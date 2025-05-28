@@ -2,10 +2,7 @@ package ptzt.f1Hub.instraestructure.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ptzt.f1Hub.application.services.account.AccountService;
 import ptzt.f1Hub.application.services.appUser.AppUserService;
@@ -13,13 +10,10 @@ import ptzt.f1Hub.domain.mappers.AccountMapper;
 import ptzt.f1Hub.domain.mappers.AppUserMapper;
 import ptzt.f1Hub.domain.models.Account;
 import ptzt.f1Hub.domain.models.AppUser;
-import ptzt.f1Hub.instraestructure.dto.in.account.AccountInDto;
 import ptzt.f1Hub.instraestructure.dto.in.account.AccountInFullDto;
 import ptzt.f1Hub.instraestructure.dto.in.appUser.AppUserIdInDto;
 import ptzt.f1Hub.instraestructure.dto.out.appUser.AppUserOutDto;
-import ptzt.f1Hub.instraestructure.dto.out.appUser.AppUserOutLimitedDto;
 import ptzt.f1Hub.instraestructure.dto.out.shared.DefaultResponseDto;
-import ptzt.f1Hub.instraestructure.dto.out.shared.PageOutDto;
 
 @RestController
 @RequestMapping("/appUsers")
@@ -30,7 +24,6 @@ public class AppUserController {
     private final AccountMapper accountMapper;
     private final AppUserService appUserService;
     private final AccountService accountService;
-    private final PasswordEncoder passwordEncoder;
 
 
     @PostMapping

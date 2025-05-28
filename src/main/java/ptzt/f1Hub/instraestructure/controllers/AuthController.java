@@ -67,4 +67,22 @@ public class AuthController {
 
     }
 
+    @GetMapping("/verify")
+    public ResponseEntity<DefaultResponseDto> verify(@RequestParam String token) {
+
+        accountService.verify(token);
+
+        return ResponseEntity.ok(new DefaultResponseDto(
+                200, "Account verified successfully"));
+    }
+
+    @PutMapping("/resend-verification")
+    public ResponseEntity<DefaultResponseDto> resendVerification(@RequestParam String email) {
+        accountService.resendVerification(email);
+
+        return ResponseEntity.ok(new DefaultResponseDto(
+                200, "Verification resent successfully"
+        ));
+    }
+
 }

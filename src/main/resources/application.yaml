@@ -22,8 +22,19 @@ spring:
 
   application:
     name: F1Hub
+
+  mail:
+    host: smtp-relay.brevo.com
+    port: 587
+    username: efeuno.hub@gmail.com
+    password: 2SQ1jANHdpOvgTF0
+    properties:
+      mail:
+        smtp.starttls.enable: true
+        smtp.auth: true
     
 security:
   jwt:
     key: ${KEY}
     expiration-time: ${EXPIRATION_TIME}
+
