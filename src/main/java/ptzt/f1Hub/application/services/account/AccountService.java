@@ -16,6 +16,10 @@ public interface AccountService {
 
     void delete(Account account);
 
+    void verify(String token);
+
+    void resendVerification(String email);
+
     Account getById(Long id);
 
     Account getByEmail(String email);

@@ -20,8 +20,8 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponseDto> handleNotFoundException(EntityNotFoundException e){
+    @ExceptionHandler({EntityNotFoundException.class, OffersNotAvailableException.class})
+    public ResponseEntity<ErrorResponseDto> handleNotFoundErrors(Exception e){
 
         return ResponseEntity.status(404)
                 .body(
@@ -30,12 +30,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
-    @ExceptionHandler(UnproccesableEntityException.class)
-    public ResponseEntity<ErrorResponseDto> handleUnproccesableEntityException(UnproccesableEntityException e){
+    @ExceptionHandler({UnproccesableEntityException.class, BadRequestException.class})
+    public ResponseEntity<ErrorResponseDto> handleBadRequestErrors(Exception e){
 
-        return ResponseEntity.status(422)
+        return ResponseEntity.status(400)
                 .body(
-                        new ErrorResponseDto(422, LocalDateTime.now(), e.getMessage())
+                        new ErrorResponseDto(400, LocalDateTime.now(), e.getMessage())
                 );
 
     }

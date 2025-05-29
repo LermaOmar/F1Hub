@@ -29,4 +29,5 @@ public class AppUser {
     @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private Set<Budget> budgets = new HashSet<>();
 
+
 }

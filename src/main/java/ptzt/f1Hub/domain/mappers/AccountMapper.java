@@ -19,7 +19,6 @@ public interface AccountMapper {
     Account toEntity(AccountInDto accountInDto);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "active", ignore = true)
     @Mapping(target = "appUser", ignore = true)
     Account toEntity(AccountInFullDto accountInDto);
 

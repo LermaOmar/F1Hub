@@ -10,12 +10,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ptzt.f1Hub.application.services.mail.MailService;
+import ptzt.f1Hub.application.services.verificationToken.VerificationTokenService;
 import ptzt.f1Hub.config.security.AppUserDetailService;
 import ptzt.f1Hub.config.security.JwtService;
-import ptzt.f1Hub.exceptions.AccountNotActiveException;
-import ptzt.f1Hub.exceptions.AuthenticationException;
-import ptzt.f1Hub.exceptions.EntityNotFoundException;
-import ptzt.f1Hub.exceptions.UnproccesableEntityException;
+import ptzt.f1Hub.domain.models.AppUser;
+import ptzt.f1Hub.exceptions.*;
 import ptzt.f1Hub.domain.models.Account;
 import ptzt.f1Hub.instraestructure.dto.in.account.AccountLoginDto;
 import ptzt.f1Hub.instraestructure.repository.AccountRepository;
@@ -32,6 +32,8 @@ public class AccountServiceImpl implements AccountService{
     private final AppUserDetailService appUserDetailService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final VerificationTokenService verificationTokenService;
+    private final MailService mailService;
 
 
     @Override
@@ -42,7 +44,11 @@ public class AccountServiceImpl implements AccountService{
                 throw new UnproccesableEntityException("Email or Username already assigned to other account");;
 
             account.setPassword(passwordEncoder.encode(account.getPassword()));
-            return accountRepository.save(account);
+
+            Account entity = accountRepository.save(account);
+
+            mailService.sendVerificationEmail(entity, verificationTokenService.creteToken(entity).getToken());
+            return entity;
 
         } catch (NonUniqueResultException e) {
             throw new UnproccesableEntityException("Email or Username already assigned to other account");
@@ -95,6 +101,30 @@ public class AccountServiceImpl implements AccountService{
     public void delete(Account account) {
 
         accountRepository.delete(account);
+
+    }
+
+    @Override
+    public void verify(String token) {
+
+        Account account = verificationTokenService.verifyToken(token);
+        account.setActive(true);
+        update(account);
+
+    }
+
+    @Override
+    public void resendVerification(String email) {
+
+        Account account = getByEmail(email);
+
+        if (account.isActive())
+            throw new BadRequestException("Account already verified");
+
+        verificationTokenService.invalidateAllTokensForUser(account);
+
+        mailService.sendVerificationEmail(account, verificationTokenService.creteToken(account).getToken());
+
 
     }
 
