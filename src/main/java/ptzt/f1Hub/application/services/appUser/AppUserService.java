@@ -3,9 +3,8 @@ package ptzt.f1Hub.application.services.appUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import ptzt.f1Hub.domain.models.Account;
-import ptzt.f1Hub.domain.models.AppUser;
-import ptzt.f1Hub.domain.models.League;
+import ptzt.f1Hub.domain.models.original.Account;
+import ptzt.f1Hub.domain.models.original.AppUser;
 
 
 public interface AppUserService {

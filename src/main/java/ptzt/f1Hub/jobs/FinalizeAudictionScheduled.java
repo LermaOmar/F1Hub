@@ -7,9 +7,9 @@ import ptzt.f1Hub.application.services.appUser.AppUserService;
 import ptzt.f1Hub.application.services.lineUp.LineUpService;
 import ptzt.f1Hub.application.services.market.MarketService;
 import ptzt.f1Hub.application.services.budget.BudgetService;
-import ptzt.f1Hub.domain.models.*;
-import ptzt.f1Hub.domain.models.market.MarketItem;
-import ptzt.f1Hub.domain.models.market.Offer;
+import ptzt.f1Hub.domain.models.original.*;
+import ptzt.f1Hub.domain.models.original.market.MarketItem;
+import ptzt.f1Hub.domain.models.original.market.Offer;
 
 import java.util.Map;
 

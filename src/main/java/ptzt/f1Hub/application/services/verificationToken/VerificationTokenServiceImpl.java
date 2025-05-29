@@ -3,11 +3,10 @@ package ptzt.f1Hub.application.services.verificationToken;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ptzt.f1Hub.domain.models.Account;
-import ptzt.f1Hub.domain.models.AppUser;
-import ptzt.f1Hub.domain.models.VerificationToken;
+import ptzt.f1Hub.domain.models.original.Account;
+import ptzt.f1Hub.domain.models.original.VerificationToken;
 import ptzt.f1Hub.exceptions.BadRequestException;
-import ptzt.f1Hub.instraestructure.repository.VerificationTokenRepository;
+import ptzt.f1Hub.instraestructure.repository.original.VerificationTokenRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

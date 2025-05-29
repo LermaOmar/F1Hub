@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.application.services.driver.DriverService;
 import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.team.TeamService;
+import ptzt.f1Hub.domain.models.original.*;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
-import ptzt.f1Hub.domain.models.*;
-import ptzt.f1Hub.instraestructure.repository.LineUpRepository;
+import ptzt.f1Hub.instraestructure.repository.original.LineUpRepository;
 
 import java.util.List;
 import java.util.Set;

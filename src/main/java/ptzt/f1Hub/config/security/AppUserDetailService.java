@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ptzt.f1Hub.domain.enums.Roles;
-import ptzt.f1Hub.domain.models.Account;
-import ptzt.f1Hub.instraestructure.repository.AccountRepository;
+import ptzt.f1Hub.domain.models.original.Account;
+import ptzt.f1Hub.instraestructure.repository.original.AccountRepository;
 
 import java.util.List;
 import java.util.Set;

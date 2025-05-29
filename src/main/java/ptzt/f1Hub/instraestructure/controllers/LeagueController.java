@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.domain.mappers.LeagueMapper;
-import ptzt.f1Hub.domain.models.League;
+import ptzt.f1Hub.domain.models.original.League;
 import ptzt.f1Hub.instraestructure.dto.in.league.LeagueInDto;
 import ptzt.f1Hub.instraestructure.dto.out.league.LeagueOutDto;
 

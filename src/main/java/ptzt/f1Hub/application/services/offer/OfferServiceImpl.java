@@ -9,12 +9,12 @@ import ptzt.f1Hub.application.services.appUser.AppUserService;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.exceptions.UnproccesableEntityException;
-import ptzt.f1Hub.domain.models.AppUser;
-import ptzt.f1Hub.domain.models.Budget;
-import ptzt.f1Hub.domain.models.LineUp;
-import ptzt.f1Hub.domain.models.market.MarketItem;
-import ptzt.f1Hub.domain.models.market.Offer;
-import ptzt.f1Hub.instraestructure.repository.OfferRepository;
+import ptzt.f1Hub.domain.models.original.AppUser;
+import ptzt.f1Hub.domain.models.original.Budget;
+import ptzt.f1Hub.domain.models.original.LineUp;
+import ptzt.f1Hub.domain.models.original.market.MarketItem;
+import ptzt.f1Hub.domain.models.original.market.Offer;
+import ptzt.f1Hub.instraestructure.repository.original.OfferRepository;
 
 import java.util.List;
 import java.util.Optional;

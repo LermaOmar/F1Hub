@@ -14,11 +14,10 @@ import ptzt.f1Hub.application.services.mail.MailService;
 import ptzt.f1Hub.application.services.verificationToken.VerificationTokenService;
 import ptzt.f1Hub.config.security.AppUserDetailService;
 import ptzt.f1Hub.config.security.JwtService;
-import ptzt.f1Hub.domain.models.AppUser;
 import ptzt.f1Hub.exceptions.*;
-import ptzt.f1Hub.domain.models.Account;
+import ptzt.f1Hub.domain.models.original.Account;
 import ptzt.f1Hub.instraestructure.dto.in.account.AccountLoginDto;
-import ptzt.f1Hub.instraestructure.repository.AccountRepository;
+import ptzt.f1Hub.instraestructure.repository.original.AccountRepository;
 
 import java.util.Optional;
 

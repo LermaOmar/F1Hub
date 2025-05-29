@@ -3,22 +3,18 @@ package ptzt.f1Hub.instraestructure.controllers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ptzt.f1Hub.application.services.account.AccountService;
 import ptzt.f1Hub.application.services.appUser.AppUserService;
-import ptzt.f1Hub.domain.enums.Roles;
 import ptzt.f1Hub.domain.mappers.AccountMapper;
 import ptzt.f1Hub.domain.mappers.AppUserMapper;
-import ptzt.f1Hub.domain.models.Account;
-import ptzt.f1Hub.domain.models.AppUser;
+import ptzt.f1Hub.domain.models.original.Account;
+import ptzt.f1Hub.domain.models.original.AppUser;
 import ptzt.f1Hub.instraestructure.dto.in.account.AccountInDto;
 import ptzt.f1Hub.instraestructure.dto.in.account.AccountLoginDto;
 import ptzt.f1Hub.instraestructure.dto.out.appUser.AppUserOutDto;
 import ptzt.f1Hub.instraestructure.dto.out.shared.DefaultResponseDto;
-
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/auth")

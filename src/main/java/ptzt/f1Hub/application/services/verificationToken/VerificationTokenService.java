@@ -1,8 +1,7 @@
 package ptzt.f1Hub.application.services.verificationToken;
 
-import ptzt.f1Hub.domain.models.Account;
-import ptzt.f1Hub.domain.models.AppUser;
-import ptzt.f1Hub.domain.models.VerificationToken;
+import ptzt.f1Hub.domain.models.original.Account;
+import ptzt.f1Hub.domain.models.original.VerificationToken;
 
 public interface VerificationTokenService {
 

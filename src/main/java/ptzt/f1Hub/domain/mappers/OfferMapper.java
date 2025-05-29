@@ -6,7 +6,7 @@ import org.mapstruct.MappingTarget;
 import ptzt.f1Hub.application.services.appUser.AppUserService;
 import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
-import ptzt.f1Hub.domain.models.market.Offer;
+import ptzt.f1Hub.domain.models.original.market.Offer;
 import ptzt.f1Hub.instraestructure.dto.in.offer.OfferInDto;
 import ptzt.f1Hub.instraestructure.dto.in.offer.OfferInUpdateDto;
 import ptzt.f1Hub.instraestructure.dto.out.offer.OfferOutDto;

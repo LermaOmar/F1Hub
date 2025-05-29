@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
-import ptzt.f1Hub.domain.models.AppUser;
-import ptzt.f1Hub.domain.models.Budget;
-import ptzt.f1Hub.domain.models.League;
-import ptzt.f1Hub.instraestructure.repository.BudgetRepository;
+import ptzt.f1Hub.domain.models.original.AppUser;
+import ptzt.f1Hub.domain.models.original.Budget;
+import ptzt.f1Hub.domain.models.original.League;
+import ptzt.f1Hub.instraestructure.repository.original.BudgetRepository;
 
 @Service
 @RequiredArgsConstructor

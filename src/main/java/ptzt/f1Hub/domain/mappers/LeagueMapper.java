@@ -4,9 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ptzt.f1Hub.application.services.league.LeagueService;
-import ptzt.f1Hub.domain.models.League;
+import ptzt.f1Hub.domain.models.original.League;
 import ptzt.f1Hub.instraestructure.dto.in.league.LeagueInDto;
-import ptzt.f1Hub.instraestructure.dto.in.league.LeagueInIdDto;
 import ptzt.f1Hub.instraestructure.dto.out.league.LeagueOutDto;
 
 @Mapper(componentModel = "spring", uses = LeagueService.class)

@@ -13,16 +13,15 @@ import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.lineUp.LineUpService;
 import ptzt.f1Hub.application.services.offer.OfferService;
 import ptzt.f1Hub.application.services.team.TeamService;
-import ptzt.f1Hub.domain.models.*;
+import ptzt.f1Hub.domain.models.original.*;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.exceptions.UnproccesableEntityException;
-import ptzt.f1Hub.instraestructure.repository.AppUserRepository;
+import ptzt.f1Hub.instraestructure.repository.original.AppUserRepository;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Lazy)

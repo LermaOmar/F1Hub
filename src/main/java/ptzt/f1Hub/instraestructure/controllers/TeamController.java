@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ptzt.f1Hub.application.services.auctionableEntity.AuctionableEntityService;
 import ptzt.f1Hub.application.services.team.TeamService;
 import ptzt.f1Hub.domain.mappers.TeamMapper;
-import ptzt.f1Hub.domain.models.Team;
+import ptzt.f1Hub.domain.models.original.Team;
 import ptzt.f1Hub.instraestructure.dto.in.team.TeamInDto;
 import ptzt.f1Hub.instraestructure.dto.out.shared.DefaultResponseDto;
 import ptzt.f1Hub.instraestructure.dto.out.shared.PageOutDto;

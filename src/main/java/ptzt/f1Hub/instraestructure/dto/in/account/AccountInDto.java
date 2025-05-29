@@ -1,13 +1,9 @@
 package ptzt.f1Hub.instraestructure.dto.in.account;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
-import ptzt.f1Hub.domain.enums.Roles;
-import ptzt.f1Hub.domain.models.AppUser;
 
 @Getter
 @Setter

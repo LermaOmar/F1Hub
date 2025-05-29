@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.application.services.lineUp.LineUpService;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
-import ptzt.f1Hub.domain.models.AuctionableEntity;
+import ptzt.f1Hub.domain.models.original.AuctionableEntity;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
-import ptzt.f1Hub.domain.models.Driver;
-import ptzt.f1Hub.domain.models.market.MarketItem;
-import ptzt.f1Hub.instraestructure.repository.DriverRepository;
+import ptzt.f1Hub.domain.models.original.Driver;
+import ptzt.f1Hub.domain.models.original.market.MarketItem;
+import ptzt.f1Hub.instraestructure.repository.original.DriverRepository;
 
 import java.util.Comparator;
 import java.util.List;

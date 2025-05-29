@@ -3,7 +3,7 @@ package ptzt.f1Hub.domain.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import ptzt.f1Hub.domain.models.Team;
+import ptzt.f1Hub.domain.models.original.Team;
 import ptzt.f1Hub.instraestructure.dto.in.team.TeamInDto;
 import ptzt.f1Hub.instraestructure.dto.out.team.TeamOutDto;
 import ptzt.f1Hub.instraestructure.dto.out.team.TeamOutLimitedDto;

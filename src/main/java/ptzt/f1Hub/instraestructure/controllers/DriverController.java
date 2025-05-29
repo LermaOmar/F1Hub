@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ptzt.f1Hub.application.services.auctionableEntity.AuctionableEntityService;
 import ptzt.f1Hub.application.services.driver.DriverService;
 import ptzt.f1Hub.domain.mappers.DriverMapper;
-import ptzt.f1Hub.domain.models.Driver;
+import ptzt.f1Hub.domain.models.original.Driver;
 import ptzt.f1Hub.instraestructure.dto.in.driver.DriverInDto;
 import ptzt.f1Hub.instraestructure.dto.out.driver.DriverOutDto;
 import ptzt.f1Hub.instraestructure.dto.out.driver.DriverOutLimitedDto;

@@ -2,7 +2,7 @@ package ptzt.f1Hub.domain.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ptzt.f1Hub.domain.models.market.MarketItem;
+import ptzt.f1Hub.domain.models.original.market.MarketItem;
 import ptzt.f1Hub.instraestructure.dto.out.marketItems.MarketItemsOutDto;
 
 @Mapper(componentModel = "spring")

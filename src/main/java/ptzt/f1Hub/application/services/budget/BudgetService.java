@@ -1,8 +1,8 @@
 package ptzt.f1Hub.application.services.budget;
 
-import ptzt.f1Hub.domain.models.AppUser;
-import ptzt.f1Hub.domain.models.Budget;
-import ptzt.f1Hub.domain.models.League;
+import ptzt.f1Hub.domain.models.original.AppUser;
+import ptzt.f1Hub.domain.models.original.Budget;
+import ptzt.f1Hub.domain.models.original.League;
 
 public interface BudgetService {
 

@@ -2,8 +2,8 @@ package ptzt.f1Hub.application.services.market.item;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ptzt.f1Hub.domain.models.market.Market;
-import ptzt.f1Hub.domain.models.market.MarketItem;
+import ptzt.f1Hub.domain.models.original.market.Market;
+import ptzt.f1Hub.domain.models.original.market.MarketItem;
 
 import java.util.List;
 

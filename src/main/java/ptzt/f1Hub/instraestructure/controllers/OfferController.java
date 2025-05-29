@@ -12,7 +12,7 @@ import ptzt.f1Hub.application.services.account.AccountService;
 import ptzt.f1Hub.application.services.appUser.AppUserService;
 import ptzt.f1Hub.application.services.offer.OfferService;
 import ptzt.f1Hub.domain.mappers.OfferMapper;
-import ptzt.f1Hub.domain.models.market.Offer;
+import ptzt.f1Hub.domain.models.original.market.Offer;
 import ptzt.f1Hub.instraestructure.dto.in.offer.OfferInDto;
 import ptzt.f1Hub.instraestructure.dto.in.offer.OfferInUpdateDto;
 import ptzt.f1Hub.instraestructure.dto.out.offer.OfferOutDto;

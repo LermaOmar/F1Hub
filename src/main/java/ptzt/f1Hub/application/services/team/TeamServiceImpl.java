@@ -9,10 +9,10 @@ import ptzt.f1Hub.application.services.lineUp.LineUpService;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.exceptions.UnproccesableEntityException;
-import ptzt.f1Hub.domain.models.LineUp;
-import ptzt.f1Hub.domain.models.Team;
-import ptzt.f1Hub.domain.models.market.MarketItem;
-import ptzt.f1Hub.instraestructure.repository.TeamRepository;
+import ptzt.f1Hub.domain.models.original.LineUp;
+import ptzt.f1Hub.domain.models.original.Team;
+import ptzt.f1Hub.domain.models.original.market.MarketItem;
+import ptzt.f1Hub.instraestructure.repository.original.TeamRepository;
 
 import java.util.List;
 import java.util.Optional;

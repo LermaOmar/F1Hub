@@ -10,11 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ptzt.f1Hub.application.services.account.AccountService;
 import ptzt.f1Hub.domain.mappers.AccountMapper;
-import ptzt.f1Hub.domain.models.Account;
+import ptzt.f1Hub.domain.models.original.Account;
 import ptzt.f1Hub.instraestructure.dto.in.account.AccountInFullDto;
 import ptzt.f1Hub.instraestructure.dto.out.account.AccountOutDto;
-import ptzt.f1Hub.instraestructure.dto.out.appUser.AppUserOutDto;
-import ptzt.f1Hub.instraestructure.dto.out.appUser.AppUserOutLimitedDto;
 import ptzt.f1Hub.instraestructure.dto.out.shared.PageOutDto;
 
 @RestController

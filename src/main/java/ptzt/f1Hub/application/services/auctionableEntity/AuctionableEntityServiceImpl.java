@@ -3,8 +3,8 @@ package ptzt.f1Hub.application.services.auctionableEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
-import ptzt.f1Hub.domain.models.AuctionableEntity;
-import ptzt.f1Hub.instraestructure.repository.AuctionableEntityRepository;
+import ptzt.f1Hub.domain.models.original.AuctionableEntity;
+import ptzt.f1Hub.instraestructure.repository.original.AuctionableEntityRepository;
 
 @Service
 @RequiredArgsConstructor

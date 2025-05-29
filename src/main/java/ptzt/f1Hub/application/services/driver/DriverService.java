@@ -2,7 +2,7 @@ package ptzt.f1Hub.application.services.driver;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ptzt.f1Hub.domain.models.Driver;
+import ptzt.f1Hub.domain.models.original.Driver;
 
 import java.util.List;
 

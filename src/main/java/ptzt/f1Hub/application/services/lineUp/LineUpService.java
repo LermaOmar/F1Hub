@@ -2,7 +2,7 @@ package ptzt.f1Hub.application.services.lineUp;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ptzt.f1Hub.domain.models.*;
+import ptzt.f1Hub.domain.models.original.*;
 
 import java.util.List;
 

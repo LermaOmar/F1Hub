@@ -1,19 +1,30 @@
 spring:
-
   uploadDir: "./images"
   web:
     resources:
       static-locations:
         - classpath:/static/images
 
-  datasource:
-    url: jdbc:h2:mem:mydb
-    username: root
-    password: root
-    driverClassName: org.h2.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
     defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+
+  datasource:
+    primary:
+      jdbc-url: jdbc:h2:mem:primary;DB_CLOSE_DELAY=-1
+      username: root
+      password: root
+      driver-class-name: org.h2.Driver
+    secondary:
+      jdbc-url: jdbc:h2:mem:secondary;DB_CLOSE_DELAY=-1
+      username: root
+      password: root
+      driver-class-name: org.h2.Driver
 
   h2:
     console:
@@ -32,9 +43,8 @@ spring:
       mail:
         smtp.starttls.enable: true
         smtp.auth: true
-    
+
 security:
   jwt:
     key: ${KEY}
     expiration-time: ${EXPIRATION_TIME}
-

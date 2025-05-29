@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ptzt.f1Hub.application.services.market.MarketService;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
-import ptzt.f1Hub.domain.models.market.Market;
-import ptzt.f1Hub.domain.models.market.MarketItem;
-import ptzt.f1Hub.instraestructure.repository.MarketItemRepository;
+import ptzt.f1Hub.domain.models.original.market.Market;
+import ptzt.f1Hub.domain.models.original.market.MarketItem;
+import ptzt.f1Hub.instraestructure.repository.original.MarketItemRepository;
 
 import java.util.List;
 

@@ -7,8 +7,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
 import ptzt.f1Hub.application.services.market.MarketService;
-import ptzt.f1Hub.domain.models.market.Market;
-import ptzt.f1Hub.domain.models.market.MarketItem;
+import ptzt.f1Hub.domain.models.original.market.Market;
+import ptzt.f1Hub.domain.models.original.market.MarketItem;
 
 import java.util.*;
 import java.util.stream.Collectors;
