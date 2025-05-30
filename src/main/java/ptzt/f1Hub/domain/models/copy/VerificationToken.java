@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "verification_token")
 public class VerificationToken {
 
     @Id
@@ -20,9 +21,10 @@ public class VerificationToken {
     @Column(unique = true, nullable = false)
     private String token;
 
-    @Column(nullable = false)
+    @Column(name = "expires_at")
     private LocalDateTime expiresAt;
 
+    @Column(name = "confirmed_at")
     private LocalDateTime confirmedAt;
 
     @Column(nullable = false)

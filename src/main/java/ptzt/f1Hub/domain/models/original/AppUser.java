@@ -10,6 +10,7 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "app_user")
 public class AppUser {
 
     @Id

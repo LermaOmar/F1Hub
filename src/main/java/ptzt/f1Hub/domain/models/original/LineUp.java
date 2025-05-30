@@ -34,6 +34,7 @@ public class LineUp {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    @Column(name = "total_points")
     private Long totalPoints = 0L;
 
 }

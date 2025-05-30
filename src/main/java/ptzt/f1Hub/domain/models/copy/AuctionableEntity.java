@@ -13,6 +13,7 @@ import java.util.Set;
 @DiscriminatorColumn(name = "type")
 @Getter
 @Setter
+@Table(name = "auctionable_entity")
 public abstract class AuctionableEntity {
 
     @Id
@@ -23,12 +24,14 @@ public abstract class AuctionableEntity {
 
     private Long points = 0L;
 
+    @Column(name = "previous_points")
     private Long previousPoints = 0L;
 
     private Long price;
 
     private Boolean active = true;
 
+    @Column(name = "image_url")
     private String imageUrl = "";
 
     @OneToMany(mappedBy = "auctionableEntity")

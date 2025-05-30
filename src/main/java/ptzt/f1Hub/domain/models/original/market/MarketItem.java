@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Table(name = "market_item")
 public class MarketItem {
 
     @Id
@@ -27,8 +28,8 @@ public class MarketItem {
     private Boolean available = false;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "MarketItem_markets",
-            joinColumns = @JoinColumn(name = "marketItem_id"),
+    @JoinTable(name = "Market_Item_markets",
+            joinColumns = @JoinColumn(name = "market_item_id"),
             inverseJoinColumns = @JoinColumn(name = "markets_id"))
     private Set<Market> markets = new HashSet<>();
 

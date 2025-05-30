@@ -41,7 +41,7 @@ public class PrimaryDatasourceConfig {
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setShowSql(jpaProperties.isShowSql());
-        vendorAdapter.setGenerateDdl(true); // Puedes hacer esto configurable si quieres
+        vendorAdapter.setGenerateDdl(true);
         vendorAdapter.setDatabasePlatform(jpaProperties.getProperties().get("hibernate.dialect"));
 
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -61,4 +61,6 @@ public class PrimaryDatasourceConfig {
 
         return new JpaTransactionManager(emf);
     }
+
+
 }

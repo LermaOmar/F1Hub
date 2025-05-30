@@ -13,6 +13,8 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @Column(name = "budget_value")
     private Long budgetValue = 100_000_000L;
 
 

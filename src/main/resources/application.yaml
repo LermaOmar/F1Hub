@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     defer-datasource-initialization: true
 
   sql:
@@ -16,12 +16,12 @@ spring:
 
   datasource:
     primary:
-      jdbc-url: jdbc:h2:mem:primary;DB_CLOSE_DELAY=-1
+      jdbc-url: jdbc:h2:file:./data/primary
       username: root
       password: root
       driver-class-name: org.h2.Driver
     secondary:
-      jdbc-url: jdbc:h2:mem:secondary;DB_CLOSE_DELAY=-1
+      jdbc-url: jdbc:h2:file:./data/secondary
       username: root
       password: root
       driver-class-name: org.h2.Driver
