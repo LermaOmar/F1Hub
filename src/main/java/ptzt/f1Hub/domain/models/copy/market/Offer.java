@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import ptzt.f1Hub.domain.models.copy.AppUser;
 import ptzt.f1Hub.domain.models.copy.League;
-import ptzt.f1Hub.domain.models.copy.market.MarketItem;
 
 import java.time.LocalDateTime;
 
@@ -24,13 +23,13 @@ public class Offer {
 
     private Long amount;
 
-    @ManyToOne( cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "market_item_id")
     private MarketItem marketItem;
 
     private LocalDateTime createdAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "league_id")
     private League league;
 

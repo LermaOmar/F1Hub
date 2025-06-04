@@ -20,17 +20,17 @@ public class LineUp {
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name = "league_id")
     private League league;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "LineUp_drivers",
             joinColumns = @JoinColumn(name = "lineUp_id"),
             inverseJoinColumns = @JoinColumn(name = "drivers_id"))
     private Set<Driver> drivers = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
 

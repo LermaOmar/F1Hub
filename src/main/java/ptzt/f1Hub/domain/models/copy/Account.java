@@ -32,10 +32,10 @@ public class Account {
     @Enumerated(EnumType.STRING)
     Set<Roles> roles = Set.of(Roles.PLAYER);
 
-    @OneToOne(mappedBy = "account", cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @OneToOne(mappedBy = "account", fetch = FetchType.EAGER)
     private AppUser appUser;
 
-    @OneToMany(mappedBy = "account", orphanRemoval = true, cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "account", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<VerificationToken> verificationTokens = new HashSet<>();
 
 }
