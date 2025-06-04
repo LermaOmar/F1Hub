@@ -24,13 +24,13 @@ public class League {
     @Column(unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "league", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "league", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private Set<Offer> offers = new HashSet<>();
 
-    @OneToMany(mappedBy = "league", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "league", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private Set<Budget> budgets = new HashSet<>();
 
-    @OneToOne(mappedBy = "league", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "league", cascade = {CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REMOVE})
     private Market market;
 
 }

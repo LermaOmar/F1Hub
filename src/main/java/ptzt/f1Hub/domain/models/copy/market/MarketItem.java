@@ -27,7 +27,7 @@ public class MarketItem {
 
     private Boolean available = false;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER ,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(name = "Market_Item_markets",
             joinColumns = @JoinColumn(name = "market_item_id"),
             inverseJoinColumns = @JoinColumn(name = "markets_id"))

@@ -22,13 +22,13 @@ public class AppUser {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Set<LineUp> lineUps = new HashSet<>();
 
-    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
     private Set<Offer> offers = new HashSet<>();
 
-    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
     private Set<Budget> budgets = new HashSet<>();
 
 

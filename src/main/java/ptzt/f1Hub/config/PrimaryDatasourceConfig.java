@@ -13,6 +13,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -26,12 +27,6 @@ import javax.sql.DataSource;
 )
 public class PrimaryDatasourceConfig {
 
-    @Primary
-    @Bean(name = "primaryDatasource")
-    @ConfigurationProperties(prefix = "spring.datasource.primary")
-    public DataSource primaryDatasource() {
-        return DataSourceBuilder.create().build();
-    }
 
     @Primary
     @Bean(name = "primaryEntityManagerFactory")
@@ -60,6 +55,24 @@ public class PrimaryDatasourceConfig {
             @Qualifier("primaryEntityManagerFactory") EntityManagerFactory emf) {
 
         return new JpaTransactionManager(emf);
+    }
+
+
+    @Primary
+    @Bean(name = "dataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.primary")
+    public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "primaryDatasource")
+    public DataSource primaryDatasource(@Qualifier("dataSource") DataSource dataSource) {
+        return dataSource;
+    }
+
+    @Bean
+    public TransactionManager transactionManager(@Qualifier("primaryTransactionManager") TransactionManager primaryTransactionManager) {
+        return primaryTransactionManager;
     }
 
 

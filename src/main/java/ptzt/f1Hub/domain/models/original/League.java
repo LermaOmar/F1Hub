@@ -18,19 +18,19 @@ public class League {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "league", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "league", fetch = FetchType.EAGER)
     private Set<LineUp> lineUps = new HashSet<>();
 
     @Column(unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "league", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "league", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Offer> offers = new HashSet<>();
 
-    @OneToMany(mappedBy = "league", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "league", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Budget> budgets = new HashSet<>();
 
-    @OneToOne(mappedBy = "league", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "league", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Market market;
 
 }
