@@ -23,13 +23,13 @@ public class Offer {
 
     private Long amount;
 
-    @ManyToOne
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "market_item_id")
     private MarketItem marketItem;
 
     private LocalDateTime createdAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "league_id")
     private League league;
 

@@ -18,17 +18,17 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "appUser", fetch = FetchType.EAGER)
     private Set<LineUp> lineUps = new HashSet<>();
 
-    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<Offer> offers = new HashSet<>();
 
-    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<Budget> budgets = new HashSet<>();
 
 
