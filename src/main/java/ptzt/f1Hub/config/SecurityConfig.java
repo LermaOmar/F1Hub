@@ -44,10 +44,15 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry ->
-                        registry.requestMatchers("/h2-console/**").permitAll()
-                                .requestMatchers("/swagger/**").permitAll()
-                                .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                                .requestMatchers("/images/**", "/css/**", "/js/**").permitAll()
+                        registry.requestMatchers(
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html",
+                                        "/swagger-resources/**",
+                                        "/favicon.ico",
+                                        "/auth/**",
+                                        "/h2-console/**"
+                                ).permitAll()
 
                                 //AUTH
                                 .requestMatchers("/auth/check").hasAnyRole("ADMIN","REVIEWER","PLAYER")

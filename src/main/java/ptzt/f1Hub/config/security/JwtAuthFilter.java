@@ -31,6 +31,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+
+        return (path.contains("/auth") && !(path.contains("/auth/check")) ||
+                path.contains("/swagger") ||
+                path.contains("/v3/api-docs") ||
+                path.contains("/h2-console"));
+    }
+
+    @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -46,11 +56,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 
             SecurityContextHolder.getContext().setAuthentication(fakeAuthentication);
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        if ((request.getRequestURI().contains("/auth") && !(request.getRequestURI().contains("/auth/check")))|| request.getRequestURI().contains("/swagger") || request.getRequestURI().contains("/h2-console")) {
             filterChain.doFilter(request, response);
             return;
         }
