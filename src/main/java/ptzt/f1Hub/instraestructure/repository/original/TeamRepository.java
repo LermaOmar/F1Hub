@@ -15,11 +15,20 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
     Optional<Team> findByName(String name);
 
     @Query("""
-        SELECT t FROM Team t
-        LEFT JOIN t.lineUp l
-        WHERE l IS NULL OR l.league IS NULL OR l.league.id <> :leagueId
+        SELECT t
+        FROM Team t
+        LEFT JOIN t.lineUps l
+          ON l.league.id = :leagueId
+        WHERE l IS NULL
+          AND t.id NOT IN (
+            SELECT mi.auctionableEntity.id
+            FROM MarketItem mi
+            JOIN mi.markets m
+            WHERE m.league.id   = :leagueId
+              AND mi.available  = true
+          )
         """)
-    List<Team> findAllByNotAssignedToLineUpInLeague(@Param("leagueId") Long leagueId);
+    List<Team> findAllByNotAssignedToLineOrMarketUpInLeague(@Param("leagueId") Long leagueId);
 
     Page<Team> findAllByActiveTrue(Pageable pageable);
 

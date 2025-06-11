@@ -55,7 +55,7 @@ public class SecurityConfig {
                                 ).permitAll()
 
                                 //AUTH
-                                .requestMatchers("/auth/check").hasAnyRole("ADMIN","REVIEWER","PLAYER")
+                                .requestMatchers("/auth/check").authenticated()
                                 .requestMatchers("/auth/**").permitAll()
 
                                 //ACCOUNTS

@@ -16,6 +16,8 @@ public interface AccountService {
 
     void delete(Account account);
 
+    void deactivate(Account account);
+
     void verify(String token);
 
     void resendVerification(String email);

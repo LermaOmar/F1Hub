@@ -1,6 +1,6 @@
-package ptzt.f1Hub.instraestructure.dto.out.driver;
+package ptzt.f1Hub.instraestructure.dto.out.auctionableEntities;
 
-public record DriverOutDto(
+public record TeamOutDto(
 
         Long id,
 

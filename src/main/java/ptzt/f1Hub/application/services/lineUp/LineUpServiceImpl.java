@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ptzt.f1Hub.application.services.appUser.AppUserService;
 import ptzt.f1Hub.application.services.driver.DriverService;
 import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.team.TeamService;
@@ -13,6 +14,7 @@ import ptzt.f1Hub.domain.models.original.*;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.instraestructure.repository.original.LineUpRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,6 +27,7 @@ public class LineUpServiceImpl implements LineUpService {
     private final TeamService teamService;
     private final DriverService driverService;
     private final LeagueService leagueService;
+    private final AppUserService appUserService;
 
     @Transactional
     @Override
@@ -46,7 +49,7 @@ public class LineUpServiceImpl implements LineUpService {
     public void delete(LineUp lineUp) {
 
         Team team = lineUp.getTeam();
-        team.setLineUp(null);
+        team.setLineUps(new HashSet<>());
         teamService.update(team);
 
         Set<Driver> drivers = lineUp.getDrivers();
@@ -67,6 +70,11 @@ public class LineUpServiceImpl implements LineUpService {
         );
         leagueService.update(league);
 
+        AppUser appUser = lineUp.getAppUser();
+        appUser.getLineUps().removeIf(lineUp1 -> lineUp1.getId().equals(lineUp.getId()));
+        appUserService.update(appUser);
+
+
         lineUpRepository.delete(lineUp);
 
     }
@@ -80,11 +88,11 @@ public class LineUpServiceImpl implements LineUpService {
     }
 
     @Override
-    public Page<LineUp> getAllByUser(Pageable pageable, AppUser appUser) {
-
-        return lineUpRepository.findAllByAppUser(appUser, pageable);
-
+    public LineUp getByUserAndLeague(AppUser appUser, League league) {
+        return null;
     }
+
+
 
     @Override
     public Page<LineUp> getAllByLeague(Pageable pageable, League league) {

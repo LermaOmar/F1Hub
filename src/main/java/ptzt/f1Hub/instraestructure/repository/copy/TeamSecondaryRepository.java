@@ -15,9 +15,11 @@ public interface TeamSecondaryRepository extends JpaRepository<Team, Long> {
     Optional<Team> findByName(String name);
 
     @Query("""
-        SELECT t FROM Team t
-        LEFT JOIN t.lineUp l
-        WHERE l IS NULL OR l.league IS NULL OR l.league.id <> :leagueId
+        SELECT t
+        FROM Team t
+        LEFT JOIN t.lineUps l
+        ON l.league.id = :leagueId
+        WHERE l IS NULL
         """)
     List<Team> findAllByNotAssignedToLineUpInLeague(@Param("leagueId") Long leagueId);
 

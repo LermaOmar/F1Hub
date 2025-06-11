@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import ptzt.f1Hub.domain.models.original.Team;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TeamService {
 
@@ -13,6 +14,8 @@ public interface TeamService {
     Team update(Team team);
 
     Team getById(Long id);
+
+    boolean checkAuctionableIsTeam(Long id);
 
     Team getMvp();
 

@@ -4,8 +4,12 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ptzt.f1Hub.application.services.league.LeagueService;
+import ptzt.f1Hub.application.services.market.item.MarketItemService;
 import ptzt.f1Hub.application.services.offer.OfferService;
+import ptzt.f1Hub.domain.models.original.Driver;
 import ptzt.f1Hub.domain.models.original.League;
+import ptzt.f1Hub.domain.models.original.LineUp;
+import ptzt.f1Hub.domain.models.original.Team;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.models.original.market.Market;
 import ptzt.f1Hub.domain.models.original.market.MarketItem;
@@ -19,6 +23,7 @@ import java.util.*;
 public class MarketServiceImpl implements MarketService{
 
     private final MarketRepository marketRepository;
+    private final MarketItemService marketItemService;
     private final LeagueService leagueService;
     private final OfferService offerService;
 
@@ -36,6 +41,18 @@ public class MarketServiceImpl implements MarketService{
     public Market update(Market market) {
 
         return marketRepository.save(market);
+
+    }
+
+    @Override
+    public void delete(Market market) {
+
+        marketItemService.getAll().forEach(marketItem -> {
+            marketItem.getMarkets().removeIf(market1 -> market1.getId().equals(market.getId()));
+            marketItemService.update(marketItem);
+        });
+
+        marketRepository.delete(market);
 
     }
 
@@ -80,7 +97,10 @@ public class MarketServiceImpl implements MarketService{
 
             // Filter and process offers for the current league
             allOffers.stream()
-                    .filter(offer -> offer.getLeague().equals(league)) // Filter offers by league
+                    .filter(offer -> offer.getLeague().equals(league))
+                    .filter(offer -> offer.getMarketItem().getAvailable()
+                            && offer.getMarketItem().getMarkets().stream()
+                            .anyMatch(m -> m.getLeague().getId().equals(league.getId())))
                     .forEach(offer -> {
                         MarketItem marketItem = offer.getMarketItem();
 
@@ -96,7 +116,5 @@ public class MarketServiceImpl implements MarketService{
         // Return the map with winning offers by league and market item
         return winningOffersByLeague;
     }
-
-
 
 }

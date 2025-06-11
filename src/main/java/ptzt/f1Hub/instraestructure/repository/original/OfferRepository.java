@@ -17,4 +17,5 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     Optional<Offer> findByAppUserAndLeagueAndMarketItem(AppUser appUser, League league, MarketItem marketItem);
 
     Page<Offer> findAllByAppUser(Pageable pageable, AppUser appUser);
+
 }

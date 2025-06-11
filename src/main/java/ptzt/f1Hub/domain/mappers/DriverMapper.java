@@ -5,8 +5,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ptzt.f1Hub.domain.models.original.Driver;
 import ptzt.f1Hub.instraestructure.dto.in.driver.DriverInDto;
-import ptzt.f1Hub.instraestructure.dto.out.driver.DriverOutDto;
-import ptzt.f1Hub.instraestructure.dto.out.driver.DriverOutLimitedDto;
+import ptzt.f1Hub.instraestructure.dto.out.auctionableEntities.DriverOutDto;
+import ptzt.f1Hub.instraestructure.dto.out.auctionableEntities.DriverOutLimitedDto;
 
 @Mapper(componentModel = "spring")
 public interface DriverMapper {

@@ -29,7 +29,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import ptzt.f1Hub.domain.models.copy.Driver;
-import ptzt.f1Hub.domain.models.copy.Team;
 import ptzt.f1Hub.domain.models.copy.AuctionableEntity;
 import ptzt.f1Hub.domain.models.original.Account;
 import ptzt.f1Hub.domain.models.original.AppUser;
@@ -599,7 +598,7 @@ public class BatchConfig {
 
 
     @Bean
-    public CompositeItemWriter<Team> compositeWriterFromTeam(
+    public CompositeItemWriter<ptzt.f1Hub.domain.models.copy.Team> compositeWriterFromTeam(
             @Qualifier("writerAEFromTeam") JdbcBatchItemWriter<AuctionableEntity> writerAE,
             JdbcBatchItemWriter<ptzt.f1Hub.domain.models.copy.Team> writerTm) {
 

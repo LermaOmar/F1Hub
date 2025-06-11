@@ -2,6 +2,7 @@ package ptzt.f1Hub.application.services.account;
 
 import lombok.RequiredArgsConstructor;
 import org.hibernate.NonUniqueResultException;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +23,7 @@ import ptzt.f1Hub.instraestructure.repository.original.AccountRepository;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Lazy)
 public class AccountServiceImpl implements AccountService{
 
     private final AccountRepository accountRepository;
@@ -100,6 +101,14 @@ public class AccountServiceImpl implements AccountService{
     public void delete(Account account) {
 
         accountRepository.delete(account);
+
+    }
+
+    @Override
+    public void deactivate(Account account) {
+
+        account.setActive(false);
+        update(account);
 
     }
 

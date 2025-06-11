@@ -16,7 +16,7 @@ public class Driver extends AuctionableEntity{
 
     private String name;
 
-    @ManyToMany(mappedBy = "drivers", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "drivers", fetch = FetchType.EAGER)
     private Set<LineUp> lineUps = new HashSet<>();
 
 
