@@ -6,10 +6,7 @@ import org.springframework.stereotype.Service;
 import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
 import ptzt.f1Hub.application.services.offer.OfferService;
-import ptzt.f1Hub.domain.models.original.Driver;
 import ptzt.f1Hub.domain.models.original.League;
-import ptzt.f1Hub.domain.models.original.LineUp;
-import ptzt.f1Hub.domain.models.original.Team;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.domain.models.original.market.Market;
 import ptzt.f1Hub.domain.models.original.market.MarketItem;
@@ -106,7 +103,14 @@ public class MarketServiceImpl implements MarketService{
 
                         // Update the highest offer for each market item, comparing by the offer amount
                         highestOffersForLeague.merge(marketItem, offer,
-                                (existingOffer, newOffer) -> newOffer.getAmount() > existingOffer.getAmount() ? newOffer : existingOffer);
+                                (existingOffer, newOffer) -> {
+                                    if(newOffer.getAmount() > existingOffer.getAmount())
+                                        return newOffer;
+                                    else if (newOffer.getAmount().equals(existingOffer.getAmount())) {
+                                        return newOffer.getCreatedAt().isBefore(existingOffer.getCreatedAt()) ? newOffer : existingOffer;
+                                    }else
+                                        return existingOffer;
+                                });
                     });
 
             // Add the highest offers for the current league to the final result
