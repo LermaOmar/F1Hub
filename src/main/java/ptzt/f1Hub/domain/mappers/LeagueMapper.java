@@ -7,6 +7,7 @@ import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.domain.models.original.League;
 import ptzt.f1Hub.instraestructure.dto.in.league.LeagueInDto;
 import ptzt.f1Hub.instraestructure.dto.out.league.LeagueOutDto;
+import ptzt.f1Hub.instraestructure.dto.out.league.LeagueOutLimitedDto;
 
 @Mapper(componentModel = "spring", uses = LeagueService.class)
 public interface LeagueMapper {
@@ -26,4 +27,6 @@ public interface LeagueMapper {
     League toUpdate(LeagueInDto leagueInDto, @MappingTarget League league);
 
     LeagueOutDto toOutDto(League league);
+
+    LeagueOutLimitedDto toOutLimitedDto(League league);
 }

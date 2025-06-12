@@ -123,9 +123,34 @@ public class AppUserServiceImpl implements AppUserService {
 
         League foundLeague = leagueService.getById(leagueId);
 
-        //Verify user already in league
         if (appUser.getLineUps().stream().anyMatch(lineUp -> lineUp.getLeague().getId().equals(leagueId))) {
             throw new UnproccesableEntityException("User is already in this league");
+        }
+
+        if (foundLeague.getLineUps().size() >= 5){
+            throw new UnproccesableEntityException("League is full");
+        }
+
+        if (foundLeague.getLineUps().isEmpty()){
+
+            AppUser efeuno = getByAccount(accountService.getByEmail("efeuno.hub@gmail.com"));
+
+            LineUp lineUp = new LineUp();
+            lineUp.setAppUser(efeuno);
+            lineUp.setLeague(foundLeague);
+            lineUp.setTeam(null);
+            lineUp.setDrivers(Set.of());
+            LineUp createdLineUp = lineUpService.create(lineUp);
+
+            Budget budget = new Budget();
+            budget.setLeague(foundLeague);
+            budget.setAppUser(efeuno);
+            Budget createdBudget = budgetService.create(budget);
+
+
+            foundLeague.getBudgets().add(createdBudget);
+            foundLeague.getLineUps().add(createdLineUp);
+
         }
 
 
@@ -153,29 +178,33 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
 
+    @Transactional
     @Override
     public void leaveLeague(AppUser appUser, Long leagueId) {
+        League league = leagueService.getById(leagueId);
 
-        League foundLeague = leagueService.getById(leagueId);
-
-        //Verify user not in league
-        if (appUser.getLineUps().stream().anyMatch(lineUp -> lineUp.getLeague().getId().equals(leagueId))) {
+        if (appUser.getLineUps().stream().noneMatch(lu -> lu.getLeague().getId().equals(leagueId)))
             throw new UnproccesableEntityException("User is not in this league");
+
+
+        if (league.getLineUps().size() == 2
+                && league.getLineUps().iterator().next().getAppUser().getId().equals(appUser.getId())) {
+            leagueService.delete(league);
+            return;
         }
 
+        List<LineUp> toRemoveLineUps = appUser.getLineUps().stream()
+                .filter(lu -> lu.getLeague().getId().equals(leagueId))
+                .toList();
 
-        LineUp lineUp = lineUpService.getByAppUserAndLeague(appUser,foundLeague);
+        toRemoveLineUps.forEach(lineUpService::delete);
 
+        List<Budget> toRemoveBudgets = appUser.getBudgets().stream()
+                .filter(bu -> bu.getLeague().getId().equals(leagueId))
+                .toList();
 
-        Budget budget = budgetService.getByUserAndLeague(appUser,foundLeague);
+        toRemoveBudgets.forEach(budgetService::delete);
 
-
-        lineUpService.delete(lineUp);
-        budgetService.delete(budget);
-
-        appUser.getBudgets().removeIf(budget1 -> budget1.getId().equals(budget.getId()));
-        appUser.getLineUps().removeIf(lineUp1 -> lineUp1.getId().equals(lineUp.getId()));
-        update(appUser);
     }
 
     private Set<Driver> getRandomDrivers(Long league){

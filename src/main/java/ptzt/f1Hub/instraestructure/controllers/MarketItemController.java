@@ -8,16 +8,17 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import ptzt.f1Hub.application.services.account.AccountService;
+import ptzt.f1Hub.application.services.appUser.AppUserService;
 import ptzt.f1Hub.application.services.league.LeagueService;
 import ptzt.f1Hub.application.services.market.MarketService;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
+import ptzt.f1Hub.application.services.offer.OfferService;
 import ptzt.f1Hub.domain.mappers.MarketItemMapper;
-import ptzt.f1Hub.domain.models.original.AppUser;
-import ptzt.f1Hub.domain.models.original.AuctionableEntity;
-import ptzt.f1Hub.domain.models.original.League;
-import ptzt.f1Hub.domain.models.original.LineUp;
+import ptzt.f1Hub.domain.models.original.*;
 import ptzt.f1Hub.domain.models.original.market.Market;
 import ptzt.f1Hub.domain.models.original.market.MarketItem;
+import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.exceptions.UserUnauthorizedException;
 import ptzt.f1Hub.instraestructure.dto.in.league.LeagueInIdDto;
 import ptzt.f1Hub.instraestructure.dto.out.marketItems.MarketItemsOutDto;
@@ -26,6 +27,7 @@ import ptzt.f1Hub.instraestructure.dto.out.shared.PageOutDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/marketItems")
@@ -34,6 +36,9 @@ public class MarketItemController {
 
     private final MarketItemMapper  marketItemMapper;
 
+    private final OfferService offerService;
+    private final AppUserService appUserService;
+    private final AccountService accountService;
     private final MarketItemService marketItemService;
     private final MarketService marketService;
     private final LeagueService leagueService;
@@ -46,6 +51,21 @@ public class MarketItemController {
         );
 
     }
+
+    @GetMapping("/{id}/league")
+    public ResponseEntity<PageOutDto<MarketItemsOutDto>> getAllByMarket(@PageableDefault Pageable pageable, @PathVariable Long id){
+
+        return ResponseEntity.ok(
+                new PageOutDto<>(
+                        marketItemService.getAllByMarket(
+                            marketService.getByLeague(leagueService.getById(id)),pageable
+                        ).map(marketItemMapper::toOutDto)
+                )
+        );
+
+    }
+
+
 
     @PutMapping("/{id}/display")
     public ResponseEntity<DefaultResponseDto> displayInMarket(@PathVariable Long id,
@@ -90,20 +110,41 @@ public class MarketItemController {
 
     }
 
-    private void checkSameUser(League league, MarketItem marketItem, Authentication authentication) {
-        LineUp lineUp = league.getLineUps().stream()
-                .filter(lineUp1->
-                        lineUp1.getDrivers().stream()
-                                .map(AuctionableEntity::getId)
-                                .toList()
-                                .contains(marketItem.getAuctionableEntity().getId())
-                ).toList().get(0);
+    private void checkSameUser(League league,
+                               MarketItem marketItem,
+                               Authentication authentication) {
 
-        AppUser appUser = lineUp.getAppUser();
+        AuctionableEntity entity = marketItem.getAuctionableEntity();
 
-        if (!appUser.getAccount().getEmail().equals(authentication.getName()))
-            throw new UserUnauthorizedException("You're unauthorized to manipulate other's lineup");
+        LineUp lineUp = findLineUpContaining(league, entity)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "No lineup contiene ese ítem en la liga " + league.getId()
+                ));
+
+        String ownerEmail = lineUp.getAppUser().getAccount().getEmail();
+        if (! ownerEmail.equals(authentication.getName())) {
+            throw new UserUnauthorizedException(
+                    "No puedes manipular el mercado de otro usuario"
+            );
+        }
     }
+
+    private Optional<LineUp> findLineUpContaining(League league, AuctionableEntity entity) {
+        return league.getLineUps().stream()
+                .filter(lu -> {
+                    if (entity instanceof Driver driver) {
+                        return lu.getDrivers().stream()
+                                .anyMatch(d -> d.getId().equals(driver.getId()));
+                    } else if (entity instanceof Team team) {
+                        return lu.getTeam() != null
+                                && lu.getTeam().getId().equals(team.getId());
+                    } else {
+                        return false;
+                    }
+                })
+                .findFirst();
+    }
+
 
     private League leagueInIdDtoToEntity(LeagueInIdDto leagueInIdDto){
 

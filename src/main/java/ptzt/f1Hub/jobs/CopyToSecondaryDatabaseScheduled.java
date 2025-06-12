@@ -14,7 +14,7 @@ public class CopyToSecondaryDatabaseScheduled {
     private final JobLauncher jobLauncher;
     private final Job copyEntitiesJob;
 
-    @Scheduled(cron = "0 0 0 1 */2 *" )
+    @Scheduled(cron = "0 0 0 * * *")
     public void copyToSecondaryDataBase() throws Exception {
 
         jobLauncher.run(copyEntitiesJob, new JobParametersBuilder()

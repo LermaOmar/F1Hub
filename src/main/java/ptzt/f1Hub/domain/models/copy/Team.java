@@ -3,9 +3,12 @@ package ptzt.f1Hub.domain.models.copy;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -17,7 +20,8 @@ public class Team extends AuctionableEntity {
     @Column(unique = true)
     private String name;
 
-    @OneToOne(mappedBy = "team")
-    private LineUp lineUp;
+
+    @OneToMany(mappedBy = "team", orphanRemoval = true)
+    private Set<LineUp> lineUps = new HashSet<>();
 
 }

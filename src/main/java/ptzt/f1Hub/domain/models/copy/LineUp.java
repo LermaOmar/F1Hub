@@ -10,6 +10,13 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Table(
+        name = "lineup",
+        uniqueConstraints = @UniqueConstraint(
+                name = "uk_lineup_league_team",
+                columnNames = {"league_id", "team_id"}
+        )
+)
 public class LineUp {
 
     @Id
@@ -21,20 +28,25 @@ public class LineUp {
     private AppUser appUser;
 
     @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
+    @ManyToOne
     @JoinColumn(name = "league_id")
     private League league;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "LineUp_drivers",
-            joinColumns = @JoinColumn(name = "lineUp_id"),
-            inverseJoinColumns = @JoinColumn(name = "drivers_id"))
+    @JoinTable(
+            name = "LineUp_drivers",
+            joinColumns = @JoinColumn(name = "lineup_id"),
+            inverseJoinColumns = @JoinColumn(name = "driver_id"),
+            uniqueConstraints = @UniqueConstraint(
+                    name = "uk_lineup_driver",
+                    columnNames = {"lineup_id", "driver_id"}
+            )
+    )
     private Set<Driver> drivers = new HashSet<>();
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
 
     @Column(name = "total_points")
     private Long totalPoints = 0L;
-
 }

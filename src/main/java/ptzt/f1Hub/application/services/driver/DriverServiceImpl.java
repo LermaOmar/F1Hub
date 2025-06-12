@@ -91,7 +91,7 @@ public class DriverServiceImpl implements DriverService{
     @Override
     public List<Driver> getAllNotAssigned(Long league) {
 
-        return driverRepository.findAllByNotAssignedToLeague(league);
+        return driverRepository.findAllByNotAssignedToLineUpOrMarketInLeague(league);
 
     }
 

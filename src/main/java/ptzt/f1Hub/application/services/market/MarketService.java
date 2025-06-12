@@ -14,6 +14,8 @@ public interface MarketService {
 
     Market update(Market market);
 
+    void delete(Market market);
+
     Market getById(Long id);
 
     Market getByLeague(League league);

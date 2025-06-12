@@ -11,9 +11,21 @@ import java.util.List;
 
 public interface DriverRepository extends JpaRepository<Driver, Long> {
 
-    @Query("SELECT d FROM Driver d WHERE d.id NOT IN (" +
-            "SELECT d2.id FROM LineUp l JOIN l.drivers d2 WHERE l.league.id = :leagueId)")
-    List<Driver> findAllByNotAssignedToLeague(@Param("leagueId") Long leagueId);
+    @Query("""
+        SELECT d
+        FROM Driver d
+        LEFT JOIN d.lineUps l
+          ON l.league.id = :leagueId
+        WHERE l IS NULL
+          AND d.id NOT IN (
+            SELECT mi.auctionableEntity.id
+            FROM MarketItem mi
+            JOIN mi.markets m
+            WHERE m.league.id   = :leagueId
+              AND mi.available  = true
+          )
+        """)
+    List<Driver> findAllByNotAssignedToLineUpOrMarketInLeague(@Param("leagueId") Long leagueId);
 
     Page<Driver> findAllByActiveTrue(Pageable pageable);
 

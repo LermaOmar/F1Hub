@@ -18,6 +18,4 @@ public interface LineUpRepository extends JpaRepository<LineUp, Long> {
 
     Page<LineUp> findAllByLeague(League league, Pageable pageable);
 
-    Page<LineUp> findAllByAppUser(AppUser appUser, Pageable pageable);
-
 }

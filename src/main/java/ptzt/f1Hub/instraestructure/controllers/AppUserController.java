@@ -46,7 +46,7 @@ public class AppUserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<DefaultResponseDto> delete(@PathVariable Long id){
 
-        appUserService.delete(id);
+        accountService.deactivate(appUserService.getById(id).getAccount());
 
         return ResponseEntity.ok(
                 new DefaultResponseDto(200, "Se ha eliminado correctamente el usuario")

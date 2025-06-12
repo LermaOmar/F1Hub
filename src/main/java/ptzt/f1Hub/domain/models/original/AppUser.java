@@ -24,10 +24,10 @@ public class AppUser {
     @OneToMany(mappedBy = "appUser", fetch = FetchType.EAGER)
     private Set<LineUp> lineUps = new HashSet<>();
 
-    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "appUser",fetch = FetchType.LAZY)
     private Set<Offer> offers = new HashSet<>();
 
-    @OneToMany(mappedBy = "appUser", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "appUser",fetch = FetchType.LAZY)
     private Set<Budget> budgets = new HashSet<>();
 
 

@@ -63,13 +63,13 @@ public class AuthController {
 
     }
 
-    @GetMapping("/verify")
+    @PutMapping("/activate")
     public ResponseEntity<DefaultResponseDto> verify(@RequestParam String token) {
 
         accountService.verify(token);
 
         return ResponseEntity.ok(new DefaultResponseDto(
-                200, "Account verified successfully"));
+                200, "Account activated successfully"));
     }
 
     @PutMapping("/resend-verification")

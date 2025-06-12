@@ -1,6 +1,6 @@
-package ptzt.f1Hub.instraestructure.dto.out.team;
+package ptzt.f1Hub.instraestructure.dto.out.auctionableEntities;
 
-public record TeamOutLimitedDto(
+public record DriverOutLimitedDto(
 
         Long id,
 
@@ -16,5 +16,6 @@ public record TeamOutLimitedDto(
 
         String imageUrl
 
-) {
+
+) implements AuctionableEntityOutDto {
 }

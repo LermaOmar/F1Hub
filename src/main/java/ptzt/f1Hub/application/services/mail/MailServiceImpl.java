@@ -32,7 +32,7 @@ public class MailServiceImpl implements MailService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setFrom("efeuno.hub@gmail.com");
             helper.setTo(account.getEmail());
-            helper.setSubject("Verify your account");
+            helper.setSubject("Activate your account");
             helper.setText(processVerificationTemplate(account.getUsername(), token), true);
 
             mailSender.send(mimeMessage);
@@ -46,7 +46,7 @@ public class MailServiceImpl implements MailService {
     private String processVerificationTemplate(String user, String token) {
         Map<String, Object> model = new HashMap<>();
         model.put("username", user);
-        model.put("activationUrl", "http://localhost:8080/auth/verify?token=" + token); // Testing, in the future must be a front path
+        model.put("activationUrl", "http://localhost:5173/activate/" + token);
 
         Context context = new Context();
         context.setVariables(model);

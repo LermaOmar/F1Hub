@@ -34,10 +34,10 @@ public class Account {
     @Enumerated(EnumType.STRING)
     Set<Roles> roles = Set.of(Roles.PLAYER);
 
-    @OneToOne(mappedBy = "account", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "account")
     private AppUser appUser;
 
-    @OneToMany(mappedBy = "account", orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "account", orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<VerificationToken> verificationTokens = new HashSet<>();
 
 }

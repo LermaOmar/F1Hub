@@ -14,12 +14,13 @@ import ptzt.f1Hub.domain.models.original.Team;
 import ptzt.f1Hub.domain.models.original.market.MarketItem;
 import ptzt.f1Hub.instraestructure.repository.original.TeamRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class TeamServiceImpl implements TeamService{
+public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
     private final LineUpService lineUpService;
@@ -28,118 +29,93 @@ public class TeamServiceImpl implements TeamService{
     @Transactional
     @Override
     public Team create(Team team) {
-
-        if (teamRepository.findByName(team.getName()).isPresent())
-            throw new UnproccesableEntityException("Name is already assigned to other team");
-
-        Team createdTeam = teamRepository.save(team);
-
-        MarketItem marketItem = new MarketItem();
-        marketItem.setAuctionableEntity(createdTeam);
-
-        marketItemService.create(marketItem);
-
-        return createdTeam;
-
+        if (teamRepository.findByName(team.getName()).isPresent()) {
+            throw new UnproccesableEntityException("Name is already assigned to another team");
+        }
+        Team created = teamRepository.save(team);
+        MarketItem mi = new MarketItem();
+        mi.setAuctionableEntity(created);
+        marketItemService.create(mi);
+        return created;
     }
 
+    @Transactional
     @Override
     public Team update(Team team) {
-
-        Optional<Team> opTeam = teamRepository.findByName(team.getName());
-
-        if (opTeam.isPresent() && !opTeam.get().getId().equals(team.getId()))
-            throw new UnproccesableEntityException("Name is already assigned to other team");
-
-        LineUp lineUp = team.getLineUp();
-
-        if (lineUp != null && lineUp.getId() != null)
-            lineUpService.update(lineUp);
-
+        teamRepository.findByName(team.getName())
+                .filter(t -> !t.getId().equals(team.getId()))
+                .ifPresent(t -> { throw new UnproccesableEntityException("Name is already assigned to another team"); });
+        for (LineUp lu : team.getLineUps()) {
+            if (lu.getId() != null) {
+                lineUpService.update(lu);
+            }
+        }
         return teamRepository.save(team);
-
     }
 
     @Override
     public Team getById(Long id) {
-
         return teamRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("There is no team with that ID"));
+    }
 
+    @Override
+    public boolean checkAuctionableIsTeam(Long id) {
+        return teamRepository.findById(id).isPresent();
     }
 
     @Override
     public Team getMvp() {
-
         return teamRepository.findFirstByOrderByPreviousPointsDesc();
-
     }
 
     @Override
     public Page<Team> getAll(Pageable pageable) {
-
         return teamRepository.findAll(pageable);
-
     }
 
     @Override
     public Page<Team> getAllActive(Pageable pageable) {
-
         return teamRepository.findAllByActiveTrue(pageable);
-
     }
 
     @Override
     public List<Team> getAll() {
-
         return teamRepository.findAll();
-
     }
 
     @Override
-    public List<Team> getAllNotAssigned(Long league) {
-
-        return teamRepository.findAllByNotAssignedToLineUpInLeague(league);
-
+    public List<Team> getAllNotAssigned(Long leagueId) {
+        return teamRepository.findAllByNotAssignedToLineOrMarketUpInLeague(leagueId);
     }
 
     @Transactional
     @Override
     public void deactivate(Long id) {
-
         Team team = getById(id);
-
         team.setActive(false);
-
-        lineUpService.getAllByTeam(team).forEach(lineUp -> lineUp.setTeam(null));
-
+        for (LineUp lu : team.getLineUps()) {
+            lu.setTeam(null);
+            lineUpService.update(lu);
+        }
         teamRepository.save(team);
-
     }
 
     @Transactional
     @Override
     public void activate(Long id) {
-
         Team team = getById(id);
         team.setActive(true);
-
         teamRepository.save(team);
-
     }
 
     @Transactional
     @Override
     public void updateValue(Team team) {
-
-        if (team.getPreviousPoints() == 0)
-            return;
-
-        long pointsDifference = team.getPoints() - team.getPreviousPoints();
-
-        double priceChangeFactor =  pointsDifference * 1.0 / team.getPreviousPoints();
-
-        team.setPrice(Math.round(team.getPrice() + (team.getPrice() * priceChangeFactor)));
-
+        if (team.getPreviousPoints() == 0) return;
+        long diff = team.getPoints() - team.getPreviousPoints();
+        double factor = (double) diff / team.getPreviousPoints();
+        team.setPrice(Math.round(team.getPrice() + team.getPrice() * factor));
+        teamRepository.save(team);
     }
 }

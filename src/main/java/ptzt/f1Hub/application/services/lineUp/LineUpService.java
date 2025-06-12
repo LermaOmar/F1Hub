@@ -16,7 +16,7 @@ public interface LineUpService {
 
     LineUp getById(Long id);
 
-    Page<LineUp> getAllByUser(Pageable pageable, AppUser appUser);
+    LineUp getByUserAndLeague(AppUser appUser, League league);
 
     Page<LineUp> getAllByLeague(Pageable pageable, League league);
 

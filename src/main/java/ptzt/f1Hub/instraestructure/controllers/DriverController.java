@@ -11,11 +11,13 @@ import ptzt.f1Hub.application.services.auctionableEntity.AuctionableEntityServic
 import ptzt.f1Hub.application.services.driver.DriverService;
 import ptzt.f1Hub.domain.mappers.DriverMapper;
 import ptzt.f1Hub.domain.models.original.Driver;
+import ptzt.f1Hub.exceptions.UnproccesableEntityException;
 import ptzt.f1Hub.instraestructure.dto.in.driver.DriverInDto;
-import ptzt.f1Hub.instraestructure.dto.out.driver.DriverOutDto;
-import ptzt.f1Hub.instraestructure.dto.out.driver.DriverOutLimitedDto;
+import ptzt.f1Hub.instraestructure.dto.out.auctionableEntities.DriverOutDto;
+import ptzt.f1Hub.instraestructure.dto.out.auctionableEntities.DriverOutLimitedDto;
 import ptzt.f1Hub.instraestructure.dto.out.shared.DefaultResponseDto;
 import ptzt.f1Hub.instraestructure.dto.out.shared.PageOutDto;
+import ptzt.f1Hub.utils.ImageUtils;
 
 @RestController
 @RequestMapping("/drivers")
@@ -62,11 +64,25 @@ public class DriverController {
     }
 
     @PostMapping
-    public ResponseEntity<DriverOutDto> create(@Valid @RequestBody DriverInDto driverInDto){
+    public ResponseEntity<DriverOutDto> create(@Valid @RequestBody DriverInDto driverInDto) {
+
+        Driver driver = driverMapper.toEntity(driverInDto);
+
+        try {
+            driver.setImageUrl(
+                    driverInDto.getBase64image() == null || driverInDto.getBase64image().isEmpty() ?
+                            "http://172.25.36.12:8080/images/default.jpg" : ImageUtils.parseBase64image(driverInDto.getBase64image())
+            );
+
+        } catch (Exception e) {
+            String msg = e.getMessage();
+            System.out.println(msg);
+            throw new UnproccesableEntityException("An error uploading with the image");
+        }
 
         return ResponseEntity.ok(
                 driverMapper.toOutDto(
-                        driverService.create(driverMapper.toEntity(driverInDto))
+                        driverService.create(driver)
                 )
         );
 
@@ -77,6 +93,15 @@ public class DriverController {
 
         Driver driver = driverService.getById(id);
 
+        if (driverInDto.getBase64image() != null && !driverInDto.getBase64image().isEmpty()){
+
+            try {
+                driver.setImageUrl(ImageUtils.parseBase64image(driverInDto.getBase64image()));
+            } catch (Exception e) {
+                throw new UnproccesableEntityException("An error uploading with the image");
+            }
+
+        }
         driverMapper.toUpdate(driverInDto,driver);
 
         return ResponseEntity.ok(

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ptzt.f1Hub.application.services.appUser.AppUserService;
 import ptzt.f1Hub.application.services.market.item.MarketItemService;
+import ptzt.f1Hub.application.services.team.TeamService;
+import ptzt.f1Hub.domain.models.original.League;
 import ptzt.f1Hub.exceptions.EntityNotFoundException;
 import ptzt.f1Hub.exceptions.UnproccesableEntityException;
 import ptzt.f1Hub.domain.models.original.AppUser;
@@ -26,6 +28,7 @@ public class OfferServiceImpl implements OfferService{
     private final OfferRepository offerRepository;
     private final AppUserService appUserService;
     private final MarketItemService marketItemService;
+    private final TeamService teamService;
 
 
     @Override
@@ -57,7 +60,9 @@ public class OfferServiceImpl implements OfferService{
         Optional<Offer> opOffer = offerRepository
                 .findByAppUserAndLeagueAndMarketItem(offer.getAppUser(),offer.getLeague(),offer.getMarketItem());
 
-        if (opOffer.isPresent() && opOffer.get().getAppUser().getId().equals(offer.getAppUser().getId()))
+        if (opOffer.isPresent()
+                && opOffer.get().getAppUser().getId().equals(offer.getAppUser().getId())
+                && !opOffer.get().getAppUser().getAccount().getEmail().equals("efeuno.hub@gmail.com"))
             throw new UnproccesableEntityException("This user already post a offer for this item");
 
 
@@ -90,7 +95,24 @@ public class OfferServiceImpl implements OfferService{
 
     }
 
+    @Override
+    public Optional<Offer> getOfferByMarketItemAndAppUserAndLeague(AppUser appUser, League league, MarketItem marketItem) {
+
+        return offerRepository.findByAppUserAndLeagueAndMarketItem(appUser,league,marketItem);
+
+    }
+
+    @Override
+    public Page<Offer> getOffersByMarketItemrAndLeague(Pageable pageable, League league, MarketItem marketItem) {
+
+        return offerRepository.findByLeagueAndMarketItem(league,marketItem, pageable);
+
+    }
+
     private void validateOffer(Offer offer) {
+
+        if (offer.getAppUser().getAccount().getEmail().equalsIgnoreCase("efeuno.hub@gmail.com"))
+            return;
 
         if (!offer.getMarketItem().getAvailable())
             throw new UnproccesableEntityException("Item is not available");
@@ -114,12 +136,19 @@ public class OfferServiceImpl implements OfferService{
         }
 
         //Already have a team
-        if (lineUp.getTeam() != null) {
+        if (lineUp.getTeam() != null && lineUp.getTeam().getActive()
+                && teamService.checkAuctionableIsTeam(offer.getMarketItem().getAuctionableEntity().getId())) {
             throw new UnproccesableEntityException("You already have a team");
         }
 
         //Already have 2 drivers
-        if (lineUp.getDrivers().size() >= 2) {
+        if (lineUp.getDrivers().size() >= 2 &&
+            (
+                lineUp.getDrivers().stream().toList().get(0).getActive() &&
+                lineUp.getDrivers().stream().toList().get(1).getActive()
+            )
+
+        ) {
             throw new UnproccesableEntityException("You already have 2 drivers");
         }
     }

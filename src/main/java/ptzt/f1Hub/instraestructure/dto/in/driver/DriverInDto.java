@@ -20,4 +20,6 @@ public class DriverInDto {
 
     @NotNull(message = "Specify if the team is active")
     private Boolean active;
+
+    private String base64image;
 }

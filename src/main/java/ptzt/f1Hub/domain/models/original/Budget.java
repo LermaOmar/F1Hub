@@ -18,7 +18,7 @@ public class Budget {
     private Long budgetValue = 100_000_000L;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id")
     private AppUser appUser;
 

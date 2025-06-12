@@ -1,8 +1,7 @@
 package ptzt.f1Hub.domain.models.original.market;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import ptzt.f1Hub.domain.models.original.AppUser;
 import ptzt.f1Hub.domain.models.original.League;
 
@@ -11,6 +10,9 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class Offer {
 
     @Id
