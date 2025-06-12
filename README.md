@@ -558,7 +558,7 @@ Este apartado documentará las secciones más destacables del código.
 
 ### **Proceso Batch:**
 
-> [!INFO]
+> [!NOTE]
 >
 >Un proceso **Batch** es un conjunto de tareas automatizadas que procesan grandes volúmenes de datos de manera secuencial o periódica, sin interacción del usuario. Se ejecutan en "lotes" y son ideales para trabajos de larga duración. Como metáfora se podría afirmar que  \
 
@@ -569,7 +569,7 @@ Este apartado documentará las secciones más destacables del código.
 Uso en el proyecto: 
 
 
-> [!INFO]
+> [!NOTE]
 >
 >El ***Reader*** es responsable de leer los datos desde la base de datos primaria utilizando una consulta SQL. En este caso, se emplea un JdbcCursorItemReader que ejecuta una consulta para obtener datos de dos tablas: MARKET_ITEM y AUCTIONABLE_ENTITY.
 
@@ -600,7 +600,7 @@ Los resultados de la consulta se mapean a un DTO (MarketItemJoin) para facilitar
         return reader;
     }
 ```
-> [!INFO]
+> [!NOTE]
 >
 >El ***Processor*** toma el DTO leído en el Reader y lo transforma en una entidad que será finalmente persistida en la base de datos secundaria. Aquí, el ItemProcessor convierte el objeto MarketItemJoin a una entidad de tipo MarketItem, y si es necesario, también crea un objeto de tipo AuctionableEntity que puede ser una subclase de Driver o Team, dependiendo del tipo de entidad (aeType)
 
@@ -628,7 +628,7 @@ Los resultados de la consulta se mapean a un DTO (MarketItemJoin) para facilitar
     }
 ```
 
-> [!INFO]
+> [!NOTE]
 >
 >El ***Writer*** se encarga de persistir los datos procesados en la base de datos secundaria. En este caso, el JdbcBatchItemWriter utiliza una sentencia MERGE INTO para insertar o actualizar los registros en la tabla MARKET_ITEM.
 
@@ -663,7 +663,7 @@ La sentencia SQL es preparada con los valores correspondientes para cada campo.
 ### 
 ### **Schedules**
 
-> [!INFO]
+> [!NOTE]
 >
 >Una ***Scheduled Task*** es una acción o proceso que se ejecuta automáticamente en intervalos específicos o en momentos predeterminados, sin necesidad de intervención manual.
 
@@ -706,7 +706,7 @@ public long deleteAllExpiredTokens() {
 
 - **Automatización de la finalización de las subastas del mercado**
 
-> [!INFO]
+> [!NOTE]
 >
 >Se encarga de finalizar la subastas que afectan a los items del mercado, en caso de que las ofertas sean iguales ganará la que se haya realizado antes.
 
@@ -838,7 +838,7 @@ public long deleteAllExpiredTokens() {
 
 - **Automatización de la actualización del valor de los pilotos y equipos**
 
-> [!INFO]
+> [!NOTE]
 > 
 >Para calcular los valores de de los equipos y pilotos se utiliza el el método ***updateValue*** definido tanto en ***DriverService*** como en ***TeamService***
 
@@ -896,7 +896,7 @@ public long deleteAllExpiredTokens() {
     }
 ```
 - **Automatización de la actualización de los puntos de las plantillas existentes**
-> [!INFO]
+> [!NOTE]
 > 
 >Los puntos de los distintos items son seteados desde el front, por un usuario de tipo **_REVIEWER_**, y en base a los puntos de los items son seteados los puntos de las plantillas.
 
@@ -923,7 +923,7 @@ public long deleteAllExpiredTokens() {
 - **Automatización de la actualización de los items del mercado**
 
 
-> [!INFO]
+> [!NOTE]
 > 
 >Se incorporan nuevos elementos del mercado una vez se inicia el back y diariamente a la 00:00. Para ello se ocultan los elementos disponibles que no son parte de ninguna plantilla y se seleccionan los items disponibles que tampoco pertenezcan a ninguna plantilla, tras esto se reorganizan aleatoriamente y se toman hasta 7 elementos y se muestran en el mercado.
 
