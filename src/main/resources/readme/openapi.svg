@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="3100">
+  <foreignObject width="100%" height="100%">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, sans-serif;">
+      <style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+h2 {
+  background-color: #004d40;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 40px;
+}
+th, td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+tr:hover {
+  background-color: #e0f7fa;
+  transition: background-color 0.3s ease;
+}
+th {
+  background-color: #00796b;
+  color: white;
+}
+</style>
+      <body><style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+h2 {
+  background-color: #004d40;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 40px;
+}
+th, td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+tr:hover {
+  background-color: #e0f7fa;
+  transition: background-color 0.3s ease;
+}
+th {
+  background-color: #00796b;
+  color: white;
+}
+#capture{
+  padding: 30px;
+}
+</style>
+
+
+   <h2>team-controller</h2>
+   <table>
+   <thead>
+   <tr><th>Method</th><th>EndPoint</th><th>Description</th><th>Action</th></tr></thead>
+   <tbody>
+   <tr><td>GET</td><td>/teams/{id}</td><td>Gets a team with the specified ID</td><td>getById</td></tr>
+   <tr><td>PUT</td><td>/teams/{id}</td><td>Updates a team with the specified ID</td><td>update</td></tr>
+   <tr><td>PUT</td><td>/teams/points/{id}</td><td>Set points to a team with the specified ID</td><td>setPoints</td></tr>
+   <tr><td>PUT</td><td>/teams/deactivate/{id}</td><td>Dectivates a team with the specified ID</td><td>deactivate</td></tr>
+   <tr><td>PUT</td><td>/teams/activate/{id}</td><td>Activates a team with the specified ID</td><td>activate</td></tr>
+   <tr><td>GET</td><td>/teams</td><td>Gets a Page with all drivers</td><td>getAll</td></tr>
+   <tr><td>POST</td><td>/teams</td><td>Creates a team</td><td>create</td></tr>
+   <tr><td>GET</td><td>/teams/mvp</td><td>Gets the mvp team of the GP</td><td>getById</td></tr>
+   </tbody>
+   </table>
+   <h2>offer-controller</h2>
+   <table>
+   <thead>
+   <tr><th>Method</th><th>EndPoint</th><th>Description</th><th>Action</th></tr></thead>
+   <tbody>
+   <tr><td>PUT</td><td>/offers/{id}</td><td>Updates an offer with the specified ID</td><td>update</td></tr>
+   <tr><td>GET</td><td>/offers</td><td>Gets a Page with all the offers of a user</td><td>getAllByUser</td></tr>
+   <tr><td>POST</td><td>/offers</td><td>Creates an offer</td><td>create</td></tr>
+   <tr><td>GET</td><td>/offers/leagueId/league/{itemId}/item</td><td>Gets a Page with all the offers with all the offers made by to a user's item with the specified ID of a league with the specified ID</td><td>getAllByMarketItemAndLeague</td></tr>
+   <tr><td>GET</td><td>/offers/leagueId/league/{itemId}/item/mine</td><td>Gets an offer made by the user to a item with the specified ID of a league with the specified ID</td><td>getByUserMarketItemAndLeague</td></tr>
+   </tbody>
+   </table>
+   <h2>market-item-controller</h2>
+   <table>
+   <thead>
+   <tr><th>Method</th><th>EndPoint</th><th>Description</th><th>Action</th></tr></thead>
+   <tbody>
+   <tr><td>PUT</td><td>/marketItems/{id}/hide</td><td>Eliminates a driver or team, with the specified ID, of the market</td><td>hideInMarket</td></tr>
+   <tr><td>PUT</td><td>/marketItems/{id}/display</td><td>Takes out a driver or team, with the specified ID, of the market</td><td>displayInMarket</td></tr>
+   <tr><td>GET</td><td>/marketItems</td><td>Gets a Page with all the market items</td><td>getAll</td></tr>
+   <tr><td>GET</td><td>/marketItems/{id}/league</td><td>Gets a Page with all the market items of a league with the specified ID</td><td>getAllByMarket</td></tr>
+   </tbody>
+   </table>
+   <h2>league-controller</h2>
+   <table>
+   <thead>
+   <tr><th>Method</th><th>EndPoint</th><th>Description</th><th>Action</th></tr></thead>
+   <tbody>
+   <tr><td>PUT</td><td>/leagues/{id}</td><td>Updates a league with the specified ID</td><td>update</td></tr>
+   <tr><td>GET</td><td>/leagues</td><td>Gets a Page with all the leagues that an appUser is joined to</td><td>getAllByUser</td></tr>
+   <tr><td>POST</td><td>/leagues</td><td>Creates a league</td><td>create</td></tr>
+   </tbody>
+   </table>
+   <h2>driver-controller</h2>
+   <table>
+   <thead>
+   <tr><th>Method</th><th>EndPoint</th><th>Description</th><th>Action</th></tr></thead>
+   <tbody>
+   <tr><td>GET</td><td>/drivers/{id}</td><td>Gets a driver with the specified ID</td><td>getById</td></tr>
+   <tr><td>PUT</td><td>/drivers/{id}</td><td>Updates a driver with the specified ID</td><td>update</td></tr>
+   <tr><td>PUT</td><td>/drivers/points/{id}</td><td>Set points to a driver with the specified ID</td><td>setPoints</td></tr>
+   <tr><td>PUT</td><td>/drivers/deactivate/{id}</td><td>Deactivates a driver with the specified ID</td><td>deactivate</td></tr>
+   <tr><td>PUT</td><td>/drivers/activate/{id}</td><td>Activates a driver with the specified ID</td><td>activate</td></tr>
+   <tr><td>GET</td><td>/drivers</td><td>Gets a Page with all the driver</td><td>getAll</td></tr>
+   <tr><td>POST</td><td>/drivers</td><td>Creates a driver</td><td>create</td></tr>
+   <tr><td>GET</td><td>/drivers/mvps</td><td>Gets a Page with the 2 mvp drivers of the GP</td><td>getMvps</td></tr>
+   </tbody>
+   </table>
+   <h2>auth-controller</h2>
+   <table>
+   <thead>
+   <tr><th>Method</th><th>EndPoint</th><th>Description</th><th>Action</th></tr></thead>
+   <tbody>
+   <tr><td>PUT</td><td>/auth/resend-verification</td><td>Resends the verification token to a specified email</td><td>resendVerification</td></tr>
+   <tr><td>PUT</td><td>/auth/activate</td><td>Activates an account with a specified email</td><td>verify</td></tr>
+   <tr><td>POST</td><td>/auth/register</td><td>Register a new appUser with his respective account</td><td>register</td></tr>
+   <tr><td>POST</td><td>/auth/login</td><td>Permits a user to login, return an access token and creates a session</td><td>login</td></tr>
+   <tr><td>POST</td><td>/auth/check</td><td>Permits check the validity of a token</td><td>checkToken</td></tr>
+   </tbody>
+   </table>
+   <h2>app-user-controller</h2>
+   <table>
+   <thead>
+   <tr><th>Method</th><th>EndPoint</th><th>Description</th><th>Action</th></tr></thead>
+   <tbody>
+   <tr><td>PUT</td><td>/appUsers/{id}</td><td>Updates an appUser with the specified ID</td><td>update</td></tr>
+   <tr><td>DELETE</td><td>/appUsers/{id}</td><td>Soft deletes an appUser with an specified  ID</td><td>delete</td></tr>
+   <tr><td>PUT</td><td>/appUsers/leaveLeague/{leagueId}</td><td>AppUser leaves a league with the specified ID</td><td>leaveLeague</td></tr>
+   <tr><td>PUT</td><td>/appUsers/joinLeague/{leagueId}</td><td>AppUser joins a league with the specified ID</td><td>joinLeague</td></tr>
+   <tr><td>POST</td><td>/appUsers</td><td>Creates an appUser</td><td>create</td></tr>
+   </tbody>
+   </table>
+   <h2>account-controller</h2>
+   <table>
+   <thead>
+   <tr><th>Method</th><th>EndPoint</th><th>Description</th><th>Action</th></tr></thead>
+   <tbody>
+   <tr><td>PUT</td><td>/accounts/{id}</td><td>Updates an account with the specified ID</td><td>update</td></tr>
+   <tr><td>GET</td><td>/accounts</td><td>Gets a Page with all the accounts</td><td>getAll</td></tr>
+   </tbody>
+   </table>
+   <h2>line-up-controller</h2>
+   <table>
+   <thead>
+   <tr><th>Method</th><th>EndPoint</th><th>Description</th><th>Action</th></tr></thead>
+   <tbody>
+   <tr><td>GET</td><td>/lineUps/{id}/league</td><td>Gets a Page with all the lineups of a league</td><td>getAllByLeague</td></tr>
+   <tr><td>GET</td><td>/lineUps/{id}/league/ranking</td><td>Gets a Page with all the lineups by a league with specified ID sorted based in the total point of the lineups</td><td>getByUserAndLeague</td></tr>
+   <tr><td>GET</td><td>/lineUps/{id}/league/mine</td><td>Gets the lineup of an appUser and league</td><td>getByUserAndLeague</td></tr>
+   </tbody>
+   </table>
+</body>
+    </div>
+  </foreignObject>
+</svg>
