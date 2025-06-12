@@ -5,7 +5,12 @@ RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jdk
 WORKDIR /app
+
 COPY --from=build /build/target/F1Hub.jar app.jar
+
 COPY --from=build /build/.env .env
+COPY --from=build /build/data /app/data
+COPY --from=build /build/images /app/images
+
 EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]
