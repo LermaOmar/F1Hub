@@ -102,6 +102,13 @@ public class OfferServiceImpl implements OfferService{
 
     }
 
+    @Override
+    public Page<Offer> getOffersByMarketItemrAndLeague(Pageable pageable, League league, MarketItem marketItem) {
+
+        return offerRepository.findByLeagueAndMarketItem(league,marketItem, pageable);
+
+    }
+
     private void validateOffer(Offer offer) {
 
         if (offer.getAppUser().getAccount().getEmail().equalsIgnoreCase("efeuno.hub@gmail.com"))

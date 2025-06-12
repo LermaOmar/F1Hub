@@ -2,6 +2,8 @@ package ptzt.f1Hub.instraestructure.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,12 @@ import ptzt.f1Hub.domain.mappers.OfferMapper;
 import ptzt.f1Hub.domain.models.original.market.Offer;
 import ptzt.f1Hub.instraestructure.dto.in.offer.OfferInDto;
 import ptzt.f1Hub.instraestructure.dto.in.offer.OfferInUpdateDto;
-import ptzt.f1Hub.instraestructure.dto.out.marketItems.MarketItemsOutDto;
 import ptzt.f1Hub.instraestructure.dto.out.offer.OfferOutDto;
 import ptzt.f1Hub.instraestructure.dto.out.shared.DefaultResponseDto;
 import ptzt.f1Hub.instraestructure.dto.out.shared.PageOutDto;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -49,8 +52,8 @@ public class OfferController {
 
     }
 
-    @GetMapping("/{leagueId}/league/{itemId}/item")
-    public ResponseEntity<OfferOutDto> getOffer(Authentication authentication,
+    @GetMapping("/{leagueId}/league/{itemId}/item/mine")
+    public ResponseEntity<OfferOutDto> getUserOfferForItem(Authentication authentication,
                                                       @PathVariable Long leagueId,
                                                       @PathVariable Long itemId){
 
@@ -63,6 +66,27 @@ public class OfferController {
         return opOffer.map(offer ->
                     ResponseEntity.ok(offerMapper.toOutDto(offer))).orElseGet(() -> ResponseEntity.noContent().build()
                );
+
+    }
+
+    @GetMapping("/{leagueId}/league/{itemId}/item")
+    public ResponseEntity<PageOutDto<OfferOutDto>> getOfferForItem(@PageableDefault Pageable pageable,
+                                                @PathVariable Long leagueId,
+                                                @PathVariable Long itemId){
+
+
+        List<OfferOutDto> filteredOffers = offerService.getOffersByMarketItemrAndLeague(
+                        pageable,
+                        leagueService.getById(leagueId),
+                        marketItemService.getById(itemId)
+                ).getContent().stream()
+                .filter(offer -> offer.getCreatedAt().toLocalDate().equals(LocalDate.now()))
+                .map(offerMapper::toOutDto)
+                .toList();
+
+        Page<OfferOutDto> page = new PageImpl<>(filteredOffers,pageable,filteredOffers.size());
+
+        return ResponseEntity.ok(new PageOutDto<>(page));
 
     }
 

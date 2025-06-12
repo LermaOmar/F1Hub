@@ -26,5 +26,7 @@ public interface OfferService {
 
     Optional<Offer> getOfferByMarketItemAndAppUserAndLeague(AppUser appUser, League league, MarketItem marketItem);
 
+    Page<Offer> getOffersByMarketItemrAndLeague(Pageable pageable, League league, MarketItem marketItem);
+
 
 }
