@@ -41,7 +41,7 @@ public class AccountServiceImpl implements AccountService{
 
         try {
             if (accountRepository.findByUsernameOrEmail(account.getUsername(),account.getEmail()).isPresent())
-                throw new UnproccesableEntityException("Email or Username already assigned to other account");;
+                throw new UnproccesableEntityException("Email or Username already assigned to other account");
 
             account.setPassword(passwordEncoder.encode(account.getPassword()));
 
@@ -59,9 +59,12 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public String login(AccountLoginDto accountLoginDto) {
         try{
+
             if (!accountRepository.findByEmail(accountLoginDto.getEmail()).get().isActive())
                 throw new AccountNotActiveException("Active the account before login");
 
+            if (accountLoginDto.getEmail().equals("efeuno.hub@gmail.com"))
+                    throw new BadRequestException("You can not login with the system account");
 
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(accountLoginDto.getEmail(),accountLoginDto.getPassword()));
@@ -81,6 +84,10 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Account update(Account account) {
+
+        if (account.getEmail().equals("efeuno.hub@gmail.com")){
+            throw new BadRequestException("You can not modify the system account");
+        }
 
         try{
 
@@ -107,6 +114,9 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public void deactivate(Account account) {
 
+        if (account.getEmail().equals("efeuno.hub@gmail.com")){
+            throw new BadRequestException("You can not deactivate the system account");
+        }
         account.setActive(false);
         update(account);
 

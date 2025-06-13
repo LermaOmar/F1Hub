@@ -60,7 +60,7 @@ public class AppUserServiceImpl implements AppUserService {
         if (appUser.getOffers() != null) {
             appUser.getOffers().forEach(offer -> {
                 offer.setAppUser(null);
-                offerService.delete(offer); // importante que lo elimines por el service si hay lógica adicional
+                offerService.delete(offer);
             });
             appUser.getOffers().clear();
         }
