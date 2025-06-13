@@ -111,7 +111,7 @@ public class MarketItemServiceImpl implements MarketItemService{
     @Override
     public void updateMarketItems() {
         List<Market> markets   = marketService.getAll();
-        List<MarketItem> allItems = getAll();
+        List<MarketItem> allItems = getAll().stream().filter(marketItem -> marketItem.getAuctionableEntity().getActive()).toList();
         if (markets.isEmpty() || allItems.isEmpty()) return;
 
         for (Market market : markets) {

@@ -14,9 +14,7 @@ import ptzt.f1Hub.domain.models.original.Team;
 import ptzt.f1Hub.domain.models.original.market.MarketItem;
 import ptzt.f1Hub.instraestructure.repository.original.TeamRepository;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -99,6 +97,8 @@ public class TeamServiceImpl implements TeamService {
             lineUpService.update(lu);
         }
         teamRepository.save(team);
+        MarketItem marketItem = marketItemService.getByAuctionableEntity(team);
+        marketItemService.hideInMarket(marketItem,marketItem.getMarkets().stream().toList());
     }
 
     @Transactional

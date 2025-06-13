@@ -116,6 +116,9 @@ public class DriverServiceImpl implements DriverService{
 
         });
 
+        MarketItem marketItem = marketItemService.getByAuctionableEntity(driver);
+        marketItemService.hideInMarket(marketItem,marketItem.getMarkets().stream().toList());
+
         driverRepository.save(driver);
     }
 
