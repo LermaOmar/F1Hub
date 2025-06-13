@@ -575,7 +575,7 @@ Uso en el proyecto:
 
 Los resultados de la consulta se mapean a un DTO (MarketItemJoin) para facilitar el procesamiento posterior
 
-```
+```java
 @Bean
     public JdbcCursorItemReader<MarketItemJoin> readerMarketItem(@Qualifier("primaryDatasource") DataSource dataSource) {
         JdbcCursorItemReader<MarketItemJoin> reader = new JdbcCursorItemReader<>();
@@ -604,7 +604,7 @@ Los resultados de la consulta se mapean a un DTO (MarketItemJoin) para facilitar
 >
 >El ***Processor*** toma el DTO leído en el Reader y lo transforma en una entidad que será finalmente persistida en la base de datos secundaria. Aquí, el ItemProcessor convierte el objeto MarketItemJoin a una entidad de tipo MarketItem, y si es necesario, también crea un objeto de tipo AuctionableEntity que puede ser una subclase de Driver o Team, dependiendo del tipo de entidad (aeType)
 
-```
+```java
 @Bean
     public ItemProcessor<MarketItemJoin, ptzt.f1Hub.domain.models.copy.market.MarketItem> processorMarketItemToMarketItem() {
         return original -> {
@@ -634,7 +634,7 @@ Los resultados de la consulta se mapean a un DTO (MarketItemJoin) para facilitar
 
 La sentencia SQL es preparada con los valores correspondientes para cada campo.
 
-```
+```java
 @Bean
     public JdbcBatchItemWriter<ptzt.f1Hub.domain.models.copy.market.MarketItem> writerMarketItem(
             @Qualifier("secondaryDatasource") DataSource dataSource) {
@@ -673,8 +673,8 @@ Uso en el proyecto:
 
 Automatiza el servicio batch detallado arriba
 
-```
-@Scheduled(cron = "cron = "0 0 0 * * *"" )
+```java
+@Scheduled(cron = "0 0 0 * * *")
     public void copyToSecondaryDataBase() throws Exception {
 
         jobLauncher.run(copyEntitiesJob, new JobParametersBuilder()
@@ -685,7 +685,7 @@ Automatiza el servicio batch detallado arriba
 ```
 - **Automatización de eliminación de los token no válidos**
 
-```
+```java
 @Scheduled(cron = "0 0 0 * * *")
     public void deleteInvalidVerificationToken(){
         verificationTokenService.deleteAllExpiredTokens();
@@ -695,7 +695,7 @@ Automatiza el servicio batch detallado arriba
 
 
 
-```
+```java
 @Override
 public long deleteAllExpiredTokens() {
 
@@ -710,7 +710,7 @@ public long deleteAllExpiredTokens() {
 >
 >Se encarga de finalizar la subastas que afectan a los items del mercado, en caso de que las ofertas sean iguales ganará la que se haya realizado antes.
 
-```
+```java
 @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void finalizeAuction() {
@@ -842,7 +842,7 @@ public long deleteAllExpiredTokens() {
 > 
 >Para calcular los valores de de los equipos y pilotos se utiliza el el método ***updateValue*** definido tanto en ***DriverService*** como en ***TeamService***
 
-```
+```java
    @Scheduled(cron = "0 0 0 * * *")
     public void calculateTeamsValue(){
 
@@ -865,7 +865,7 @@ public long deleteAllExpiredTokens() {
 ```
 ***updateValue()*** en ***TeamService***
 
-```
+```java
    @Transactional
     @Override
     public void updateValue(Team team) {
@@ -879,7 +879,7 @@ public long deleteAllExpiredTokens() {
 
 ***updateValue()*** en ***DriverService***
 
-```
+```java
    @Transactional
     @Override
     public void updateValue(Driver driver) {
@@ -900,7 +900,7 @@ public long deleteAllExpiredTokens() {
 > 
 >Los puntos de los distintos items son seteados desde el front, por un usuario de tipo **_REVIEWER_**, y en base a los puntos de los items son seteados los puntos de las plantillas.
 
-```
+```java
 @Scheduled(cron = "0 59 23 * * 1")
     public void calculateLineUpPoints(){
 
@@ -929,7 +929,7 @@ public long deleteAllExpiredTokens() {
 
 >Los mercados serán distintos por cada liga
 
-```
+```java
 private final MarketItemService marketItemService;
 
 
@@ -951,59 +951,59 @@ public void setUpMarketDaily() {
 ```
 ***updateMarketItems()*** en ***MarketItemService***
 
-```
+```java
 @Override
-    public void updateMarketItems() {
-        List<Market> markets   = marketService.getAll();
-        List<MarketItem> allItems = getAll();
-        if (markets.isEmpty() || allItems.isEmpty()) return;
+public void updateMarketItems() {
+  List<Market> markets   = marketService.getAll();
+  List<MarketItem> allItems = getAll().stream().filter(marketItem -> marketItem.getAuctionableEntity().getActive()).toList();
+  if (markets.isEmpty() || allItems.isEmpty()) return;
 
-        for (Market market : markets) {
-            League league = market.getLeague();
+  for (Market market : markets) {
+    League league = market.getLeague();
 
-            //Items part of any lineup
-            Set<MarketItem> lockedItems = allItems.stream()
-                    .filter(mi -> isInLineUp(mi, league))
-                    .collect(Collectors.toSet());
+    //Items part of any lineup
+    Set<MarketItem> lockedItems = allItems.stream()
+            .filter(mi -> isInLineUp(mi, league))
+            .collect(Collectors.toSet());
 
-            //Hide items in market that are not part of any lineup
-            List<MarketItem> currentlyVisible = allItems.stream()
-                    .filter(mi -> mi.getMarkets().contains(market))
-                    .filter(mi -> !lockedItems.contains(mi))
-                    .toList();
-            currentlyVisible.forEach(mi ->
-                    hideInMarket(mi, List.of(market))
-            );
+    //Hide items in market that are not part of any lineup
+    List<MarketItem> currentlyVisible = allItems.stream()
+            .filter(mi -> mi.getMarkets().contains(market))
+            .filter(mi -> !lockedItems.contains(mi))
+            .toList();
+    currentlyVisible.forEach(mi ->
+            hideInMarket(mi, List.of(market))
+    );
 
-            //Select the available items
-            List<MarketItem> candidates = allItems.stream()
-                    .filter(mi -> !mi.getMarkets().contains(market))
-                    .filter(mi -> !lockedItems.contains(mi))
-                    .collect(Collectors.toList());
+    //Select the available items
+    List<MarketItem> candidates = allItems.stream()
+            .filter(mi -> !mi.getMarkets().contains(market))
+            .filter(mi -> !lockedItems.contains(mi))
+            .collect(Collectors.toList());
 
-            //Shuffle to get random item into market
-            Collections.shuffle(candidates);
-            Set<MarketItem> toDisplay = new HashSet<>(
-                    candidates.subList(0, Math.min(ITEMS_PER_MARKET, candidates.size()))
-            );
-            toDisplay.forEach(mi ->
-                    displayInMarket(mi, List.of(market))
-            );
-        }
-    }
+    //Shuffle to get random item into market
+    Collections.shuffle(candidates);
+    Set<MarketItem> toDisplay = new HashSet<>(
+            candidates.subList(0, Math.min(ITEMS_PER_MARKET, candidates.size()))
+    );
+    toDisplay.forEach(mi ->
+            displayInMarket(mi, List.of(market))
+    );
+  }
+}
 
 
-    private boolean isInLineUp(MarketItem mi, League league) {
-        var entity = mi.getAuctionableEntity();
-        if (entity instanceof Driver driver) {
-            return driver.getLineUps().stream()
-                    .anyMatch(lu -> lu.getLeague().getId().equals(league.getId()));
-        } else if (entity instanceof Team team) {
-            return team.getLineUps().stream()
-                    .anyMatch(lu -> lu.getLeague().getId().equals(league.getId()));
-        }
-        return false;
-    }
+private boolean isInLineUp(MarketItem mi, League league) {
+  var entity = mi.getAuctionableEntity();
+  if (entity instanceof Driver driver) {
+    return driver.getLineUps().stream()
+            .anyMatch(lu -> lu.getLeague().getId().equals(league.getId()));
+  } else if (entity instanceof Team team) {
+    return team.getLineUps().stream()
+            .anyMatch(lu -> lu.getLeague().getId().equals(league.getId()));
+  }
+  return false;
+}
 ```
 ### 
 ### **Envío de correo de activación de cuenta**
@@ -1012,7 +1012,7 @@ Se envían correos para la activación de cuentas recién registradas, además e
 
 Servicio de envío de mails utilizado en otros servicios
 
-```
+```java
 private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
 
@@ -1050,7 +1050,7 @@ private final JavaMailSender mailSender;
 ```
 Servicio encargado de la gestión y verificación de token de verificación de cuentas
 
-```
+```java
 @Override
     public VerificationToken creteToken(Account account) {
 
@@ -1096,7 +1096,7 @@ Servicio encargado de la gestión y verificación de token de verificación de c
 ```
 Parte de ***AccountService*** es el encargado de coordinar los Servicios, detallados arriba, para el envío y verificación de tokens
 
-```
+```java
 @Override
     public void verify(String token) {
 
@@ -1122,9 +1122,75 @@ Parte de ***AccountService*** es el encargado de coordinar los Servicios, detall
     }
 ```
 
+### **Tratamiento de excepciones**
+
+Las excepciones son tratadas mediante un Componenete con la anotación *RestControllerAdvice*, en mi caso, ***GlobalExceptionHandler***.
+
+Este es el encargado de capturar las excepciones lanzadas por el código y devolver un ResponseEntity con código de error, para ello es necesario especificar la excepción que se pretende capturar mediante la etiquete *ExceptionHandler* 
+
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler({EntityNotFoundException.class, OffersNotAvailableException.class})
+    public ResponseEntity<ErrorResponseDto> handleNotFoundErrors(Exception e){
+
+        return ResponseEntity.status(404)
+                .body(
+                        new ErrorResponseDto(404, LocalDateTime.now(), e.getMessage())
+                );
+
+    }
+
+    @ExceptionHandler({UnproccesableEntityException.class, BadRequestException.class})
+    public ResponseEntity<ErrorResponseDto> handleBadRequestErrors(Exception e){
+
+        return ResponseEntity.status(400)
+                .body(
+                        new ErrorResponseDto(400, LocalDateTime.now(), e.getMessage())
+                );
+
+    }
+
+    @ExceptionHandler({InvalidTokenException.class, AuthenticationException.class, AccountNotActiveException.class})
+    public ResponseEntity<ErrorResponseDto> handleUnauthorizedErrors (Exception ex){
+        return ResponseEntity.
+                status(HttpStatusCode.
+                        valueOf(401)).
+                body((new ErrorResponseDto(401, LocalDateTime.now(), ex.getMessage())));
+    }
+
+    @ExceptionHandler(UserUnauthorizedException.class)
+    public ResponseEntity<ErrorResponseDto> handleUserUnauthorizedException (UserUnauthorizedException ex){
+
+        //Se controla que se lance la excepción por falta de permisos, en caso positivo se asigna como codigo de status
+        //de la respuesta 403 - Forbidden, en caso contrario 401 - Unauthorized
+        int status = ex.getMessage().toLowerCase().contains("authority") ? 403 : 401;
+
+        return ResponseEntity.
+                status(HttpStatusCode.
+                        valueOf(status)).
+                body((new ErrorResponseDto(status, LocalDateTime.now(), ex.getMessage())));
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        return ResponseEntity.
+                status(HttpStatusCode.
+                        valueOf(400)).
+                body((new ErrorResponseDto(400, LocalDateTime.now(),String.format("Formato de la petición no valida: %s",
+                        ex.getAllErrors()
+                                .stream()
+                                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                                .toList()))));
+    }
+}
+
+```
+
 ## **6. Manual de usuario**
 
-Manual de usuario en la ruta [http://localhost:5173/docs](http://localhost:5173/docs)
+Manual de usuario en la ruta [https://lermaomar.github.io/F1Hub-Front/#/docs/introduction](https://lermaomar.github.io/F1Hub-Front/#/docs/introduction)
 
 ## **7. Conclusiones**
 
