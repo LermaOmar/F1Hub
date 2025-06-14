@@ -14,6 +14,8 @@ public class F1HubApplication {
 		Dotenv dotenv = Dotenv.load();
 		System.setProperty("KEY", dotenv.get("KEY"));
 		System.setProperty("EXPIRATION_TIME", dotenv.get("EXPIRATION_TIME"));
+		System.setProperty("USER", dotenv.get("EXPIRATION_TIME"));
+		System.setProperty("PASSWORD", dotenv.get("PASSWORD"));
 
 		SpringApplication.run(F1HubApplication.class, args);
 	}
