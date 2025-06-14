@@ -181,7 +181,7 @@ public class BatchConfig {
             @Qualifier("primaryDatasource") DataSource dataSource) {
         JdbcCursorItemReader<VerificationToken> reader = new JdbcCursorItemReader<>();
         reader.setDataSource(dataSource);
-        reader.setSql("SELECT id, token, expires_at, confirmed_at, account_id FROM VERIFICATION_TOKEN");
+        reader.setSql("SELECT id, token, expires_at, confirmed_at, account_id, used FROM VERIFICATION_TOKEN");
         reader.setRowMapper(new BeanPropertyRowMapper<>(VerificationToken.class));
         return reader;
     }
@@ -195,6 +195,7 @@ public class BatchConfig {
             copy.setToken(original.getToken());
             copy.setExpiresAt(original.getExpiresAt());
             copy.setConfirmedAt(original.getConfirmedAt());
+            copy.setUsed(original.isUsed());
             if (original.getAccount() != null) {
                 ptzt.f1Hub.domain.models.copy.Account a = new ptzt.f1Hub.domain.models.copy.Account();
                 a.setId(original.getAccount().getId());
@@ -212,8 +213,8 @@ public class BatchConfig {
         writer.setDataSource(dataSource);
         writer.setSql(
                 "MERGE INTO VERIFICATION_TOKEN " +
-                        "(id, token, expires_at, confirmed_at, account_id) " +
-                        "KEY(id) VALUES (?, ?, ?, ?, ?)"
+                        "(id, token, expires_at, confirmed_at, account_id, used) " +
+                        "KEY(id) VALUES (?, ?, ?, ?, ?, ?)"
         );
         writer.setItemPreparedStatementSetter((item, ps) -> {
             ps.setLong(1, item.getId());
@@ -225,6 +226,7 @@ public class BatchConfig {
             } else {
                 ps.setNull(5, java.sql.Types.BIGINT);
             }
+            ps.setBoolean(6, item.isUsed());
         });
         return writer;
     }
