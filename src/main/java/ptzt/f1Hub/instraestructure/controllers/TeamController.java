@@ -1,0 +1,146 @@
+package ptzt.f1Hub.instraestructure.controllers;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ptzt.f1Hub.application.services.auctionableEntity.AuctionableEntityService;
+import ptzt.f1Hub.application.services.team.TeamService;
+import ptzt.f1Hub.domain.mappers.TeamMapper;
+import ptzt.f1Hub.domain.models.original.Team;
+import ptzt.f1Hub.exceptions.UnproccesableEntityException;
+import ptzt.f1Hub.instraestructure.dto.in.team.TeamInDto;
+import ptzt.f1Hub.instraestructure.dto.out.shared.DefaultResponseDto;
+import ptzt.f1Hub.instraestructure.dto.out.shared.PageOutDto;
+import ptzt.f1Hub.instraestructure.dto.out.auctionableEntities.TeamOutDto;
+import ptzt.f1Hub.instraestructure.dto.out.auctionableEntities.TeamOutLimitedDto;
+import ptzt.f1Hub.utils.ImageUtils;
+
+@RestController
+@RequestMapping("/teams")
+@RequiredArgsConstructor
+public class TeamController {
+
+    private final TeamService teamService;
+    private final TeamMapper teamMapper;
+    private final AuctionableEntityService auctionableEntityService;
+
+    @GetMapping
+    public ResponseEntity<PageOutDto<TeamOutLimitedDto>> getAll(@PageableDefault Pageable pageable,
+                                                                @RequestParam(required = false) boolean skipNotActive){
+
+        Page<Team> page = skipNotActive ? teamService.getAllActive(pageable) : teamService.getAll(pageable);
+
+        return ResponseEntity.ok(
+                new PageOutDto<>(page.map(teamMapper::toOutLimitedDto))
+        ) ;
+
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TeamOutDto> getById(@PathVariable Long id){
+
+        return ResponseEntity.ok(
+                teamMapper.toOutDto(
+                        teamService.getById(id)
+                )
+        ) ;
+
+    }
+
+    @GetMapping("/mvp")
+    public ResponseEntity<TeamOutDto> getById(@PageableDefault Pageable pageable){
+
+        return ResponseEntity.ok(
+                teamMapper.toOutDto(
+                        teamService.getMvp()
+                )
+        ) ;
+
+    }
+
+    @PostMapping
+    public ResponseEntity<TeamOutDto> create(@Valid @RequestBody TeamInDto teamInDto){
+
+
+        Team team = teamMapper.toEntity(teamInDto);
+
+        try {
+            team.setImageUrl(
+                    teamInDto.getBase64image() == null || teamInDto.getBase64image().isEmpty() ?
+                            "http://172.25.36.12:8080/images/default.jpg" : ImageUtils.parseBase64image(teamInDto.getBase64image())
+            );
+
+        } catch (Exception e) {
+            throw new UnproccesableEntityException("An error uploading with the image");
+        }
+
+        return ResponseEntity.ok(
+                teamMapper.toOutDto(
+                        teamService.create(team)
+                )
+        );
+
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamOutDto> update(@Valid @RequestBody TeamInDto teamInDto,
+                                             @PathVariable Long id){
+
+
+        Team team = teamService.getById(id);
+
+        if (teamInDto.getBase64image() != null && !teamInDto.getBase64image().isEmpty()){
+            try {
+                team.setImageUrl(ImageUtils.parseBase64image(teamInDto.getBase64image()));
+            } catch (Exception e) {
+                throw new UnproccesableEntityException("An error uploading with the image");
+            }
+        }
+
+        teamMapper.toUpdate(teamInDto,team);
+
+        return ResponseEntity.ok(
+                teamMapper.toOutDto(
+                        teamService.update(team)
+                )
+        );
+
+    }
+
+    @PutMapping("/points/{id}")
+    public ResponseEntity<DefaultResponseDto> setPoints(@PathVariable Long id, @RequestParam(name = "points") Long points){
+
+        auctionableEntityService.updatePoints(id,points);
+
+        return ResponseEntity.ok(
+                new DefaultResponseDto(200, "Teams's points have been updated")
+        );
+
+    }
+
+    @PutMapping("/deactivate/{id}")
+    public ResponseEntity<DefaultResponseDto> deactivate(@PathVariable Long id){
+
+        teamService.deactivate(id);
+
+        return ResponseEntity.ok(
+                new DefaultResponseDto(200, "Team has been deactivated")
+        );
+
+    }
+
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<DefaultResponseDto> activate(@PathVariable Long id){
+
+        teamService.activate(id);
+
+        return ResponseEntity.ok(
+                new DefaultResponseDto(200, "Team has been activated")
+        );
+
+    }
+}
