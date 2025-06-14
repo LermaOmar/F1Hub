@@ -59,7 +59,7 @@ Los usuarios pueden formar parte de múltiples ligas, cada una con su propio sis
 - **Control de versiones**: Git + GitHub 
 
 
-- **Despliegue**: GitHub Pages(Frontend) + Firebase (Backend)
+- **Despliegue**: GitHub Pages(Frontend) + Render(Backend)
 
 ## **2. Especificación de Requisitos**
 
