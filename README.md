@@ -183,8 +183,8 @@ package "Auctionable Entities" as AE {
         + String name
     }
 
-    Driver -- AuctionableEntity : 1 .. 1
-    Team   -- AuctionableEntity : 1 .. 1
+    Driver --|>  AuctionableEntity
+    Team   --|> AuctionableEntity
 }
 
 package "League & Market" as LM {
@@ -247,13 +247,13 @@ LM -[hidden]-> LB
 ' --------------------------------------------------------
 ' Styles
 ' --------------------------------------------------------
-left to right direction
 skinparam linetype ortho
 skinparam backgroundColor #f45958
 skinparam dpi 150
 skinparam nodesep 200
 skinparam ranksep 200
 skinparam edgesep 150
+left to right direction
 
 skinparam entity {
     BackgroundColor #F4F4F4
@@ -420,37 +420,21 @@ actor Maintainer
 actor Player
 actor System
 
+usecase "Login"       as Login
+
 ' --------------------------------------------------------
 ' ADMIN
 ' --------------------------------------------------------
-usecase "Create User"    as CU1
-usecase "Read User"      as RU1
-usecase "Update User"    as UU1
-usecase "Delete User"    as DU1
-Admin --> CU1
-Admin --> RU1
-Admin --> UU1
-Admin --> DU1
+usecase "CRUD Users"    as CRUD1
+usecase "CRUD Drivers"  as CRUD2
+usecase "CRUD Teams"    as CRUD3
 
 
-usecase "Create Team"    as CT1
-usecase "Read Team"      as RT1
-usecase "Update Team"    as UT1
-usecase "Delete Team"    as DT1
-Admin --> CT1
-Admin --> RT1
-Admin --> UT1
-Admin --> DT1
+Admin --> CRUD1
+Admin --> CRUD2
+Admin --> CRUD3
+Admin --> Login
 
-
-usecase "Create Driver"  as CD1
-usecase "Read Driver"    as RD1
-usecase "Update Driver"  as UD1
-usecase "Delete Driver"  as DD1
-Admin --> CD1
-Admin --> RD1
-Admin --> UD1
-Admin --> DD1
 
 ' --------------------------------------------------------
 ' MANTAINER
@@ -459,18 +443,20 @@ usecase "Assign Points to Teams"    as UC4
 usecase "Assign Points to Drivers"  as UC5
 Maintainer --> UC4
 Maintainer --> UC5
+Maintainer --> Login
 
 ' --------------------------------------------------------
 ' PLAYER
 ' --------------------------------------------------------
 usecase "Create League"                   as UC6
 usecase "Join League"                     as UC7
-usecase "Modify Lineup"                   as UC8
+usecase "Activate Account"                   as UC8
 usecase "Make Offer"                      as UC9
 usecase "View Market"                     as UC10
-usecase "View GrandPrix MVPs"             as UC11
+usecase "View GP MVPs"             as UC11
 usecase "View League Rankings"            as UC12
 usecase "Display LineUp Item in Market"   as UC13
+usecase "Activate Account"   as ActivateAccount
 
 Player --> UC6
 Player --> UC7
@@ -480,36 +466,40 @@ Player --> UC10
 Player --> UC11
 Player --> UC12
 Player --> UC13
+Player --> ActivateAccount
+Player --> Login
 
 UC6 ..> UC7 : «include»
 
 
 usecase "Process Player Offers"      as UC16
-
 usecase "Select Highest Offers"      as UC19
 usecase "Make LineUp Item Offer"     as UC20
 UC16 ..> UC19 : «include»
-UC16 ..> UC20 : «include»
 
 
 UC13 ..> UC20 : «include»
+
 
 ' --------------------------------------------------------
 ' SYSTEM
 ' --------------------------------------------------------
 usecase "Rotate Market Items"        as UC14
 usecase "Calculate Market Values"    as UC15
+usecase "Calculate Items Points"    as ItemPoints
 usecase "Copy DB to Secondary DB"    as UC17
-usecase "Update Lineup Total Points" as UC18
+usecase "Update Lineup Points" as UC18
 
 System --> UC14
 System --> UC15
 System --> UC16
 System --> UC17
 System --> UC18
+System --> ItemPoints
+System --> Login
+System --> UC20
 
-
-UC9 ..> UC20 : «extend»
+UC9 <.. UC20 : «extend»
 
 @enduml
 ```
