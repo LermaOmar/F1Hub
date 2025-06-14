@@ -30,14 +30,14 @@ public class MailServiceImpl implements MailService {
 
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            helper.setFrom("efeuno.hub@gmail.com");
+            helper.setFrom("efeuno.hub@9318736.brevosend.com");
             helper.setTo(account.getEmail());
             helper.setSubject("Activate your account");
             helper.setText(processVerificationTemplate(account.getUsername(), token), true);
 
             mailSender.send(mimeMessage);
 
-        } catch (MessagingException ex) {
+        } catch (Exception ex) {
             log.error(ex.getMessage());
             throw new RuntimeException(ex);
         }
