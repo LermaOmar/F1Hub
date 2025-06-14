@@ -2,6 +2,7 @@ package ptzt.f1Hub.config;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
@@ -10,6 +11,7 @@ import ptzt.f1Hub.application.services.market.item.MarketItemService;
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class MarketConfig {
 
     private final MarketItemService marketItemService;
@@ -23,11 +25,15 @@ public class MarketConfig {
 
     }
 
+    //Scheduled(cron = "*/30 * * * * *")
     @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void setUpMarketDaily() {
 
         marketItemService.updateMarketItems();
+        log.info("====================");
+        log.info("Market items updated");
+        log.info("====================");
 
     }
 
