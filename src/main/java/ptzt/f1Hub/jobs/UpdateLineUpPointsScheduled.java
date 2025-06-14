@@ -14,22 +14,20 @@ public class UpdateLineUpPointsScheduled {
 
     private final LineUpService lineUpService;
 
-
     @Scheduled(cron = "0 59 23 * * 1")
     public void calculateLineUpPoints(){
 
 
         lineUpService.getAll().forEach(lineUp -> {
 
-            if (lineUp.getTeam() != null || lineUp.getDrivers().size() == 2){
+            if (lineUp.getTeam() != null) {
 
                 lineUp.setTotalPoints(lineUp.getTotalPoints() + (lineUp.getTeam().getPoints() - lineUp.getTeam().getPreviousPoints()));
-
-                lineUp.getDrivers().forEach(driver -> lineUp.setTotalPoints(lineUp.getTotalPoints() + (driver.getPoints() - driver.getPreviousPoints())));
-
-                lineUpService.update(lineUp);
-
             }
+
+            lineUp.getDrivers().forEach(driver -> lineUp.setTotalPoints(lineUp.getTotalPoints() + (driver.getPoints() - driver.getPreviousPoints())));
+
+            lineUpService.update(lineUp);
 
         });
         log.info("====================================");
