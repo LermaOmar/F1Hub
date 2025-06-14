@@ -30,7 +30,7 @@ public class ImageUtils {
 
         Files.write(path, decodedBytes);
 
-        return String.format("http://172.25.36.12:8080/images/%s",filename);
+        return String.format("https://f1hub-back.onrender.com/images/%s",filename);
 
     }
 }
