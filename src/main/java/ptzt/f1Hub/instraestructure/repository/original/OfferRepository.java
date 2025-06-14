@@ -9,12 +9,16 @@ import ptzt.f1Hub.domain.models.original.League;
 import ptzt.f1Hub.domain.models.original.market.MarketItem;
 import ptzt.f1Hub.domain.models.original.market.Offer;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     Optional<Offer> findByAppUserAndLeagueAndMarketItem(AppUser appUser, League league, MarketItem marketItem);
+
+    List<Offer> findAllByAppUserAndLeagueAndCreatedAtBetween(AppUser appUser, League league, LocalDateTime initial, LocalDateTime end);
 
     Page<Offer> findByLeagueAndMarketItem( League league, MarketItem marketItem, Pageable pageable);
 
