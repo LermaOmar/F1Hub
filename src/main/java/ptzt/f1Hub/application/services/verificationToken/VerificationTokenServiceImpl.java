@@ -3,6 +3,7 @@ package ptzt.f1Hub.application.services.verificationToken;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ptzt.f1Hub.domain.enums.Roles;
 import ptzt.f1Hub.domain.models.original.Account;
 import ptzt.f1Hub.domain.models.original.VerificationToken;
 import ptzt.f1Hub.exceptions.BadRequestException;
@@ -20,6 +21,9 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
 
     @Override
     public VerificationToken creteToken(Account account) {
+
+        if (account.getRoles().size() == 1 && account.getRoles().stream().toList().get(0).equals(Roles.REVIEWER))
+            throw new BadRequestException("You can activate a REVIEWER account");
 
         VerificationToken verificationToken = VerificationToken.builder()
                 .token(UUID.randomUUID().toString())
@@ -61,10 +65,11 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
 
     }
 
+    @Transactional
     @Override
-    public long deleteAllExpiredTokens() {
+    public void deleteAllExpiredTokens() {
 
-        return verificationTokenRepository.deleteByUsedFalseAndExpiresAtBefore(LocalDateTime.now());
+        verificationTokenRepository.deleteByUsedFalseAndExpiresAtBefore(LocalDateTime.now());
 
     }
 }

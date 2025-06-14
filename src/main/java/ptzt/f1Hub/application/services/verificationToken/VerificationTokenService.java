@@ -11,6 +11,6 @@ public interface VerificationTokenService {
 
     void invalidateAllTokensForUser(Account account);
 
-    long deleteAllExpiredTokens();
+    void deleteAllExpiredTokens();
 
 }
