@@ -46,7 +46,7 @@ public class MailServiceImpl implements MailService {
     private String processVerificationTemplate(String user, String token) {
         Map<String, Object> model = new HashMap<>();
         model.put("username", user);
-        model.put("activationUrl", "http://localhost:5173/activate/" + token);
+        model.put("activationUrl", "https://lermaomar.github.io/F1Hub-Front/#/activate/" + token);
 
         Context context = new Context();
         context.setVariables(model);
