@@ -49,8 +49,11 @@ public class LineUpServiceImpl implements LineUpService {
     public void delete(LineUp lineUp) {
 
         Team team = lineUp.getTeam();
-        team.setLineUps(new HashSet<>());
-        teamService.update(team);
+        if (team != null) {
+
+            team.setLineUps(new HashSet<>());
+            teamService.update(team);
+        }
 
         Set<Driver> drivers = lineUp.getDrivers();
         drivers.forEach(driver -> {
