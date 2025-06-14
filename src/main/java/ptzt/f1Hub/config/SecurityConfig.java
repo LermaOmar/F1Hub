@@ -70,10 +70,12 @@ public class SecurityConfig {
 
                                 //DRIVERS
                                 .requestMatchers(HttpMethod.PUT, "/drivers/points/*").hasRole("REVIEWER")
+                                .requestMatchers(HttpMethod.GET, "/drivers/**").authenticated()
                                 .requestMatchers("/drivers/**").hasRole("ADMIN")
 
                                 //TEAMS
                                 .requestMatchers(HttpMethod.PUT, "/teams/points/*").hasRole("REVIEWER")
+                                .requestMatchers(HttpMethod.GET, "/teams/**").authenticated()
                                 .requestMatchers("/teams/**").hasRole("ADMIN")
 
                                 //OFFERS
